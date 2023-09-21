@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studybuddy/src/features/authentication/screens/mainscreen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -47,6 +48,8 @@ class SignupForm extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               // Add signup logic here
+            //  calls the mainscreen page
+              MainScreen();
             },
             child: Text('Sign Up'),
           ),
