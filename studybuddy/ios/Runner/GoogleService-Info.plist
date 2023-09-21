@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+String apiKey = dotenv.env[API_STUDYBUDDY_GOOGLE_KEY];
+
+
+
+// Define a function to load environment variables from a .env file
+
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyD30nYhWNQBpWYg9XbW71qm2uhZe3CHTa4</string>
+	<string>"API_PLACEHOLDER_KEY"</string>
 	<key>GCM_SENDER_ID</key>
 	<string>998704769759</string>
 	<key>PLIST_VERSION</key>
