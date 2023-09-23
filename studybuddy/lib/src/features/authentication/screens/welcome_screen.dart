@@ -2,49 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:studybuddy/src/features/authentication/screens/mainscreen.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screen.dart';
+import 'package:studybuddy/src/features/authentication/screens/widgets/login_form_widget.dart';
+import 'package:studybuddy/src/features/authentication/screens/widgets/sign_up_form_widget.dart';
 
-import '../controllers/welcomecontroller.dart';
+import '../controllers/sign_up_controller.dart';
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen({Key? key}) : super(key: key);
-  //_ represents private variables
-  bool _isFullName = true;
-  bool _isValidEduEmail = true;
-
-  //Checks if the email is a valid .edu email
-  bool isEduEmail(String email) {
-    // Validate the email format first
-    if (!EmailValidator.validate(email)) {
-      _isValidEduEmail =  false;
-    }
-
-    // Define a regular expression pattern to match ".edu" domains
-    RegExp regex = RegExp(r"@[A-Za-z0-9._%+-]+\.edu$");
-
-    // Use the RegExp's hasMatch method to check if the email matches the pattern
-    return regex.hasMatch(email);
-  }
-
-  //Checks if the user has entered a full name
-  bool isFullName(String name) {
-    if (name.contains(' ')) {
-      _isFullName = true;
-    }
-    return _isFullName;
-  }
-
-  void validateEmail(String inputEmail) {
-    final isValidFormat = EmailValidator.validate(inputEmail);
-    final hasEduDomain = inputEmail.endsWith('.edu');
-
-    setState(() {
-      email = inputEmail;
-      isInvalidFormat = !isValidFormat;
-      isInvalidDomain = !hasEduDomain;
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +23,10 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text("Hello World"),
               SignupForm(),
               SizedBox(height: 20),
-              LoginForm(),
+              // LoginForm(),
             ],
           ),
         ),

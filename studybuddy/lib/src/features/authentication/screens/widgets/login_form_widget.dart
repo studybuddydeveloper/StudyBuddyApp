@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 
-class MainScreenWidget extends StatelessWidget {
-  const MainScreenWidget({Key? key}) : super(key: key);
+class LoginForm extends StatefulWidget {
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
 
+class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: EdgeInsets.all(20),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Yayy the user has logged in/yayy the user has signed up',
+          Text(
+            'Login',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Username'),
+          ),
+          TextField(
+            decoration: InputDecoration(labelText: 'Password'),
+            obscureText: true,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Add login logic here
+            },
+            child: Text('Login'),
+          ),
         ],
-      )
+      ),
     );
   }
 }
