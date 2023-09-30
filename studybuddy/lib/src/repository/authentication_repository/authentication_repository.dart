@@ -1,9 +1,9 @@
 import  'package:get/get.dart';
-import  'package:get/get_core/src/get_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:studybuddy/src/features/authentication/screens/landing_page.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/authentication/screens/welcome_screen.dart';
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -26,20 +26,53 @@ class AuthenticationRepository extends GetxController {
   _setInitialScreen(User? user) {
     //if user has been logged out and is null, go to welcome screen
     if (user == null) {
-      Get.offAll(() => WelcomeScreen());
+      Get.offAll(() => const WelcomeScreen());
     } else {
-      Get.offAll(() => LandingPage());
+      Get.offAll(() => const MainScreen());
     }
   }
 
   //Method to register a new user by creating a new user with email and password
-  void registerUser(String email, String password) async {
+  void registerUser(String email, String password, String fullName) async {
     print("attempting to register user");
+
+    //  try {
+    //     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //       email: email,
+    //       password: password,
+    //     );
+    // // After successful registration, update the user's profile with their full name.
+    //     await userCredential.user.updateProfile(displayName: fullName);
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      firebaseUser.value != null ? Get.offAll(() => LandingPage())
-          : Get.offAll(() => WelcomeScreen());
+
+      // After successful registration, update the user's profile with their full name.
+      await userCredential.user!.updateDisplayName(fullName);
+      // Save the full name to Firestore.
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'fullName': fullName,
+        // Add other user data as needed.
+      });
+      // User? user = userCredential.user;
+      // if (user != null){
+      // }
+      // //User? user = userCredential.user;
+      // //     if (user != null) {
+      // //       // Update the user's profile with their full name.
+      // //       await user.updateProfile(displayName: fullName);
+      // //
+      // //       // Save the full name to Firestore.
+      // //       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      // //         'fullName': fullName,
+      // //         // Add other user data as needed.
+      // //       });
+
+      firebaseUser.value != null ? Get.offAll(() => const LandingPage())
+          : Get.offAll(() => const WelcomeScreen());
       print("attempting to register user");
     }  on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
@@ -56,7 +89,7 @@ class AuthenticationRepository extends GetxController {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch(e) {}
+    }
     catch (_) {}
   }
 

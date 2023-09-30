@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../controllers/sign_up_controller.dart';
 import '../main_screen.dart';
 
 class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
+
   @override
   State<SignupForm> createState() => _SignupFormState();
 }
@@ -16,12 +16,12 @@ class SignupForm extends StatefulWidget {
 class _SignupFormState extends State<SignupForm> {
 
   //_ represents private variables
-  bool _isFullName = false;
-  bool _isInValidEmailFormat = false;
+  final bool _isFullName = false;
+  final bool _isInValidEmailFormat = false;
   bool _isInvalidEduEmail = false;
   bool _isInValidFullName = false;
   String _fullnameErrorMessage = '';
-  String _emailaddress = '';
+  final String _emailaddress = '';
 
   // Timer to delay validation
   late Timer _debounce;
@@ -30,7 +30,7 @@ class _SignupFormState extends State<SignupForm> {
   void initState() {
     super.initState();
     // Initialize the timer with a delay of 500 milliseconds
-    _debounce = Timer(Duration(milliseconds: 10), () {});
+    _debounce = Timer(const Duration(milliseconds: 10), () {});
   }
 
   //Checks if the email is a valid .edu email
@@ -51,22 +51,6 @@ class _SignupFormState extends State<SignupForm> {
       _isInvalidEduEmail = true;
     }
   }
-
-
-  //Checks if the user has entered a full name
-  // void isFullName(String name) {
-  //   if (name.contains(' ')) {
-  //     _isInValidFullName = false;
-  //   }
-  //   else if(name.isEmpty){
-  //     _isInValidFullName = true;
-  //     _fullnameErrorMessage = 'Fullname cannot be empty';
-  //   }
-  //   else{
-  //     _isInValidFullName = true;
-  //     _fullnameErrorMessage = 'Please enter your full name';
-  //   }
-  // }
 
   // Checks if the user has entered a full name
   void isFullName(String name) {
@@ -92,10 +76,6 @@ class _SignupFormState extends State<SignupForm> {
 
     // Debounce the email validation to wait for user input to settle
     _debounce.cancel(); // Cancel the previous timer if it exists
-    // _debounce = Timer(Duration(milliseconds: 500), () {
-    //   // After 500ms of user inactivity, validate the email
-    //   isEduEmail(_emailaddress);
-    // });
     isEduEmail(_emailaddress);
     setState(() {
       _isInvalidEduEmail;
@@ -127,14 +107,14 @@ class _SignupFormState extends State<SignupForm> {
     // the form's input fields.
     final formKey = GlobalKey<FormState>();
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Form(
         key: formKey,
         child: Column(
           children: [
             //TODO: add validation for email
             //TODO: Create constants for email and password label
-            Text(
+            const Text(
               'Sign Up',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
@@ -167,7 +147,7 @@ class _SignupFormState extends State<SignupForm> {
             ),
             TextFormField(
               controller: controller.password,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
             TextFormField(
@@ -178,20 +158,19 @@ class _SignupFormState extends State<SignupForm> {
                 return null;
               },
               controller: controller.confirmPassword,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'Confirm Password'),
               obscureText: true,
             ),
             ElevatedButton(
               onPressed: () {
-                // Add signup logic here
-                //  calls the mainscreen page
                 if (formKey.currentState!.validate()) {
                   SignUpController.instance.registerUser(controller.email.text.trim(),
+                      controller.password.text.trim(),
                       controller.fullName.text.trim());
-                  Get.to(() => MainScreen());
+                  Get.to(() => const MainScreen());
                 }
               },
-              child: Text('Sign Up'),
+              child: const Text('Sign Up'),
             ),
           ],
         ),

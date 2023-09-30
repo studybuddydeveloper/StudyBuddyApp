@@ -1,13 +1,26 @@
-// -- Profile Screen -- Text
-
 import 'package:flutter/cupertino.dart';
 
-const String Profile = 'Profile';
-const String EditProfile = 'Edit Profile';
-const String LogOutProfile = 'Log Out';
-const String ProfileUserName = 'Username';
-const String ProfileEmail = 'Email';
-const String ProfileDescription = 'Description';
+// -- Onboarding Screen Text --
+const String sOnboardingTitle1 = 'Welcome to Study Buddy';
+const String sOnboardingTitle2 = 'Find a Study Buddy';
+const String sOnboardingTitle3 = 'Study Together';
+const String sOnboardingSubtitle1 =
+    'Study Buddy is a platform for students to find other students to study with.';
+const String sOnboardingSubtitle2 =
+    'Find a study buddy that is studying the same subject as you.';
+const String sOnboardingSubtitle3 =
+    'Study together with your study buddy.';
+const String sOnboardingCounter1 = '1/3';
+const String sOnboardingCounter2 = '2/3';
+const String sOnboardingCounter3 = '3/3';
+
+// -- Profile Screen -- Text
+const String uProfile = 'Profile';
+const String uEditProfile = 'Edit Profile';
+const String uLogOutProfile = 'Log Out';
+const String uProfileName = 'Username';
+const String uProfileEmail = 'Email';
+const String uProfileDescription = 'Description';
 
 //This is for subject tags
 // -- Profile Screen -- ListView
@@ -33,9 +46,9 @@ Table ProfileTable = Table(
   children: [
     TableRow(
       children: [
-        Text(ProfileUserName),
-        Text(ProfileEmail),
-        Text(ProfileDescription),
+        Text(uProfileName),
+        Text(uProfileEmail),
+        Text(uProfileDescription),
       ],
     ),
   ],

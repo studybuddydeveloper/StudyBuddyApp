@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:studybuddy/src/features/authentication/screens/main_screen.dart';
-import 'package:studybuddy/src/features/authentication/screens/widgets/login_form_widget.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/sign_up_form_widget.dart';
+import 'package:studybuddy/src/utils/theme/theme.dart';
+import 'package:studybuddy/src/utils/theme/widget_themes/text_theme.dart';
 
-import '../controllers/sign_up_controller.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: SAppTheme.lightTheme,
+      darkTheme: SAppTheme.darkTheme,
       title: 'Signup and Login Forms',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Signup and Login Forms'),
+          title: const Text('Signup and Login Forms'),
         ),
-        body: Center(
+        body: const Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

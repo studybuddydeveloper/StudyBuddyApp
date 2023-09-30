@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
-
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
@@ -10,6 +9,9 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(),
+    );
   }
 }
