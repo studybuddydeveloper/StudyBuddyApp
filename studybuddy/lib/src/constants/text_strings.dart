@@ -1,5 +1,19 @@
 import 'package:flutter/cupertino.dart';
 
+// -- Generic Text --
+const String sLoginText = 'Login';
+const String sSignupText = 'SignUp';
+const String sEmail = 'Email';
+const String sEmailHint = 'Enter your email';
+const String sPassword = 'Password';
+const String sConfirmPassword = 'Confirm Password';
+const String sSchoolName = 'School Name';
+const String sForgotPassword = 'Forgot Password?';
+const String sOr = 'Or';
+const String sLoginWithGoogle = 'Sign-in with Google';
+const String sDontHaveAnAccount = 'Don\'t have an account? ';
+const String sAlreadyHaveAnAccount = 'Already have an account? ';
+
 // -- Onboarding Screen Text --
 const String sOnboardingTitle1 = 'Welcome to Study Buddy';
 const String sOnboardingTitle2 = 'Find a Study Buddy';
@@ -53,3 +67,18 @@ Table ProfileTable = Table(
     ),
   ],
 );
+
+// -- Welcome Screen -- Text
+const String sWelcomeTitle = 'Welcome to Study Buddy';
+const String sWelcomeSubtitle = 'Find a study buddy today!';
+
+
+// -- Login Screen -- Text
+const String sLoginTitle = 'Login';
+const String sLoginSubtitle = 'Welcome back! Login to your account';
+
+// -- SignUp Screen -- Text
+const String sSignUpTitle = 'Sign Up';
+const String sSignUpSubtitle = 'Create an account to get started';
+const String sFullName = 'Full Name';
+

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../constants/text_strings.dart';
+
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -8,31 +10,49 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+
+  bool isIconVisible = false;
+
+  void toggleIconVisibility() {
+    isIconVisible = !isIconVisible;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Text(
-            'Login',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return  Form(
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: sEmail,
+                hintText: sEmailHint,
+                prefixIcon: Icon(Icons.person_2_outlined),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+          TextFormField(
+            decoration: InputDecoration(
+                labelText: sPassword,
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    toggleIconVisibility();
+                  },
+                  icon: isIconVisible ? Icon(Icons.visibility_off_outlined)
+                      : Icon(Icons.visibility),
+                ),
+                border: OutlineInputBorder(),
+                hintText: sPassword
+            ),
           ),
-          const TextField(
-            decoration: InputDecoration(labelText: 'Username'),
-          ),
-          const TextField(
-            decoration: InputDecoration(labelText: 'Password'),
-            obscureText: true,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Add login logic here
-            },
-            child: const Text('Login'),
-          ),
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 }

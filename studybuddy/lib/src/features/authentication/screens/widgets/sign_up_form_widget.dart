@@ -1,10 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/sign_up_controller.dart';
-import '../main_screen.dart';
+import '../main_screens/main_screen.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});

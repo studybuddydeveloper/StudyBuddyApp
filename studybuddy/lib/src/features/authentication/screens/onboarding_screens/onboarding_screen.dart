@@ -2,18 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:studybuddy/src/constants/colors.dart';
-import 'package:studybuddy/src/constants/image_strings.dart';
-import 'package:studybuddy/src/constants/sizes.dart';
-import 'package:studybuddy/src/constants/text_strings.dart';
-import 'package:studybuddy/src/features/authentication/controllers/onboarding_controller.dart';
-import 'package:studybuddy/src/features/authentication/models/model_onboarding.dart';
 
-import 'onboarding_page_widget.dart';
+import 'package:studybuddy/src/constants/colors.dart';
+import 'package:studybuddy/src/features/authentication/controllers/onboarding_controller.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +31,7 @@ class OnBoardingScreen extends StatelessWidget {
               OutlinedButton(
                 onPressed: () => obController.animateToNextSlide(),
                 style: ElevatedButton.styleFrom(
-                  side: const BorderSide(color: sTertiaryColor),
+                  side: const BorderSide(color: sSecondaryColor),
                   foregroundColor: sPrimaryColor,
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(20),

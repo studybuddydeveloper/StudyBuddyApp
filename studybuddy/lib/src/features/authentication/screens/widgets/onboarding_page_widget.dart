@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:studybuddy/src/constants/colors.dart';
-import 'package:studybuddy/src/constants/image_strings.dart';
+
 import 'package:studybuddy/src/constants/sizes.dart';
-import 'package:studybuddy/src/constants/text_strings.dart';
 import 'package:studybuddy/src/features/authentication/models/model_onboarding.dart';
 
-
-
-import '../../models/model_onboarding.dart';class OnboardingPageWidget extends StatelessWidget {
+class OnboardingPageWidget extends StatelessWidget {
   const OnboardingPageWidget({
     super.key,
     required this.model,
