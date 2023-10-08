@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'package:studybuddy/src/constants/colors.dart';
 import 'package:studybuddy/src/features/authentication/controllers/onboarding_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/welcome_screens/welcome_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   OnBoardingScreen({Key? key}) : super(key: key);
@@ -51,7 +53,7 @@ class OnBoardingScreen extends StatelessWidget {
             right: 20,
             child:
             TextButton(
-              onPressed: () => obController.skip(),
+              onPressed: () => Get.offAll(() => const WelcomeScreen()),
               child: Text("Skip",
                 style: TextStyle(
                   color: Colors.grey,

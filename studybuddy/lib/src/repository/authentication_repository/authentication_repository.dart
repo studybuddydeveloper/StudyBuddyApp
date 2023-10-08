@@ -1,5 +1,6 @@
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -33,17 +34,11 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  //Method to register a new user by creating a new user with email and password
-  void registerUser(String email, String password, String fullName) async {
-    print("attempting to register user");
-
-    //  try {
-    //     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //       email: email,
-    //       password: password,
-    //     );
-    // // After successful registration, update the user's profile with their full name.
-    //     await userCredential.user.updateProfile(displayName: fullName);
+  /**
+   * Method to register a new user by creating a new user with email and password
+   */
+  void registerUser(String email, String schoolName, String fullName,
+                    String password, String confirmPassword, ) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -58,22 +53,9 @@ class AuthenticationRepository extends GetxController {
         'fullName': fullName,
         // Add other user data as needed.
       });
-      // User? user = userCredential.user;
-      // if (user != null){
-      // }
-      // //User? user = userCredential.user;
-      // //     if (user != null) {
-      // //       // Update the user's profile with their full name.
-      // //       await user.updateProfile(displayName: fullName);
-      // //
-      // //       // Save the full name to Firestore.
-      // //       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-      // //         'fullName': fullName,
-      // //         // Add other user data as needed.
-      // //       });
-
-      firebaseUser.value != null ? Get.offAll(() => const LandingPage())
-          : Get.offAll(() => const WelcomeScreen());
+      //This checks if the user is null, if not, go to the landing page
+      firebaseUser.value != null ? Get.offAll(() => const MainScreen())
+          : Get.offAll(() => OnBoardingScreen());
       print("attempting to register user");
     }  on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
@@ -90,6 +72,10 @@ class AuthenticationRepository extends GetxController {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // Login successful, navigate to the next screen (e.g., the main screen).
+      firebaseUser.value != null ? Get.offAll(() => const MainScreen())
+          : Get.offAll(() => const WelcomeScreen());
+      // Get.offAll(WelcomeScreen()); // Replace NextScreen() with the name of your main screen widget.
     }
     catch (_) {}
   }

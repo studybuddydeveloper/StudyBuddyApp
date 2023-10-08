@@ -33,27 +33,6 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SignUpFormWidget(),
                 SizedBox(height: sFormHeight - 10),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Get.to(() => OnBoardingScreen()),
-                    child: Text(sSignupText.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: isDarkMode ? Colors.black : Colors.white,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  )
-                ),
-                SizedBox(
-                  height: 15,
-                ),
                 Column(
                   children: [
                     const Text("OR"),
