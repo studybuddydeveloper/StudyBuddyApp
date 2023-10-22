@@ -22,8 +22,6 @@ class SignUpEmailAndPasswordFailure {
       default:
         return const SignUpEmailAndPasswordFailure();
     }
-
-
   }
 
   @override

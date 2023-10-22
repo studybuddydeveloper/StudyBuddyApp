@@ -16,9 +16,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   //initializes firebase for the specific platform that the app is being run on
   //aka entry point for accessing firebase
-  // Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-  // //then we initialize the authentication repository
-  //     .then((value) => Get.put(AuthenticationRepository()));
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  //then we initialize the authentication repository
+      .then((value) => Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: SAppTheme.lightTheme,
       darkTheme: SAppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: OnBoardingScreen(),
+      home: SplashScreen(),
     );
   }
 }

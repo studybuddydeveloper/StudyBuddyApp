@@ -10,13 +10,12 @@ class SignUpFormWidget extends StatelessWidget {
   const SignUpFormWidget({
     super.key,
   });
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
 
     final controller = Get.put(SignUpController());
-    final _formKey = GlobalKey<FormState>();
-
     bool sPasswordsMatch = true;
     bool sIsValidPassword = true;
     bool sisSchoolNameMissing = false;
@@ -42,7 +41,8 @@ class SignUpFormWidget extends StatelessWidget {
             TextFormField(
               validator: (value) {
                 // if (_formKey.currentState!.validate()) {
-                  if (value!.isEmpty || value!.contains(" ")) {
+                print(value);
+                  if (value!.isEmpty || !value.contains(" ")) {
                     setState(() {
                       sisFullNameMissing = true;
                     });
@@ -124,14 +124,15 @@ class SignUpFormWidget extends StatelessWidget {
                   if (value!.isEmpty) {
                     return 'Please enter a password';
                   }
-                  if (value.length < 6) {
-                    // Set the _passwordsMatch variable to false if password length is less than 6
-                    sIsValidPassword = false;
-                    return 'Password must be at least 6 characters long';
-                  } else {
+                  // print(value.length);
+                  // if (value.length < 6) {
+                  //   // Set the _passwordsMatch variable to false if password length is less than 6
+                  //   sIsValidPassword = false;
+                  //   return 'Password must be at least 6 characters long';
+                  // } else {
                     // Reset the _passwordsMatch variable if password length is valid
-                    sIsValidPassword = true;
-                  }
+                  sIsValidPassword = true;
+                  // }
                   return null;
                 // }
               },
