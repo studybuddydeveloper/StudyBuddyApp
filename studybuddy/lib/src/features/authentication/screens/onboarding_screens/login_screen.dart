@@ -66,23 +66,23 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: sSecondaryColor,
-                  ),
-                  onPressed: () => Get.to(() => MainScreen()),
-                  child: Text(
-                      sLoginText.toUpperCase(),
-                      style: TextStyle(
-                        color: sPrimaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      )
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: sSecondaryColor,
+              //     ),
+              //     onPressed: () => Get.to(() => MainScreen()),
+              //     child: Text(
+              //         sLoginText.toUpperCase(),
+              //         style: TextStyle(
+              //           color: sPrimaryColor,
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.bold,
+              //         )
+              //     ),
+              //   ),
+              // ),
 
               SizedBox(
                 height: 15,
