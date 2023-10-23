@@ -5,7 +5,6 @@ import 'package:studybuddy/src/repository/authentication_repository/sign_up_emai
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
-import '../../features/authentication/screens/welcome_screens/landing_page.dart';
 import '../../features/authentication/screens/welcome_screens/welcome_screen.dart';
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -34,9 +33,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  /**
-   * Method to register a new user by creating a new user with email and password
-   */
+  /// Method to register a new user by creating a new user with email and password
   void registerUser(String email, String schoolName, String fullName,
                     String password, String confirmPassword, ) async {
     try {
@@ -55,7 +52,7 @@ class AuthenticationRepository extends GetxController {
       });
       //This checks if the user is null, if not, go to the landing page
       firebaseUser.value != null ? Get.offAll(() => const MainScreen())
-          : Get.offAll(() => OnBoardingScreen());
+          : Get.offAll(() => const OnBoardingScreen());
       print("attempting to register user");
     }  on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);

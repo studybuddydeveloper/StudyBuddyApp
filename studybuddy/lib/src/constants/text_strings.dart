@@ -39,7 +39,7 @@ const String uProfileDescription = 'Description';
 //This is for subject tags
 // -- Profile Screen -- ListView
 ListView SubjectsOfInterest = ListView(
-  children: [
+  children: const [
     Text('Subjects of Interest'),
     Text('Subject 1'),
     Text('Subject 2'),
@@ -57,7 +57,7 @@ ListView SubjectsOfInterest = ListView(
 // -- Profile Screen -- Table
 //Might be taking out this is for the user time availability
 Table ProfileTable = Table(
-  children: [
+  children: const [
     TableRow(
       children: [
         Text(uProfileName),

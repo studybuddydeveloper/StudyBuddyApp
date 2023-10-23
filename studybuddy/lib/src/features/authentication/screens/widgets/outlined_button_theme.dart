@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 
 /* -- Light and Dark Outlined Button Theme -- */
@@ -15,8 +14,8 @@ class SOutlinedButtonTheme {
       ),
       foregroundColor: Colors.black,
       backgroundColor: Colors.white,
-      side: BorderSide(color: Colors.black),
-      padding: EdgeInsets.symmetric(vertical: sButtonHeight),
+      side: const BorderSide(color: Colors.black),
+      padding: const EdgeInsets.symmetric(vertical: sButtonHeight),
     ),
   );
 
@@ -28,8 +27,8 @@ class SOutlinedButtonTheme {
       ),
       foregroundColor: Colors.white,
       backgroundColor: Colors.black,
-      side: BorderSide(color: Colors.white),
-      padding: EdgeInsets.symmetric(vertical: sButtonHeight),
+      side: const BorderSide(color: Colors.white),
+      padding: const EdgeInsets.symmetric(vertical: sButtonHeight),
     ),
   );
 

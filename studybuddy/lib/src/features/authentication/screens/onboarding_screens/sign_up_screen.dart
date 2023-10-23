@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import 'package:studybuddy/src/constants/sizes.dart';
-import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/form_header_widget.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
@@ -27,34 +25,34 @@ class SignUpScreen extends StatelessWidget {
             padding: const EdgeInsets.all(40),
             child: Column(
               children: [
-                FormHeaderWidget(
+                const FormHeaderWidget(
                     sWelcomeTitle: sWelcomeTitle,
                     sWelcomeSubtitle: sWelcomeSubtitle
                 ),
-                SignUpFormWidget(),
-                SizedBox(height: sFormHeight - 10),
+                const SignUpFormWidget(),
+                const SizedBox(height: sFormHeight - 10),
                 Column(
                   children: [
                     const Text("OR"),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton.icon(
                           onPressed: (){},
-                          icon: Image(image: AssetImage(
+                          icon: const Image(image: AssetImage(
                             sGoogleLogo),
                             width: 20,
                           ),
-                          label: Text(
+                          label: const Text(
                               sLoginWithGoogle,
 
                           )
                       ),
                     ),
                     TextButton(
-                        onPressed: () => Get.to(() => LoginScreen()),
+                        onPressed: () => Get.to(() => const LoginScreen()),
                         child: Text.rich(
                           TextSpan(
                             children: [

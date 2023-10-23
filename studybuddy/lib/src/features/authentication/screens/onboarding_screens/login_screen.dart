@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:studybuddy/src/constants/colors.dart';
 import 'package:studybuddy/src/constants/text_strings.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/main_screen.dart';
@@ -9,7 +8,6 @@ import 'package:studybuddy/src/features/authentication/screens/widgets/form_head
 import 'package:studybuddy/src/features/authentication/screens/widgets/login_form_widget.dart';
 
 import '../../../../constants/image_strings.dart';
-import '../../../../constants/sizes.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -31,12 +29,12 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
 
@@ -48,7 +46,7 @@ class LoginScreen extends StatelessWidget {
 
               /* -- Login FormText Fields -- */
               const LoginForm(),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
 
@@ -63,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               SizedBox(
@@ -72,10 +70,10 @@ class LoginScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: sSecondaryColor,
                   ),
-                  onPressed: () => Get.to(() => MainScreen()),
+                  onPressed: () => Get.to(() => const MainScreen()),
                   child: Text(
                       sLoginText.toUpperCase(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: sPrimaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -84,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Align(
@@ -94,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               SizedBox(
@@ -102,18 +100,18 @@ class LoginScreen extends StatelessWidget {
                   child: OutlinedButton.icon(
                         style: OutlinedButton.styleFrom(
                           backgroundColor: sPrimaryColor,
-                          side: BorderSide(
+                          side: const BorderSide(
                             color: sSecondaryColor,
                           ),
                           foregroundColor: sSecondaryColor,
                         ),
                         onPressed: () {},
                         //TODO switch to google image
-                        icon: Image(image: AssetImage(sGoogleLogo), width: 20),
+                        icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
                         label: Text(
                             sLoginWithGoogle.toUpperCase(),
                             /*todo set this to a const value*/
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: sSecondaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -121,13 +119,13 @@ class LoginScreen extends StatelessWidget {
                         ),
                     ),
                   ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Align(
                 alignment: Alignment.center,
                 child: TextButton(
-                    onPressed: () => Get.to(() => SignUpScreen()),
+                    onPressed: () => Get.to(() => const SignUpScreen()),
                     child: const Text.rich(
                       TextSpan(
                         style: TextStyle(

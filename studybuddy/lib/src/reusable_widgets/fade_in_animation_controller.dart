@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../features/authentication/screens/welcome_screens/welcome_screen.dart';

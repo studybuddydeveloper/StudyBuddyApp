@@ -21,19 +21,19 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return  Form(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: sEmail,
                 hintText: sEmailHint,
                 prefixIcon: Icon(Icons.person_2_outlined),
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           TextFormField(
@@ -43,10 +43,10 @@ class _LoginFormState extends State<LoginForm> {
                   onPressed: () {
                     toggleIconVisibility();
                   },
-                  icon: isIconVisible ? Icon(Icons.visibility_off_outlined)
-                      : Icon(Icons.visibility),
+                  icon: isIconVisible ? const Icon(Icons.visibility_off_outlined)
+                      : const Icon(Icons.visibility),
                 ),
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 hintText: sPassword
             ),
           ),

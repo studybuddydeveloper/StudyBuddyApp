@@ -4,7 +4,7 @@ import '../../../constants/colors.dart';
 
 class STextFieldTheme {
 
-  static final lightInputDecorationTheme = InputDecorationTheme(
+  static const lightInputDecorationTheme = InputDecorationTheme(
       prefixIconColor: sSecondaryColor,
       border: OutlineInputBorder(),
       //todo will update this later
@@ -20,7 +20,7 @@ class STextFieldTheme {
       ),
     );
 
-  static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
+  static InputDecorationTheme darkInputDecorationTheme = const InputDecorationTheme(
     prefixIconColor: sPrimaryColor,
     border: OutlineInputBorder(),
     //todo will update this later

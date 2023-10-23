@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studybuddy/src/constants/text_strings.dart';
 
 class FormHeaderWidget extends StatelessWidget {
   const FormHeaderWidget({
@@ -19,7 +18,7 @@ class FormHeaderWidget extends StatelessWidget {
         Text(
           sWelcomeTitle, style: Theme.of(context).textTheme.displayMedium
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
         Text(

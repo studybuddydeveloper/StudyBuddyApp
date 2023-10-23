@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
@@ -15,7 +14,7 @@ class SignUpFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final controller = Get.put(SignUpController());
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
     bool sPasswordsMatch = true;
     bool sIsValidPassword = true;
@@ -33,16 +32,16 @@ class SignUpFormWidget extends StatelessWidget {
 
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: sFormHeight - 10),
+      padding: const EdgeInsets.symmetric(vertical: sFormHeight - 10),
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
               validator: (value) {
                 // if (_formKey.currentState!.validate()) {
-                  if (value!.isEmpty || value!.contains(" ")) {
+                  if (value!.isEmpty || value.contains(" ")) {
                     setState(() {
                       sisFullNameMissing = true;
                     });
@@ -53,8 +52,8 @@ class SignUpFormWidget extends StatelessWidget {
               },
               controller: controller.fullName,
               decoration: InputDecoration(
-                label: Text(sFullName),
-                prefixIcon: Icon(Icons.person),
+                label: const Text(sFullName),
+                prefixIcon: const Icon(Icons.person),
                 errorText: sisFullNameMissing ? 'Please enter your full name' : null,
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -64,19 +63,19 @@ class SignUpFormWidget extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: sFormHeight - 20,),
+            const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty || value!.contains(" ")) {
+                if (value!.isEmpty || value.contains(" ")) {
                   return 'Please enter your full school name';
                 }
                 return null;
               },
                 controller: controller.schoolName,
                 decoration: InputDecoration(
-                  label: Text(sSchoolName),
-                  prefixIcon: Icon(Icons.school),
+                  label: const Text(sSchoolName),
+                  prefixIcon: const Icon(Icons.school),
                   errorText: sisSchoolNameMissing ? 'Please enter your full school name' : null,
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -90,7 +89,7 @@ class SignUpFormWidget extends StatelessWidget {
                 )
             ),
 
-            SizedBox(height: sFormHeight - 20,),
+            const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
               validator: (value) {
@@ -101,8 +100,8 @@ class SignUpFormWidget extends StatelessWidget {
               },
               controller: controller.email,
               decoration: InputDecoration(
-                label: Text(sEmail),
-                prefixIcon: Icon(Icons.email_rounded),
+                label: const Text(sEmail),
+                prefixIcon: const Icon(Icons.email_rounded),
                 errorBorder: OutlineInputBorder(
                  borderSide: BorderSide(
                     color: sIsValidEmail ? Colors.red: Colors.black),
@@ -115,7 +114,7 @@ class SignUpFormWidget extends StatelessWidget {
                     'address ending with ".edu"',
               ),
             ),
-            SizedBox(height: sFormHeight - 20,),
+            const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
 
@@ -137,8 +136,8 @@ class SignUpFormWidget extends StatelessWidget {
               },
               controller: controller.password,
               decoration: InputDecoration(
-                label: Text(sPassword),
-                prefixIcon: Icon(Icons.remove_red_eye),
+                label: const Text(sPassword),
+                prefixIcon: const Icon(Icons.remove_red_eye),
                 errorText: sisPasswordMissing ? 'Please enter a password' : null,
                 // Change the border color if the password length is invalid
                 border: OutlineInputBorder(
@@ -149,7 +148,7 @@ class SignUpFormWidget extends StatelessWidget {
               ),
 
             ),
-            SizedBox(height: sFormHeight - 20,),
+            const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
               validator: (value) {
@@ -163,18 +162,18 @@ class SignUpFormWidget extends StatelessWidget {
                 },
               controller: controller.confirmPassword,
               decoration: InputDecoration(
-                label: Text(sConfirmPassword),
+                label: const Text(sConfirmPassword),
                 errorText: sPasswordsMatch ? null : "Passwords don't match",
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: sPasswordsMatch ? Colors.black : Colors.red),
                 ),
-                focusedErrorBorder: OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red), // Focused error border color
                 ),
               ),
             ),
-            SizedBox(height: sFormHeight - 20,),
+            const SizedBox(height: sFormHeight - 20,),
 
             SizedBox(
               width: double.infinity,
@@ -186,7 +185,7 @@ class SignUpFormWidget extends StatelessWidget {
                     textStyle: Theme.of(context).textTheme.displayMedium
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (formKey.currentState!.validate()) {
                     SignUpController.instance.registerUser(
                         controller.email.text,
                         controller.fullName.text,

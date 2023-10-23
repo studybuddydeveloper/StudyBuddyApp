@@ -29,7 +29,7 @@ class OnboardingPageWidget extends StatelessWidget {
               children: [
                 //TODO add const for default font styling
                 Text(model.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
@@ -40,12 +40,12 @@ class OnboardingPageWidget extends StatelessWidget {
               ],
             ),
             Text(model.counterText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 50.0,),
+            const SizedBox(height: 50.0,),
           ],
         )
     );

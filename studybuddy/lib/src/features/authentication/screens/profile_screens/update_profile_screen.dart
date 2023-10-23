@@ -5,9 +5,9 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(child: Column(
-        children: const [
+        children: [
           Text("This is the update profile screen")
         ],
       )),
