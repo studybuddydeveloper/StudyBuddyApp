@@ -68,7 +68,7 @@ class SignUpFormWidget extends StatelessWidget {
 
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty || value!.contains(" ")) {
+                if (value!.isEmpty) {
                   return 'Please enter your full school name';
                 }
                 return null;

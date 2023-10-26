@@ -16,8 +16,9 @@ class FadeInAnimationController extends GetxController{
     animate.value = true;
     await Future.delayed(const Duration(milliseconds: 4200));
     animate.value = false;
-    await Future.delayed(const Duration(milliseconds: 3600));
+    await Future.delayed(const Duration(milliseconds: 500));
     //destroys the current splash screen and replaces it with the welcome screen
+    Get.offAll(() => WelcomeScreen());
   }
 
   Future startAnimation() async {
