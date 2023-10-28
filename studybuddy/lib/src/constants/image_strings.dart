@@ -11,3 +11,5 @@ const String sWelcomeScreenImage = 'assets/images/welcome_images/welcome-image.p
 
 /* -- Misc -- */
 const String sGoogleLogo = 'assets/logos/google_logo_image.jpg';
+
+//Define forgot password screen image

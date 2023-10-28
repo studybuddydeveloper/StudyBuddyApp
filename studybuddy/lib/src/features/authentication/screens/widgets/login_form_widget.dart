@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:studybuddy/src/constants/sizes.dart';
 import 'package:studybuddy/src/features/authentication/controllers/login_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/widgets/forget_password_model_bottom_sheet.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/text_strings.dart';
+import '../forgot_password_screens/forgot_password_options/forgot_password_button_widget.dart';
 import '../main_screens/main_screen.dart';
 
 class LoginForm extends StatefulWidget {
@@ -79,6 +82,25 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 height: 10,
               ),
+
+              //FORGOT PASSWORD BTN
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    ForgotPasswordScreen.buildShowModalBottomSheet(context);
+                  },
+                  child: Text(
+                    sForgotPassword,
+                    style: TextStyle(
+                      color: sSecondaryColor,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+
+              //LOGIN BTN
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -107,6 +129,7 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+
   Future<User?> loginWithEmailAndPassword(String email, String password) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     User? firebaseUser;
@@ -124,3 +147,5 @@ class _LoginFormState extends State<LoginForm> {
     return firebaseUser;
   }
 }
+
+

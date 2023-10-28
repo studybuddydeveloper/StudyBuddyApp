@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 const String sLoginText = 'Login';
 const String sSignupText = 'SignUp';
 const String sEmail = 'Email';
+const String sPhone = 'Phone';
+const String sNext = 'Next';
 const String sEmailHint = 'Enter your email';
 const String sPassword = 'Password';
 const String sConfirmPassword = 'Confirm Password';
@@ -82,3 +84,15 @@ const String sSignUpTitle = 'Sign Up';
 const String sSignUpSubtitle = 'Create an account to get started';
 const String sFullName = 'Full Name';
 
+// -- Forgot Password Screen -- Text
+const String sForgotPasswordTitle = 'Forgot Password';
+const String sForgotPasswordSubtitle =
+    'Enter your email and we will send you a link to reset your password';
+const String sResetViaEmail = 'Reset via Email';
+const String sResetViaPhone = 'Reset via Phone';
+
+// -- Forgot Password via Phone Screen -- Text
+const String sForgotPasswordViaPhoneTitle = 'Enter your phone number to receive OTP';
+
+// -- Forgot Password via Email Screen -- Text
+const String sForgotPasswordViaEmailTitle = 'Enter your email to receive OTP';
