@@ -12,11 +12,12 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
 
-void main() async {
+Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   //initializes firebase for the specific platform that the app is being run on
   //aka entry point for accessing firebase
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
   //then we initialize the authentication repository
       .then((value) => Get.put(AuthenticationRepository()));
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
     );
   }
+
 }
 
 
