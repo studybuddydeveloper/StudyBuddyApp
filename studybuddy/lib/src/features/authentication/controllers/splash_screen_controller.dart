@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 
@@ -15,6 +14,6 @@ class SplashScreenController extends GetxController{
     animate.value = true;
     await Future.delayed(const Duration(milliseconds: 2000));
     //destroys the current splash screen and replaces it with the welcome screen
-    Get.to(WelcomeScreen());
+    Get.to(const WelcomeScreen());
   }
 }

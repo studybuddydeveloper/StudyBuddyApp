@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/sign_up_controller.dart';
-import '../main_screen.dart';
+
+// import '../main_screen.dart';
+import '../profile/profile_screen.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -14,7 +16,6 @@ class SignupForm extends StatefulWidget {
 }
 
 class _SignupFormState extends State<SignupForm> {
-
   //_ represents private variables
   final bool _isFullName = false;
   final bool _isInValidEmailFormat = false;
@@ -70,10 +71,8 @@ class _SignupFormState extends State<SignupForm> {
     }
   }
 
-
   //Checks if the user has entered a valid .edu email
   void validateEmail(String inputEmail) {
-
     // Debounce the email validation to wait for user input to settle
     _debounce.cancel(); // Cancel the previous timer if it exists
     isEduEmail(_emailaddress);
@@ -138,9 +137,12 @@ class _SignupFormState extends State<SignupForm> {
               },
               scrollController: ScrollController(),
               decoration: InputDecoration(
-                  labelText: 'Email',
-                  errorText: _isInValidEmailFormat ? 'Invalid email format'
-                      : _isInvalidEduEmail ? 'Must be a .edu email' : null,
+                labelText: 'Email',
+                errorText: _isInValidEmailFormat
+                    ? 'Invalid email format'
+                    : _isInvalidEduEmail
+                        ? 'Must be a .edu email'
+                        : null,
               ),
               textCapitalization: TextCapitalization.none,
               textDirection: TextDirection.ltr,
@@ -164,10 +166,11 @@ class _SignupFormState extends State<SignupForm> {
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  SignUpController.instance.registerUser(controller.email.text.trim(),
+                  SignUpController.instance.registerUser(
+                      controller.email.text.trim(),
                       controller.password.text.trim(),
                       controller.fullName.text.trim());
-                  Get.to(() => const MainScreen());
+                  Get.to(() => const ProfileScreen());
                 }
               },
               child: const Text('Sign Up'),

@@ -1,7 +1,7 @@
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:studybuddy/src/features/authentication/screens/landing_page.dart';
-import 'package:studybuddy/src/features/authentication/screens/main_screen.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../features/authentication/screens/welcome_screen.dart';
@@ -28,7 +28,7 @@ class AuthenticationRepository extends GetxController {
     if (user == null) {
       Get.offAll(() => const WelcomeScreen());
     } else {
-      Get.offAll(() => const MainScreen());
+      Get.offAll(() => const ProfileScreen());
     }
   }
 

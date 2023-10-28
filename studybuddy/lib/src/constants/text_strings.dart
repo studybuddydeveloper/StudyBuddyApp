@@ -8,8 +8,7 @@ const String sOnboardingSubtitle1 =
     'Study Buddy is a platform for students to find other students to study with.';
 const String sOnboardingSubtitle2 =
     'Find a study buddy that is studying the same subject as you.';
-const String sOnboardingSubtitle3 =
-    'Study together with your study buddy.';
+const String sOnboardingSubtitle3 = 'Study together with your study buddy.';
 const String sOnboardingCounter1 = '1/3';
 const String sOnboardingCounter2 = '2/3';
 const String sOnboardingCounter3 = '3/3';
@@ -18,14 +17,16 @@ const String sOnboardingCounter3 = '3/3';
 const String uProfile = 'Profile';
 const String uEditProfile = 'Edit Profile';
 const String uLogOutProfile = 'Log Out';
-const String uProfileName = 'Username';
-const String uProfileEmail = 'Email';
-const String uProfileDescription = 'Description';
+const String uProfileName = 'Cynella'; //change this later
+const String uProfileEmail = 'studybuddy@gmail.com'; //change this later
+const String uProfileDescription = uAboutMeContent;
+const String uAboutMeContent =
+    " I am currently a Junior at UPENN studying Computer Science. I love listening to AfroBeats and hiking. Lets study together!!";
 
 //This is for subject tags
 // -- Profile Screen -- ListView
 ListView SubjectsOfInterest = ListView(
-  children: [
+  children: const [
     Text('Subjects of Interest'),
     Text('Subject 1'),
     Text('Subject 2'),
@@ -43,7 +44,7 @@ ListView SubjectsOfInterest = ListView(
 // -- Profile Screen -- Table
 //Might be taking out this is for the user time availability
 Table ProfileTable = Table(
-  children: [
+  children: const [
     TableRow(
       children: [
         Text(uProfileName),

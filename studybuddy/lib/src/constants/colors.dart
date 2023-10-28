@@ -12,5 +12,5 @@ const BlackColor = Color(0xFF000000);
 
 // -- ON-BOARDING COLORS -- //
 const sPage1OnboardingColor = Color(0xFFFFFFFF);
-const sPage2OnboardingColor = Color(0xFFFFDDCDF);
+const sPage2OnboardingColor = Color(0xffffddcdf);
 const sPage3OnboardingColor = Color(0xFFFFDCBD);
