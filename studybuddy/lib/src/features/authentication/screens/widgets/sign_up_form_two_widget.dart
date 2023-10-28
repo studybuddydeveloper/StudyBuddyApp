@@ -195,7 +195,6 @@ class SignUpFormWidget extends StatelessWidget {
                         controller.password.text,
                         controller.confirmPassword.text);
                   }
-
                 },
                 child: Text(sSignupText.toUpperCase())
                 ),

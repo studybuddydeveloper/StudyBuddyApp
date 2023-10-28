@@ -5,15 +5,14 @@ import 'package:studybuddy/src/repository/authentication_repository/authenticati
 class LoginController extends GetxController{
 
     static LoginController get instance => Get.find();
-
     //Textfiled Controllers to retrieve landing details from user
     final email = TextEditingController();
     final password = TextEditingController();
-
     //Login user method to be called in the WelcomeScreen
-    void loginUser(String email, String password) {
+    bool loginUser(String email, String password) {
       //perform authentication here for a new user
-      AuthenticationRepository.instance.loginWithEmailAndPassword(email,
-          password);
+        final bool isLoginValid = AuthenticationRepository.instance.loginWithEmailAndPassword(email,
+          password) as bool;
+        return isLoginValid;
     }
 }

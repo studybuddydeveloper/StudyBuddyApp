@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
-import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
+import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
+import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
@@ -12,6 +14,8 @@ class AuthenticationRepository extends GetxController {
 
   //Defining firebase variables here
   final _auth = FirebaseAuth.instance;
+
+  late var isLoginValid = true;
 
   @override
   void onReady() {
@@ -69,15 +73,27 @@ class AuthenticationRepository extends GetxController {
   }
 
   //Method to login a user with email and password
-  Future<void> loginWithEmailAndPassword(String email, String password) async {
+  Future<bool?> loginWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       // Login successful, navigate to the next screen (e.g., the main screen).
-      firebaseUser.value != null ? Get.offAll(() => const MainScreen())
-          : Get.offAll(() => const WelcomeScreen());
+      if (firebaseUser.value != null) {
+        Get.offAll(() => const MainScreen());
+      } else {
+        isLoginValid = false;
+      }
       // Get.offAll(WelcomeScreen()); // Replace NextScreen() with the name of your main screen widget.
+    } on FirebaseAuthException catch (e) {
+      final ex = LoginEmailAndPasswordFailure.code(e.code);
+      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
+      throw ex;
     }
-    catch (_) {}
+    catch (_) {
+      final ex = LoginEmailAndPasswordFailure();
+      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
+      throw ex;
+    }
+    return isLoginValid;
   }
 
   Future<void> logout() async => await _auth.signOut();
