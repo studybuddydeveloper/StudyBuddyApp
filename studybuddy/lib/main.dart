@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       darkTheme: SAppTheme.darkTheme,
       themeMode: ThemeMode.system,
       //page transitions
-      defaultTransition: Transition.leftToRightWithFade,
+      defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
       home: SplashScreen(),
     );

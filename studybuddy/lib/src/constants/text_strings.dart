@@ -96,3 +96,9 @@ const String sForgotPasswordViaPhoneTitle = 'Enter your phone number to receive 
 
 // -- Forgot Password via Email Screen -- Text
 const String sForgotPasswordViaEmailTitle = 'Enter your email to receive OTP';
+
+// -- OTP Screen -- Text
+const String sOtpTitle = 'Enter OTP';
+const String sOtpSubtitle = 'Verification';
+const String sOtpMessage = 'Enter the OTP sent to your email';
+const String sResendOtp = 'Resend OTP';
