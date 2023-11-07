@@ -43,26 +43,26 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton.icon(
-                          onPressed: () async {
-                          User? user = await signInWithGoogle();
-                          if (user != null) {
-    // Successfully signed in with Google, do something with the user.
-                            print("Signed in with Google: ${user.displayName}");
-                          } else {
-    // Handle sign-in failure
-                          print("Google Sign-In failed.");
-                          }
-                          },
-                          icon: Image(image: AssetImage(
-                            sGoogleLogo),
-                            width: 20,
-                          ),
-                          label: Text(
-                              sLoginWithGoogle,
-
-                          )
-                      ),
+    //                   child: OutlinedButton.icon(
+    // //                       onPressed: () async {
+    // //                       // User? user = await signInWithGoogle();
+    // //                       if (user != null) {
+    // // // Successfully signed in with Google, do something with the user.
+    // //                         print("Signed in with Google: ${user.displayName}");
+    // //                       } else {
+    // // // Handle sign-in failure
+    // //                       print("Google Sign-In failed.");
+    // //                       }
+    // //                       },
+    //                       icon: Image(image: AssetImage(
+    //                         sGoogleLogo),
+    //                         width: 20,
+    //                       ),
+    //                       label: Text(
+    //                           sLoginWithGoogle,
+    //
+    //                       )
+    //                   ),
                     ),
                     TextButton(
                         onPressed: () => Get.to(() => LoginScreen()),

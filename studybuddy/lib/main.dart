@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/login_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
@@ -14,12 +15,12 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   //initializes firebase for the specific platform that the app is being run on
   //aka entry point for accessing firebase
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-  //then we initialize the authentication repository
+  // //then we initialize the authentication repository
       .then((value) => Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:studybuddy/src/features/authentication/screens/email_verification_screens/email_verification.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
@@ -59,8 +60,7 @@ class AuthenticationRepository extends GetxController {
         // Add other user data as needed.
       });
       //This checks if the user is null, if not, go to the landing page
-      firebaseUser.value != null ? Get.offAll(() => const MainScreen())
-          : Get.offAll(() => OnBoardingScreen());
+      Get.offAll(() => OnBoardingScreen());
       print("attempting to register user");
     }  on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
@@ -120,6 +120,19 @@ class AuthenticationRepository extends GetxController {
       print("Error signing in with Google: $e");
       return null;
     }
+  }
+
+  Future<void> sendEmailVerification() async {
+    try {
+      await _auth.currentUser!.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      final ex = LoginEmailAndPasswordFailure.code(e.code);
+      throw ex.message;
+    } catch (_) {
+      final ex = LoginEmailAndPasswordFailure();
+      throw ex.message;
+    }
+
   }
 
 

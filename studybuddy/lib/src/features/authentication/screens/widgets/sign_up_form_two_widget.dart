@@ -22,6 +22,7 @@ class SignUpFormWidget extends StatelessWidget {
     bool sisFullNameMissing = false;
     bool sIsValidEmail = true;
     bool sisPasswordMissing = false;
+    bool _obscureText = true;
     // TODO: add validation for email
     String? _validateEmail(String value) {
       if (!value.endsWith('.edu')) {
@@ -124,17 +125,8 @@ class SignUpFormWidget extends StatelessWidget {
                   if (value!.isEmpty) {
                     return 'Please enter a password';
                   }
-                  // print(value.length);
-                  // if (value.length < 6) {
-                  //   // Set the _passwordsMatch variable to false if password length is less than 6
-                  //   sIsValidPassword = false;
-                  //   return 'Password must be at least 6 characters long';
-                  // } else {
-                    // Reset the _passwordsMatch variable if password length is valid
                   sIsValidPassword = true;
-                  // }
                   return null;
-                // }
               },
               controller: controller.password,
               decoration: InputDecoration(
@@ -153,23 +145,32 @@ class SignUpFormWidget extends StatelessWidget {
             SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
+              obscureText: _obscureText,
               validator: (value) {
-                // if (_formKey.currentState!.validate()){
                   if (value != controller.password.text) {
                     sPasswordsMatch = false;
                     return "Passwords don't match";
                   }
                   return null;
-                // };
                 },
               controller: controller.confirmPassword,
               decoration: InputDecoration(
+                hintText: 'Confirm Password',
+                prefixIcon: IconButton(
+                  icon: Icon( _obscureText ? Icons.remove_red_eye: Icons.visibility_off),
+                  onPressed: () {
+                    // Toggle the password obscure state
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
                 label: Text(sConfirmPassword),
                 errorText: sPasswordsMatch ? null : "Passwords don't match",
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: sPasswordsMatch ? Colors.black : Colors.red),
-                ),
+                  ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red), // Focused error border color
                 ),

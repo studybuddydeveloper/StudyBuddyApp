@@ -15,6 +15,10 @@ const String sOr = 'Or';
 const String sLoginWithGoogle = 'Sign-in with Google';
 const String sDontHaveAnAccount = 'Don\'t have an account? ';
 const String sAlreadyHaveAnAccount = 'Already have an account? ';
+const String sOhSnap = "Unable to send verification email";
+const String sConfirmEmail = "Confirm your email";
+const String sContinueButton = "Continue";
+const String sResendEmail = "Resend Email";
 
 // -- Onboarding Screen Text --
 const String sOnboardingTitle1 = 'Welcome to Study Buddy';
