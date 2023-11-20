@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 30.0,
                       fontWeight: FontWeight.bold,
-                      color: isDarkMode ? sSecondaryColor : sPrimaryColor,
+                      color: sSecondaryColor,
                     ),
                     textAlign: TextAlign.center,
                 ),

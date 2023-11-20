@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studybuddy/src/features/authentication/screens/email_verification_screens/email_verification.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
@@ -98,42 +97,7 @@ class AuthenticationRepository extends GetxController {
 
   Future<void> logout() async => await _auth.signOut();
 
-  Future<User?> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    if (googleUser == null) {
-      // The user canceled the sign-in process
-      return null;
-    }
-
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    try {
-      UserCredential authResult = await FirebaseAuth.instance.signInWithCredential(credential);
-      return authResult.user;
-    } catch (e) {
-      // Handle sign-in error
-      print("Error signing in with Google: $e");
-      return null;
-    }
-  }
-
-  Future<void> sendEmailVerification() async {
-    try {
-      await _auth.currentUser!.sendEmailVerification();
-    } on FirebaseAuthException catch (e) {
-      final ex = LoginEmailAndPasswordFailure.code(e.code);
-      throw ex.message;
-    } catch (_) {
-      final ex = LoginEmailAndPasswordFailure();
-      throw ex.message;
-    }
-
-  }
 
 
 }
