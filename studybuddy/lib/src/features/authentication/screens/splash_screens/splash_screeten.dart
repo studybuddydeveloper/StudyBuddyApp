@@ -17,7 +17,6 @@ class SplashScreen extends StatelessWidget {
     final controller = Get.put(FadeInAnimationController());
     controller.startSplashAnimation();
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [

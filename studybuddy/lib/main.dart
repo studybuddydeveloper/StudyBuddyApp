@@ -14,12 +14,12 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  //initializes firebase for the specific platform that the app is being run on
-  //aka entry point for accessing firebase
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // //initializes firebase for the specific platform that the app is being run on
+  // //aka entry point for accessing firebase
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-  //then we initialize the authentication repository
+  // // //then we initialize the authentication repository
       .then((value) => Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       //page transitions
       defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
-      home: SplashScreen(),
+      home: WelcomeScreen(),
     );
   }
 
