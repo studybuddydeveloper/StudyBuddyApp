@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
             children: [
               TextFormField(
                 validator: (value) {
-                  if (value!.isEmpty || !value.contains(".edu")) {
+                  if (value!.isEmpty) {
                     return 'Please enter your full name';
                   }
                   return null;
@@ -109,8 +109,13 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                        controller.loginUser(
-                            controller.email.text, controller.password.text);
+                        loginWithEmailAndPassword(controller.email.text, controller.password.text).then((value) {
+                          if (value != null) {
+                            Get.to(() => MainScreen());
+                          } else {
+                            Get.snackbar('Error', 'Error logging in');
+                          }
+                        });
                     }
                   },
                   child: Text(
@@ -129,7 +134,6 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-
   Future<User?> loginWithEmailAndPassword(String email, String password) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     User? firebaseUser;
@@ -142,6 +146,8 @@ class _LoginFormState extends State<LoginForm> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print("No user found for that email");
+      } else if (e.code == 'wrong-password') {
+        print("Wrong password provided for that user");
       }
     }
     return firebaseUser;
