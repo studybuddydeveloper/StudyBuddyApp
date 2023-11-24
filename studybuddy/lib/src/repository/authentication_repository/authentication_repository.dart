@@ -56,6 +56,13 @@ class AuthenticationRepository extends GetxController {
         'fullName': fullName,
         // Add other user data as needed.
       });
+
+      User? user = FirebaseAuth.instance.currentUser;
+
+      //verify the user email
+      if (user!= null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      }
       //This checks if the user is null, if not, go to the landing page
       Get.offAll(() => const OnBoardingScreen());
       print("attempting to register user");
