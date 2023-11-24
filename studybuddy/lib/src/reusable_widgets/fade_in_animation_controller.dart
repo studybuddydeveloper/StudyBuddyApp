@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../features/authentication/screens/welcome_screens/welcome_screen.dart';
@@ -18,7 +17,7 @@ class FadeInAnimationController extends GetxController{
     animate.value = false;
     await Future.delayed(const Duration(milliseconds: 4200));
     //destroys the current splash screen and replaces it with the welcome screen
-    Get.offAll(() => WelcomeScreen());
+    Get.offAll(() => const WelcomeScreen());
   }
 
   Future startAnimation() async {

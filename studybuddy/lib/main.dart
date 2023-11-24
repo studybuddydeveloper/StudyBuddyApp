@@ -1,15 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/login_screen.dart';
-import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/splash_screens/splash_screeten.dart';
 
-import 'package:studybuddy/src/features/authentication/screens/welcome_screens/welcome_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 import 'firebase_options.dart';
 
@@ -18,7 +14,7 @@ Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // //initializes firebase for the specific platform that the app is being run on
   // //aka entry point for accessing firebase
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
   // // //then we initialize the authentication repository
       .then((value) => Get.put(AuthenticationRepository()));
@@ -39,7 +35,7 @@ class MyApp extends StatelessWidget {
       //page transitions
       defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
-      home: WelcomeScreen(),
+      home: const SplashScreen(),
     );
   }
 

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
-import '../onboarding_screens/login_screen.dart';
 
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({
@@ -24,11 +21,11 @@ class SuccessScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           //make padding sizes constants
-          padding: EdgeInsets.all(40),
+          padding: const EdgeInsets.all(40),
           child: Column(
             children: [
               ///Title
-              Text(
+              const Text(
                 "Your account has been created!",
                 style: TextStyle(
                   fontSize: sDefaultSize * 2,
@@ -39,7 +36,7 @@ class SuccessScreen extends StatelessWidget {
               const SizedBox(height: sDefaultSize * 2),
 
               ///Subtitle
-              Text(
+              const Text(
                 //todo takeout placeholder text
                 "studybuddydeveloper@gmail.com",
                 style: TextStyle(
@@ -50,7 +47,7 @@ class SuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: sDefaultSize * 2),
               ///Description
-              Text(
+              const Text(
                 //todo takeout placeholder text
                 "Congratulations...",
                 style: TextStyle(
@@ -63,7 +60,7 @@ class SuccessScreen extends StatelessWidget {
               ///Buttons
               SizedBox(width: double.infinity,
                 child: ElevatedButton(onPressed: onpressed, child:
-                Text(sContinueButton)),
+                const Text(sContinueButton)),
               ),
             ],
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:studybuddy/src/constants/text_strings.dart';
 
 class FormHeaderWidget extends StatelessWidget {
   const FormHeaderWidget({

@@ -1,15 +1,11 @@
-import 'package:flutter/material.dart';
 import  'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:studybuddy/src/features/authentication/screens/email_verification_screens/email_verification.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
-import '../../features/authentication/screens/welcome_screens/landing_page.dart';
-import '../../features/authentication/screens/welcome_screens/welcome_screen.dart';
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
@@ -23,25 +19,23 @@ class AuthenticationRepository extends GetxController {
     //checks the status of the current user
     firebaseUser = Rx(_auth.currentUser);
     //binds the stream to the user and listens to the user/what they're doing
-    ever(firebaseUser, _setInitialScreen);
+    // ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
   //so we can reference it anywhere in the app
   late final Rx<User?> firebaseUser;
   //Defining methods to be used in the controllers here
 
-  _setInitialScreen(User? user) {
-    //if user has been logged out and is null, go to welcome screen
-    if (user == null) {
-      Get.offAll(() => const WelcomeScreen());
-    } else {
-      Get.offAll(() => const MainScreen());
-    }
-  }
+  // _setInitialScreen(User? user) {
+  //   //if user has been logged out and is null, go to welcome screen
+  //   if (user == null) {
+  //     Get.offAll(() => const WelcomeScreen());
+  //   } else {
+  //     Get.offAll(() => const MainScreen());
+  //   }
+  // }
 
-  /**
-   * Method to register a new user by creating a new user with email and password
-   */
+  /// Method to register a new user by creating a new user with email and password
   void registerUser(String email, String schoolName, String fullName,
                     String password, String confirmPassword, ) async {
     try {
@@ -59,7 +53,7 @@ class AuthenticationRepository extends GetxController {
         // Add other user data as needed.
       });
       //This checks if the user is null, if not, go to the landing page
-      Get.offAll(() => OnBoardingScreen());
+      Get.offAll(() => const OnBoardingScreen());
       print("attempting to register user");
     }  on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
@@ -93,6 +87,7 @@ class AuthenticationRepository extends GetxController {
       print('FIREBASE AUTH EXCEPTION: ${ex.message}');
       throw ex;
     }
+    return null;
   }
 
   Future<void> logout() async => await _auth.signOut();

@@ -1,10 +1,7 @@
 
 import 'package:get/get.dart';
-import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 
-/**
- * Responsible for enablign email verification
- */
+/// Responsible for enablign email verification
 class MailVerificationController extends GetxController {
 
   // @override

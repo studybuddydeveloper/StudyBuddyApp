@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:studybuddy/src/constants/sizes.dart';
 import 'package:studybuddy/src/constants/text_strings.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/login_screen.dart';
-import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/success_screens/success_screen.dart';
 class EmailVerificationScreen extends StatelessWidget {
    const EmailVerificationScreen({Key? key}) : super(key: key);
@@ -20,14 +19,14 @@ class EmailVerificationScreen extends StatelessWidget {
           //  when the user presses the clear button, they are taken
           //  to the onboarding screen where they're shown how to navigate the app
           //  or should this be after logging in??
-          onPressed: () => Get.offAll(() => LoginScreen()),
-          icon: Icon(CupertinoIcons.clear)
+          onPressed: () => Get.offAll(() => const LoginScreen()),
+          icon: const Icon(CupertinoIcons.clear)
           )
         ],
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: EdgeInsets.all(sDefaultSize),
+            padding: const EdgeInsets.all(sDefaultSize),
             child: Column(
               children: [
                 ///Verify image here todo
@@ -35,9 +34,9 @@ class EmailVerificationScreen extends StatelessWidget {
                 //   image: AssetImage("assets/images/verify_email.png"),
                 //   width: sDefaultSize * 0.6,
                 // )
-                 SizedBox(height: sDefaultSize * 2),
+                 const SizedBox(height: sDefaultSize * 2),
                 ///Title
-                Text(
+                const Text(
                   sConfirmEmail,
                   style: TextStyle(
                     fontSize: sDefaultSize * 2,
@@ -48,7 +47,7 @@ class EmailVerificationScreen extends StatelessWidget {
                 const SizedBox(height: sDefaultSize * 2),
 
                 ///Subtitle
-                Text(
+                const Text(
                   //todo takeout placeholder text
                   "studybuddydeveloper@gmai.com",
                   style: TextStyle(
@@ -59,7 +58,7 @@ class EmailVerificationScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: sDefaultSize * 2),
                 ///Description
-                Text(
+                const Text(
                   //todo takeout placeholder text
                   "Congratulations...",
                   style: TextStyle(
@@ -75,14 +74,14 @@ class EmailVerificationScreen extends StatelessWidget {
                         image: 'helloo',
                         title: 'title',
                         subtitle: 'subtitle',
-                        onpressed: () => Get.to(() => LoginScreen()))
+                        onpressed: () => Get.to(() => const LoginScreen()))
                     ),
-                    child: Text(sContinueButton)),
+                    child: const Text(sContinueButton)),
                     ),
 
                 SizedBox(width: double.infinity,
                   child: TextButton(onPressed: (){}, child:
-                  Text(sResendEmail)),
+                  const Text(sResendEmail)),
                 )
 
               ],

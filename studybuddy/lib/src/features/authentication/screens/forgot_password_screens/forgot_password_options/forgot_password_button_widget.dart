@@ -36,7 +36,7 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
                 children: [
                   Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: sPrimaryColor,
                           fontSize: 15,
                           fontWeight: FontWeight.bold
@@ -45,7 +45,7 @@ class ForgetPasswordBtnWidget extends StatelessWidget {
                   ),
                   Text(
                       subtitle,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: sPrimaryColor,
                         fontSize: 15,
                       )

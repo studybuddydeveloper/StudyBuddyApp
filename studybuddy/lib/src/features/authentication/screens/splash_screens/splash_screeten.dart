@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:studybuddy/src/constants/sizes.dart';
 import 'package:studybuddy/src/reusable_widgets/fade_in_animation_model.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../reusable_widgets/fade_in_animation_widget.dart';
@@ -9,7 +8,7 @@ import '../../../../reusable_widgets/fade_in_animation_controller.dart';
 
 class SplashScreen extends StatelessWidget {
 
-  SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key}) : super(key: key);
 
 
   @override
@@ -29,7 +28,7 @@ class SplashScreen extends StatelessWidget {
                 leftBefore: -30,
                 leftAfter: 0,
               ),
-              child: Image(
+              child: const Image(
                 width: 450,
                 height: 300,
                 image: AssetImage(SSplashTopIcon),
@@ -46,7 +45,7 @@ class SplashScreen extends StatelessWidget {
                   leftBefore: -80,
                   leftAfter: 100,
                 ),
-                child: Column(
+                child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -74,7 +73,7 @@ class SplashScreen extends StatelessWidget {
                 child: AnimatedOpacity(
                   duration: const Duration(milliseconds: 2000),
                   opacity: controller.animate.value ? 1 : 0,
-                  child: Image(
+                  child: const Image(
                     width: 450,
                     height: 300,
                     image: AssetImage(SSplashImage),

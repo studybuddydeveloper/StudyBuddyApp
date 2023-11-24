@@ -14,20 +14,20 @@ class ForgetPasswordEmailScreen extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            padding:  EdgeInsets.all(sDefaultSize),
+            padding:  const EdgeInsets.all(sDefaultSize),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: sDefaultSize * 3,
                 ),
-                FormHeaderWidget(
+                const FormHeaderWidget(
                     //todo: add image'
                     crossAxisAlignment: CrossAxisAlignment.center,
                     heightBetween: sDefaultSize * 2,
                     textAlign: TextAlign.center,
                     sWelcomeTitle: sForgotPasswordTitle,
                     sWelcomeSubtitle: sForgotPasswordSubtitle),
-                SizedBox(
+                const SizedBox(
                   height: sDefaultSize * 2,
                 ),
                 Form(child: Column(
@@ -40,7 +40,7 @@ class ForgetPasswordEmailScreen extends StatelessWidget {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: sDefaultSize * 2,
                 ),
                     SizedBox(
@@ -50,7 +50,7 @@ class ForgetPasswordEmailScreen extends StatelessWidget {
                           Get.to(
                               () => const OTPScreen());
                         },
-                        child: Text(sNext),
+                        child: const Text(sNext),
                       ),
                     )
                   ]

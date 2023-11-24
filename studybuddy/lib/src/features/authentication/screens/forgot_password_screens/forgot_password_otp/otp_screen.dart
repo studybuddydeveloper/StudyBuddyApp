@@ -44,7 +44,7 @@ class OTPScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                }, child: Text(sNext)),
+                }, child: const Text(sNext)),
                 )
           ],
         ),

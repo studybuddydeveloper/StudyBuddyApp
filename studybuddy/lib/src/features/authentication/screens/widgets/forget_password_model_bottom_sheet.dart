@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
@@ -13,7 +12,7 @@ class ForgotPasswordScreen {
       context: context,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       builder: (context) => Container(
-          padding: EdgeInsets.all(sDefaultSize),
+          padding: const EdgeInsets.all(sDefaultSize),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -31,10 +30,10 @@ class ForgotPasswordScreen {
                 subtitle: sResetViaEmail,
                 onTap: (){
                   Navigator.pop(context);
-                  Get.to(()=>ForgetPasswordEmailScreen());
+                  Get.to(()=>const ForgetPasswordEmailScreen());
                 },
               ),
-              SizedBox(height: sDefaultSize,),
+              const SizedBox(height: sDefaultSize,),
               ForgetPasswordBtnWidget(
                 btnIcon: Icons.mobile_friendly_rounded,
                 title: sPhone,
