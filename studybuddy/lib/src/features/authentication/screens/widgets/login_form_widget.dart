@@ -131,6 +131,13 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  /**
+   * TODO
+   * Add a setstate method which will set the state of the textfields when wrong
+   * user details has been entered.
+   * Update the snackbar error message
+   *
+   */
   Future<User?> loginWithEmailAndPassword(String email, String password) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? firebaseUser;
