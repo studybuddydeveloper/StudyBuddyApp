@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 
+import '../../../../constants/colors.dart';
+import '../../../../constants/image_strings.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/sign_up_controller.dart';
+import '../main_screens/main_screen.dart';
 
 class SignUpFormWidget extends StatelessWidget {
   const SignUpFormWidget({
@@ -199,6 +203,40 @@ class SignUpFormWidget extends StatelessWidget {
                 child: Text(sSignupText.toUpperCase())
                 ),
               ),
+            SizedBox(
+              height: 30,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: sPrimaryColor,
+                  side: const BorderSide(
+                    color: sSecondaryColor,
+                  ),
+                  foregroundColor: sSecondaryColor,
+                ),
+                onPressed: () async {
+                  var value = AuthenticationRepository.signInWithGoogle(context: context);
+                  if (value != null) {
+                    Get.to(() => const MainScreen());
+                  } else {
+                    Get.snackbar('Error', 'Error logging in');
+                  }
+                },
+                //TODO switch to google image
+                icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
+                label: Text(
+                    sLoginWithGoogle.toUpperCase(),
+                    /*todo set this to a const value*/
+                    style: const TextStyle(
+                      color: sSecondaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )
+                ),
+              ),
+            ),
             ]
           )
         ),
