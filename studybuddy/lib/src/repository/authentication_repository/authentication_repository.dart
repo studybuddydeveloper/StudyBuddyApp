@@ -1,10 +1,12 @@
-import  'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:studybuddy/src/features/authentication/screens/landing_page.dart';
+import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../features/authentication/screens/landing_page.dart';
 import '../../features/authentication/screens/welcome_screen.dart';
+
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
@@ -19,8 +21,10 @@ class AuthenticationRepository extends GetxController {
     ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
+
   //so we can reference it anywhere in the app
   late final Rx<User?> firebaseUser;
+
   //Defining methods to be used in the controllers here
 
   _setInitialScreen(User? user) {
@@ -28,7 +32,8 @@ class AuthenticationRepository extends GetxController {
     if (user == null) {
       Get.offAll(() => const WelcomeScreen());
     } else {
-      Get.offAll(() => const ProfileScreen());
+      Get.offAll(() =>
+          const ProfileScreen()); //change this to profilescreen so i can see it
     }
   }
 
@@ -44,8 +49,8 @@ class AuthenticationRepository extends GetxController {
     // // After successful registration, update the user's profile with their full name.
     //     await userCredential.user.updateProfile(displayName: fullName);
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       // After successful registration, update the user's profile with their full name.
       await userCredential.user!.updateDisplayName(fullName);
@@ -71,14 +76,16 @@ class AuthenticationRepository extends GetxController {
       // //         // Add other user data as needed.
       // //       });
 
-      firebaseUser.value != null ? Get.offAll(() => const LandingPage())
-          : Get.offAll(() => const WelcomeScreen());
+      firebaseUser.value != null
+          ? Get.offAll(() => const LandingPage())
+          : Get.offAll(() =>
+              const ProfileScreen()); //change this to profilescreen so i can see it
       print("attempting to register user");
-    }  on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
       print('FIREBASE AUTH EXCEPTION: ${ex.message}');
       throw ex;
-    } catch(_) {
+    } catch (_) {
       const ex = SignUpEmailAndPasswordFailure();
       print('FIREBASE AUTH EXCEPTION: ${ex.message}');
       throw ex; //throwing the exception to the controller
@@ -89,11 +96,9 @@ class AuthenticationRepository extends GetxController {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    }
-    catch (_) {}
+    } catch (_) {}
   }
 
   Future<void> logout() async => await _auth.signOut();
-  // Future
-
+// Future
 }

@@ -30,6 +30,16 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
+        // Add these lines to enable additional compiler warnings
+        allprojects { // Projects
+            gradle.projectsEvaluated {
+                tasks.withType(JavaCompile) {
+                    options.encoding = 'UTF-8'
+                    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+                }
+            }
+        }
     }
 
     kotlinOptions {

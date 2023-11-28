@@ -16,12 +16,25 @@ const String sOnboardingCounter3 = '3/3';
 // -- Profile Screen -- Text
 const String uProfile = 'Profile';
 const String uEditProfile = 'Edit Profile';
-const String uLogOutProfile = 'Log Out';
-const String uProfileName = 'Cynella'; //change this later
+const String uLogOutProfile = 'Logout';
+const String uFirstName = 'Nutshell'; //change this later
+const String uLastName = 'Benji'; //change this later
+const String uProfileName = "$uFirstName $uLastName";
 const String uProfileEmail = 'studybuddy@gmail.com'; //change this later
+const String uProfileHeading = "$uFirstName's Note";
 const String uProfileDescription = uAboutMeContent;
 const String uAboutMeContent =
     " I am currently a Junior at UPENN studying Computer Science. I love listening to AfroBeats and hiking. Lets study together!!";
+
+// -- Menu
+// const String tMenu5 = tLogout;
+const String tMenu1 = "Settings";
+const String tMenu2 = "Information";
+
+// -- Update Profile Screen -- Text
+const String tDelete = "Delete";
+const String tJoined = "Joined";
+const String tJoinedAt = " 24 July 2003";
 
 //This is for subject tags
 // -- Profile Screen -- ListView

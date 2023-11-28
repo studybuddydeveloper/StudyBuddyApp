@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/sign_up_controller.dart';
-
-// import '../main_screen.dart';
+import '../../controllers/sign_up_controller.dart'; // import '../main_screen.dart';
 import '../profile/profile_screen.dart';
 
 class SignupForm extends StatefulWidget {
