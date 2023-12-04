@@ -10,10 +10,12 @@ import '../../controllers/sign_up_controller.dart';
 import '../main_screens/main_screen.dart';
 
 class SignUpFormWidget extends StatelessWidget {
-  const SignUpFormWidget({
+  SignUpFormWidget({
     super.key,
   });
   static final _formKey = GlobalKey<FormState>();
+
+  bool passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +27,6 @@ class SignUpFormWidget extends StatelessWidget {
     bool sisFullNameMissing = false;
     bool sIsValidEmail = true;
     bool sisPasswordMissing = false;
-    bool obscureText = true;
-    // TODO: add validation for email
-    String? _validateEmail(String value) {
-      if (!value.endsWith('.edu')) {
-        return 'Please enter a valid college email address ending with ".edu"';
-      }
-      return null;
-    }
-
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: sFormHeight - 10),
@@ -44,8 +37,6 @@ class SignUpFormWidget extends StatelessWidget {
           children: [
             TextFormField(
               validator: (value) {
-                // if (_formKey.currentState!.validate()) {
-                print(value);
                   if (value!.isEmpty || !value.contains(" ")) {
                     setState(() {
                       sisFullNameMissing = true;
@@ -98,9 +89,9 @@ class SignUpFormWidget extends StatelessWidget {
 
             TextFormField(
               validator: (value) {
-                    if (!value!.endsWith('.edu')) {
-                      return 'Please enter a valid college email address ending with ".edu"';
-                    }
+                    // if (!value!.endsWith('.edu')) {
+                    //   return 'Please enter a valid college email address ending with ".edu"';
+                    // }
                     return null;
               },
               controller: controller.email,
@@ -122,9 +113,8 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
-
+              obscureText: !passwordVisible,
               validator: (value) {
-                // if (_formKey.currentState!.validate()) {
                   if (value!.isEmpty) {
                     return 'Please enter a password';
                   }
@@ -134,7 +124,16 @@ class SignUpFormWidget extends StatelessWidget {
               controller: controller.password,
               decoration: InputDecoration(
                 label: const Text(sPassword),
-                prefixIcon: const Icon(Icons.remove_red_eye),
+                prefixIcon: IconButton(
+                  icon: Icon(passwordVisible ? Icons.visibility: Icons.visibility_off),
+                  onPressed: () {
+                    print("button pressed");
+                    // Toggle the password obscure state
+                      passwordVisible = !passwordVisible;
+                    print('Password visibility toggled: $passwordVisible');
+
+                  },
+                ),
                 errorText: sisPasswordMissing ? 'Please enter a password' : null,
                 // Change the border color if the password length is invalid
                 border: OutlineInputBorder(
@@ -148,7 +147,7 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(height: sFormHeight - 20,),
 
             TextFormField(
-              obscureText: obscureText,
+              obscureText: !passwordVisible,
               validator: (value) {
                   if (value != controller.password.text) {
                     sPasswordsMatch = false;
@@ -160,12 +159,10 @@ class SignUpFormWidget extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Confirm Password',
                 prefixIcon: IconButton(
-                  icon: Icon( obscureText ? Icons.remove_red_eye: Icons.visibility_off),
+                  icon: Icon( passwordVisible ? Icons.visibility: Icons.visibility_off),
                   onPressed: () {
                     // Toggle the password obscure state
-                    setState(() {
-                      obscureText = !obscureText;
-                    });
+                      passwordVisible = !passwordVisible;
                   },
                 ),
                 label: const Text(sConfirmPassword),
@@ -206,37 +203,37 @@ class SignUpFormWidget extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: sPrimaryColor,
-                  side: const BorderSide(
-                    color: sSecondaryColor,
-                  ),
-                  foregroundColor: sSecondaryColor,
-                ),
-                onPressed: () async {
-                  var value = AuthenticationRepository.signInWithGoogle(context: context);
-                  if (value != null) {
-                    Get.to(() => const MainScreen());
-                  } else {
-                    Get.snackbar('Error', 'Error logging in');
-                  }
-                },
-                //TODO switch to google image
-                icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
-                label: Text(
-                    sLoginWithGoogle.toUpperCase(),
-                    /*todo set this to a const value*/
-                    style: const TextStyle(
-                      color: sSecondaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: OutlinedButton.icon(
+            //     style: OutlinedButton.styleFrom(
+            //       backgroundColor: sPrimaryColor,
+            //       side: const BorderSide(
+            //         color: sSecondaryColor,
+            //       ),
+            //       foregroundColor: sSecondaryColor,
+            //     ),
+            //     onPressed: () async {
+            //       var value = AuthenticationRepository.signInWithGoogle(context: context);
+            //       if (value != null) {
+            //         Get.to(() => const MainScreen());
+            //       } else {
+            //         Get.snackbar('Error', 'Error logging in');
+            //       }
+            //     },
+            //     //TODO switch to google image
+            //     icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
+            //     label: Text(
+            //         sLoginWithGoogle.toUpperCase(),
+            //         /*todo set this to a const value*/
+            //         style: const TextStyle(
+            //           color: sSecondaryColor,
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.bold,
+            //         )
+            //     ),
+            //   ),
+            // ),
             ]
           )
         ),

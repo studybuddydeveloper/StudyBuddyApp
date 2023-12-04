@@ -7,6 +7,8 @@ import 'package:studybuddy/src/features/authentication/screens/widgets/form_head
 import 'package:studybuddy/src/features/authentication/screens/widgets/login_form_widget.dart';
 
 import '../../../../constants/image_strings.dart';
+import '../../../../repository/authentication_repository/authentication_repository.dart';
+import '../main_screens/main_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -73,7 +75,14 @@ class LoginScreen extends StatelessWidget {
                           ),
                           foregroundColor: sSecondaryColor,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          var value = AuthenticationRepository.signInWithGoogle(context: context);
+                          if (value != null) {
+                            Get.to(() => const MainScreen());
+                          } else {
+                            Get.snackbar('Error', 'Error logging in');
+                          }
+                        },
                         //TODO switch to google image
                         icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
                         label: Text(

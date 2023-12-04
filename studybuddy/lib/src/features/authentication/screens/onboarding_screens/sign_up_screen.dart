@@ -28,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
                     sWelcomeTitle: sWelcomeTitle,
                     sWelcomeSubtitle: sWelcomeSubtitle
                 ),
-                const SignUpFormWidget(),
+                SignUpFormWidget(),
                 const SizedBox(height: sFormHeight - 10),
                 Column(
                   children: [
