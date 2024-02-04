@@ -6,6 +6,7 @@ import '../../../../constants/text_strings.dart';
 import '../forgot_password_screens/forgot_password_email/forget_password_email.dart';
 import '../forgot_password_screens/forgot_password_options/forgot_password_button_widget.dart';
 
+/// ForgotPasswordScreen displays popups if the user forgot their login password
 class ForgotPasswordScreen {
   static Future<dynamic> buildShowModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -16,7 +17,7 @@ class ForgotPasswordScreen {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //it's light blue i dont lioke
+              //it's light blue i dont like
               Text(sForgotPasswordTitle,
                 style: Theme.of(context).textTheme.displayLarge,),
 
@@ -34,12 +35,13 @@ class ForgotPasswordScreen {
                 },
               ),
               const SizedBox(height: sDefaultSize,),
-              ForgetPasswordBtnWidget(
-                btnIcon: Icons.mobile_friendly_rounded,
-                title: sPhone,
-                subtitle: sResetViaPhone,
-                onTap: (){},
-              ),
+              //To be added later
+              // ForgetPasswordBtnWidget(
+              //   btnIcon: Icons.mobile_friendly_rounded,
+              //   title: sPhone,
+              //   subtitle: sResetViaPhone,
+              //   onTap: (){},
+              // ),
             ],
           )
       ),
