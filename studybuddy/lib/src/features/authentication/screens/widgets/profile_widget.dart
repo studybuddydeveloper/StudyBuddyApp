@@ -45,25 +45,38 @@ class ProfileWidget extends StatelessWidget {
           fit: BoxFit.cover,
           width: 128,
           height: 128,
-          child: InkWell(onTap: onClicked),
         ),
       ),
     );
   }
 
   //declaring a clickable icon for the edit icon button
-  Widget buildEditIcon(Color color) => buildCircle(
-      color: Colors.white,
-      all: 3,
+  Widget buildEditIcon(Color color) {
+    return buildCircle(
+      all: 4,
+      color: color,
       child: IconButton(
-          onPressed: GestureDetector().onTap,
-          icon: buildCircle(
-              color: color,
-              all: 8,
-              child: Icon(
-                isEdit ? Icons.add_a_photo : Icons.edit,
-                color: Colors.white,
-              ))));
+        onPressed: onClicked,
+        icon: Icon(
+          isEdit ? Icons.add_a_photo : Icons.edit,
+          color: Colors.white,
+        ),
+      ),
+    );
+    //   color: Colors.white;
+    // all: 21,
+    // child: IconButton(
+    //   onPressed: onClicked,
+    //   icon: buildCircle(
+    //     color: color,
+    //     all: 0,
+    //     child: Icon(
+    //     isEdit ? Icons.add_a_photo : Icons.edit,
+    //     color: Colors.white,
+    // )
+    //    )
+    // )
+  }
 
   Widget buildCircle({
     required Widget child,
