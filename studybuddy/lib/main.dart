@@ -49,11 +49,14 @@
 //
 
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
 import 'package:studybuddy/src/utils/user_preferences.dart';
+
+import 'firebase_options.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,6 +65,10 @@ Future main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -69,7 +76,7 @@ class MyApp extends StatelessWidget {
   static const String title = 'User Profile';
 
   @override
-  Widget build(BuildContext context) {
+  ThemeProvider build(BuildContext context) {
     const user = UserPreferences.myUser;
 
     return ThemeProvider(

@@ -16,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     const user = UserPreferences.myUser;
+    // Get.put(ProfileRepository());
 
     return ThemeSwitchingArea(
         child: Builder(
