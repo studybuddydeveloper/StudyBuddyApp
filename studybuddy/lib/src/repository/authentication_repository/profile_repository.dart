@@ -64,6 +64,19 @@ class ProfileRepository extends GetxController {
     });
   }
 
+  //Saves the users profile information to the database
+  void saveProfileInfo(
+      String fullName, String email, String college, String about) {
+    //TODO Add the functionality to save the user's profile information
+    // to the database of the assigned user
+    print("my fullName: $fullName");
+    FirebaseFirestore.instance.collection('users').doc().set({
+      'fullName': fullName,
+      'email': email,
+      'schoolName': college,
+      'about': about,
+    });
+  }
 // final Colleges MountHolyokeCollege = Colleges(
 //   college_id: 'mount_holyoke_college',
 //   college_name: 'Mount Holyoke College',

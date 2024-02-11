@@ -2,6 +2,8 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
 
 import '../../../../utils/user_preferences.dart';
 import '../../models/user.dart' as modelUser;
@@ -38,13 +40,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
   modelUser.User user =
       UserPreferences.myUser; //this retrieves colleges by their names only
 
+  // modelUser.User user = UserPreferences.UpdateUser;
+
   String itemSelected = '';
+  final controller = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) => ThemeSwitchingArea(
         child: Builder(
           builder: (context) => Scaffold(
             appBar: buildAppBar(context),
+            floatingActionButton: FloatingActionButton(
+                //TODO Add the functionality to save the user's profile information
+                // to the database of the assigned user
+                onPressed: () {
+                  controller.saveProfileInfo(
+                    controller.fullName.text,
+                    controller.email.text,
+                    controller.college.text,
+                    controller.about.text,
+                  );
+                },
+                child: Text('Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ))),
             body: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               physics: const BouncingScrollPhysics(),
@@ -56,15 +77,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 const SizedBox(height: 24),
                 TextFieldWidget(
-                  label: 'Full Name',
+                  label: 'Name',
                   text: user.name,
-                  onChanged: (name) {},
+                  onChanged: (name) {
+                    controller.fullName.text = name;
+                  },
                 ),
                 const SizedBox(height: 24),
                 TextFieldWidget(
                   label: 'Email',
                   text: user.email,
-                  onChanged: (email) {},
+                  onChanged: (email) {
+                    controller.email.text = email.toString();
+                  },
                 ),
                 const SizedBox(height: 24),
                 FutureBuilder(
@@ -105,6 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     )),
                               ),
                               onChanged: (value) {
+                                controller.college.text = value.toString();
                                 setState(() {
                                   itemSelected = value.toString();
                                 });
@@ -120,7 +146,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   label: 'About',
                   text: user.about,
                   maxLines: 5,
-                  onChanged: (about) {},
+                  onChanged: (about) {
+                    controller.about.text = about.toString();
+                  },
                 ),
               ],
             ),
