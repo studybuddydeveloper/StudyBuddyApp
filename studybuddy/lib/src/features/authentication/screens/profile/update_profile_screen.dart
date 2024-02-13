@@ -9,7 +9,6 @@ import '../../../../utils/user_preferences.dart';
 import '../../models/user.dart' as modelUser;
 import '../widgets/appbar-widget.dart';
 import '../widgets/profile_widget.dart';
-import '../widgets/textfield_widget.dart';
 
 Future<List<String>> retrieveMultipleColleges() async {
   final CollectionReference _collegeCollection =
@@ -30,6 +29,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   late Future<List<String>> collegeNamesList;
+  bool nameFieldFocused = false;
 
   @override
   void initState() {
@@ -76,20 +76,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   onClicked: () async {},
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Name',
-                  text: user.name,
-                  onChanged: (name) {
-                    controller.fullName.text = name;
-                  },
+                Text('Name'),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: controller.fullName,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: nameFieldFocused ? '' : 'Name',
+                    ),
+                    onChanged: (value) {
+                      // Handle changes to the 'Name' section
+                      print("Name: $value");
+                    },
+                    maxLines: null,
+                  ),
                 ),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'Email',
-                  text: user.email,
-                  onChanged: (email) {
-                    controller.email.text = email.toString();
-                  },
+                Text('Email'),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    enabled: false,
+                    controller: controller.email,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: nameFieldFocused ? '' : 'Email',
+                    ),
+                    onChanged: (value) {
+                      // Handle changes to the 'Name' section
+                      print("email: $value");
+                    },
+                    maxLines: null,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 FutureBuilder(
@@ -130,6 +161,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     )),
                               ),
                               onChanged: (value) {
+                                print("This is the value: $value");
                                 controller.college.text = value.toString();
                                 setState(() {
                                   itemSelected = value.toString();
@@ -142,14 +174,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       }
                     }),
                 const SizedBox(height: 24),
-                TextFieldWidget(
-                  label: 'About',
-                  text: user.about,
-                  maxLines: 5,
-                  onChanged: (about) {
-                    controller.about.text = about.toString();
-                  },
-                ),
+                Text('About Section'),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    controller: controller.about,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: nameFieldFocused ? '' : 'About',
+                    ),
+                    onChanged: (value) {
+                      // Handle changes to the 'Name' section
+                      print("About: $value");
+                    },
+                    maxLines: null,
+                  ),
+                )
               ],
             ),
           ),

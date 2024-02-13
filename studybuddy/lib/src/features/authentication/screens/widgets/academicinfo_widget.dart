@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/profile_controller.dart';
 
 class AcademicInfoWidget extends StatelessWidget {
+  final controller = Get.put(ProfileController());
+
+  //TODo add default values for texts
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          buildWrappedButton(context, 'College'),
+          buildWrappedButton(
+              context, ProfileController.instance.updatedCollege.value),
           buildDivider(),
           buildWrappedButton(context, 'Major'),
           buildDivider(),

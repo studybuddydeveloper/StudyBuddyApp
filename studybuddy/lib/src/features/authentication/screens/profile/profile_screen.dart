@@ -1,8 +1,10 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
 
 import '../../../../utils/user_preferences.dart';
+import '../../controllers/profile_controller.dart';
 import '../../models/user.dart' as modelUser;
 import '../widgets/academicinfo_widget.dart';
 import '../widgets/appbar-widget.dart';
@@ -17,6 +19,7 @@ class ProfileScreen extends StatelessWidget {
     // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     const user = UserPreferences.myUser;
     // Get.put(ProfileRepository());
+    final controller = Get.put(ProfileController());
 
     return ThemeSwitchingArea(
         child: Builder(
@@ -50,12 +53,12 @@ class ProfileScreen extends StatelessWidget {
 Widget buildName(modelUser.User user) => Column(
       children: [
         Text(
-          user.name,
+          '${ProfileController.instance.updatedFullName.value}',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         const SizedBox(height: 4),
         Text(
-          user.email,
+          '${ProfileController.instance.updatedEmail.value}',
           style: TextStyle(color: Colors.grey),
         )
       ],
@@ -77,7 +80,7 @@ Widget buildAbout(modelUser.User user) => Container(
           ),
           const SizedBox(height: 16),
           Text(
-            user.about,
+            '${ProfileController.instance.updatedAbout.value}',
             style: TextStyle(fontSize: 16, height: 1.4),
           ),
         ],

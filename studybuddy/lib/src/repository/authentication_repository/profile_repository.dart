@@ -2,6 +2,8 @@
 //it includes the user's profile information
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 class ProfileRepository extends GetxController {
   //this retrieves a single instance of the class profilerepository instead of calling
@@ -76,6 +78,20 @@ class ProfileRepository extends GetxController {
       'schoolName': college,
       'about': about,
     });
+    Get.to(() => const ProfileScreen());
+
+    // Update GetX controller values
+    ProfileController.instance.updatedFullName.value = fullName;
+    ProfileController.instance.updatedEmail.value = email;
+    ProfileController.instance.updatedCollege.value = college;
+    ProfileController.instance.updatedAbout.value = about;
+
+    //TODO Have a check to determine if the saving was successful
+  }
+
+  void displayProfileInfo() {
+    //TODO Add the functionality to display the user's profile information
+    // to the database of the assigned user
   }
 // final Colleges MountHolyokeCollege = Colleges(
 //   college_id: 'mount_holyoke_college',
