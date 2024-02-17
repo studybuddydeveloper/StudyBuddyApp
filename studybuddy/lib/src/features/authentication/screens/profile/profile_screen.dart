@@ -53,7 +53,9 @@ class ProfileScreen extends StatelessWidget {
 Widget buildName(modelUser.User user) => Column(
       children: [
         Text(
-          '${ProfileController.instance.updatedFullName.value}',
+          ProfileController.instance.updatedFullName.value == ""
+              ? 'Your Name'
+              : "${ProfileController.instance.updatedFullName.value}",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
         const SizedBox(height: 4),
@@ -75,12 +77,16 @@ Widget buildAbout(modelUser.User user) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${user.name}'s Note",
+            ProfileController.instance.updatedFullName.value == ""
+                ? 'Your Note'
+                : "${ProfileController.instance.updatedFullName.value}'s Note",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
           Text(
-            '${ProfileController.instance.updatedAbout.value}',
+            ProfileController.instance.updatedAbout.value == ""
+                ? 'Add a note about yourself'
+                : '${ProfileController.instance.updatedAbout.value}',
             style: TextStyle(fontSize: 16, height: 1.4),
           ),
         ],

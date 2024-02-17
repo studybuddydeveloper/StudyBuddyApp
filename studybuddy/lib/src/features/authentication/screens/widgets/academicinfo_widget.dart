@@ -8,11 +8,15 @@ class AcademicInfoWidget extends StatelessWidget {
 
   //TODo add default values for texts
   @override
-  Widget build(BuildContext context) => Row(
+  Widget build(BuildContext context) =>
+      Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           buildWrappedButton(
-              context, ProfileController.instance.updatedCollege.value),
+            context,
+            ProfileController.instance.updatedCollege.value == '' ? 'College'
+                : ProfileController.instance.updatedCollege.value,
+          ),
           buildDivider(),
           buildWrappedButton(context, 'Major'),
           buildDivider(),
@@ -20,7 +24,8 @@ class AcademicInfoWidget extends StatelessWidget {
         ],
       );
 
-  Widget buildDivider() => Container(
+  Widget buildDivider() =>
+      Container(
         height: 24,
         child: VerticalDivider(),
       );
