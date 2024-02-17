@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/sign_up_email_and_password_failure.dart';
 
-import '../../features/authentication/screens/home_screen.dart';
 import '../../features/authentication/screens/welcome_screen.dart';
 
 class AuthenticationRepository extends GetxController {
@@ -77,7 +76,7 @@ class AuthenticationRepository extends GetxController {
       // //       });
 
       firebaseUser.value != null
-          ? Get.offAll(() => const LandingPage())
+          ? Get.offAll(() => const WelcomeScreen())
           : Get.offAll(() =>
               const ProfileScreen()); //change this to profilescreen so i can see it
       print("attempting to register user");
