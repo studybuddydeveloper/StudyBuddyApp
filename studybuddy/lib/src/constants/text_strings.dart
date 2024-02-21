@@ -1,5 +1,25 @@
 import 'package:flutter/cupertino.dart';
 
+// -- Generic Text --
+const String sLoginText = 'Login';
+const String sSignupText = 'SignUp';
+const String sEmail = 'Email';
+const String sPhone = 'Phone';
+const String sNext = 'Next';
+const String sEmailHint = 'Enter your email';
+const String sPassword = 'Password';
+const String sConfirmPassword = 'Confirm Password';
+const String sSchoolName = 'School Name';
+const String sForgotPassword = 'Forgot Password?';
+const String sOr = 'Or';
+const String sLoginWithGoogle = 'Sign-in with Google';
+const String sDontHaveAnAccount = 'Don\'t have an account? ';
+const String sAlreadyHaveAnAccount = 'Already have an account? ';
+const String sOhSnap = "Unable to send verification email";
+const String sConfirmEmail = "Confirm your email";
+const String sContinueButton = "Continue";
+const String sResendEmail = "Resend Email";
+
 // -- Onboarding Screen Text --
 const String sOnboardingTitle1 = 'Welcome to Study Buddy';
 const String sOnboardingTitle2 = 'Find a Study Buddy';
@@ -16,25 +36,10 @@ const String sOnboardingCounter3 = '3/3';
 // -- Profile Screen -- Text
 const String uProfile = 'Profile';
 const String uEditProfile = 'Edit Profile';
-const String uLogOutProfile = 'Logout';
-const String uFirstName = 'Nutshell'; //change this later
-const String uLastName = 'Benji'; //change this later
-const String uProfileName = "$uFirstName $uLastName";
-const String uProfileEmail = 'studybuddy@gmail.com'; //change this later
-const String uProfileHeading = "$uFirstName's Note";
-const String uProfileDescription = uAboutMeContent;
-const String uAboutMeContent =
-    " I am currently a Junior at UPENN studying Computer Science. I love listening to AfroBeats and hiking. Lets study together!!";
-
-// -- Menu
-// const String tMenu5 = tLogout;
-const String tMenu1 = "Settings";
-const String tMenu2 = "Information";
-
-// -- Update Profile Screen -- Text
-const String tDelete = "Delete";
-const String tJoined = "Joined";
-const String tJoinedAt = " 24 July 2003";
+const String uLogOutProfile = 'Log Out';
+const String uProfileName = 'Username';
+const String uProfileEmail = 'Email';
+const String uProfileDescription = 'Description';
 
 //This is for subject tags
 // -- Profile Screen -- ListView
@@ -67,3 +72,36 @@ Table ProfileTable = Table(
     ),
   ],
 );
+
+// -- Welcome Screen -- Text
+const String sWelcomeTitle = 'Welcome to Study Buddy';
+const String sWelcomeSubtitle = 'Find a study buddy today!';
+
+// -- Login Screen -- Text
+const String sLoginTitle = 'Login';
+const String sLoginSubtitle = 'Welcome back! Login to your account';
+
+// -- SignUp Screen -- Text
+const String sSignUpTitle = 'Sign Up';
+const String sSignUpSubtitle = 'Create an account to get started';
+const String sFullName = 'Full Name';
+
+// -- Forgot Password Screen -- Text
+const String sForgotPasswordTitle = 'Forgot Password';
+const String sForgotPasswordSubtitle =
+    'Enter your email and we will send you a link to reset your password';
+const String sResetViaEmail = 'Reset via Email';
+const String sResetViaPhone = 'Reset via Phone';
+
+// -- Forgot Password via Phone Screen -- Text
+const String sForgotPasswordViaPhoneTitle =
+    'Enter your phone number to receive OTP';
+
+// -- Forgot Password via Email Screen -- Text
+const String sForgotPasswordViaEmailTitle = 'Enter your email to receive OTP';
+
+// -- OTP Screen -- Text
+const String sOtpTitle = 'Enter OTP';
+const String sOtpSubtitle = 'Verification';
+const String sOtpMessage = 'Enter the OTP sent to your email';
+const String sResendOtp = 'Resend OTP';

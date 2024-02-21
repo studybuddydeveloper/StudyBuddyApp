@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/sign_up_controller.dart'; // import '../main_screen.dart';
-import '../profile/profile_screen.dart';
+import '../../controllers/sign_up_controller.dart';
+import '../main_screens/main_screen.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
@@ -166,9 +166,11 @@ class _SignupFormState extends State<SignupForm> {
                 if (formKey.currentState!.validate()) {
                   SignUpController.instance.registerUser(
                       controller.email.text.trim(),
+                      controller.fullName.text.trim(),
+                      controller.schoolName.text.trim(),
                       controller.password.text.trim(),
                       controller.fullName.text.trim());
-                  Get.to(() => const ProfileScreen());
+                  Get.to(() => const MainScreen());
                 }
               },
               child: const Text('Sign Up'),

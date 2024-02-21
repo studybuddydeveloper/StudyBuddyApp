@@ -51,6 +51,7 @@ dependencies:
   # switch animation between light and dark theme
   animated_theme_switcher: ^2.0.1-nullsafety.0
   dropdown_search: ^5.0.6
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -86,7 +87,9 @@ flutter:
     - assets/images/
     - assets/images/splash_images/
     - assets/images/onboarding_images/
+    - assets/images/welcome_images/
     - assets/images/profile/
+    - assets/logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

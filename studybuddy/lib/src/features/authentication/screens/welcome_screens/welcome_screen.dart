@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:studybuddy/src/constants/image_strings.dart';
 import 'package:studybuddy/src/constants/text_strings.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/sign_up_screen.dart';
-
-import '../../../constants/colors.dart';
-import '../../../reusable_widgets/fade_in_animation_controller.dart';
-import 'onboarding_screens/login_screen.dart';
+import '../../../../constants/colors.dart';
+import '../../../../reusable_widgets/fade_in_animation_controller.dart';
+import '../onboarding_screens/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);

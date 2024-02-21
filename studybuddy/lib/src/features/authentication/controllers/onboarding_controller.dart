@@ -5,7 +5,7 @@ import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/text_strings.dart';
 import '../models/model_onboarding.dart';
-import '../screens/onboarding_screens/onboarding_page_widget.dart';
+import '../screens/widgets/onboarding_page_widget.dart';
 
 class OnBoardingController extends GetxController {
 
