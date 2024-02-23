@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
-import 'package:studybuddy/src/features/authentication/screens/widgets/button_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,13 +14,19 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     //eventually, this mainscreen will invoke mainscreenwidget class
     //as we don't want our design logic to be where we're handling the data i.e the models
-    return Container(
-        child: ButtonWidget(
-      text: ("Click me!"),
-      onClicked: () {
-        Get.to(() => const ProfileScreen());
-      },
-    ));
+    return Column(
+      children: [
+        Container(
+            child: ElevatedButton(
+              child: Text("Click me!"),
+              onPressed: () {
+                Get.to(() => const ProfileScreen());
+              },
+            )),
+
+
+      ],
+    );
 
     // ]);
   }

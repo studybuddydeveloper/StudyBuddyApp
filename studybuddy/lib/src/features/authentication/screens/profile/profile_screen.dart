@@ -20,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
     const user = UserPreferences.myUser;
     // Get.put(ProfileRepository());
     final controller = Get.put(ProfileController());
+    controller.setUser();
     final m_controller = Get.put(Majors());
     // m_controller.addMajors();
     return Builder(
@@ -45,6 +46,9 @@ class ProfileScreen extends StatelessWidget {
                 AcademicInfoWidget(),
                 const SizedBox(height: 48),
                 buildAbout(user),
+                ElevatedButton(
+                    child: Text("Go to Home"),
+                    onPressed: () => controller.goToMainScreen())
               ],
             )));
   }
@@ -60,7 +64,7 @@ Widget buildName(modelUser.User user) => Column(
         ),
         const SizedBox(height: 4),
         Text(
-          '${ProfileController.instance.updatedEmail.value}',
+          '${ProfileController.instance.email.text}',
           style: TextStyle(color: Colors.grey),
         )
       ],
