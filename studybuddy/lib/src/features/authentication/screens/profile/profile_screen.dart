@@ -1,8 +1,8 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
 
+import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
 import '../../controllers/profile_controller.dart';
 import '../../models/user.dart' as modelUser;
@@ -20,33 +20,33 @@ class ProfileScreen extends StatelessWidget {
     const user = UserPreferences.myUser;
     // Get.put(ProfileRepository());
     final controller = Get.put(ProfileController());
-
-    return ThemeSwitchingArea(
-        child: Builder(
-            builder: (context) => Scaffold(
-                appBar: buildAppBar(context),
-                body: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    ProfileWidget(
-                      imagePath: user.imagePath,
-                      onClicked: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (context) => EditProfilePage()),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    buildName(user),
-                    const SizedBox(height: 24),
-                    Center(child: buildUpgradeButton()),
-                    const SizedBox(height: 24),
-                    AcademicInfoWidget(),
-                    const SizedBox(height: 48),
-                    buildAbout(user),
-                  ],
-                ))));
+    final m_controller = Get.put(Majors());
+    // m_controller.addMajors();
+    return Builder(
+        builder: (context) => Scaffold(
+            appBar: buildAppBar(context),
+            body: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: [
+                ProfileWidget(
+                  imagePath: user.imagePath,
+                  onClicked: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => EditProfilePage()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                buildName(user),
+                const SizedBox(height: 24),
+                Center(child: buildUpgradeButton()),
+                const SizedBox(height: 24),
+                AcademicInfoWidget(),
+                const SizedBox(height: 48),
+                buildAbout(user),
+              ],
+            )));
   }
 }
 

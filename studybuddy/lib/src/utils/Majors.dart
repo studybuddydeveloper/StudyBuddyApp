@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class Majors extends GetxController {
+  //string
   static Majors get instance => Get.find();
   final List<String> majorsList = [
     'Accounting',
@@ -63,9 +64,11 @@ class Majors extends GetxController {
   ];
 
 //   save the list of majors in firestore
-  void addMajors() {
-    FirebaseFirestore.instance.collection('majors').doc().set({
-      'collegeMajors': majorsList,
-    });
+  void addMajors() async {
+    CollectionReference majorsCollection =
+        FirebaseFirestore.instance.collection('majors');
+    for (String major in majorsList) {
+      await majorsCollection.add({'name': major});
+    }
   }
 }
