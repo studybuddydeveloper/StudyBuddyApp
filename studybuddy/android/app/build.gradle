@@ -30,6 +30,16 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
+        // Add these lines to enable additional compiler warnings
+        allprojects { // Projects
+            gradle.projectsEvaluated {
+                tasks.withType(JavaCompile) {
+                    options.encoding = 'UTF-8'
+                    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+                }
+            }
+        }
     }
 
     kotlinOptions {
@@ -49,6 +59,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -64,4 +75,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation("androidx.multidex:multidex:2.0.1")
+}
