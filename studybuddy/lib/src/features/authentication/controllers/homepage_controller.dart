@@ -1,20 +1,26 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../repository/users_repository/users_repository.dart';
 
 /**
  * This controller fetches data from the database to be displayed on the home screen
  */
 class HomeScreenController extends GetxController {
   static HomeScreenController get instance => Get.find();
+  FirestoreService firestoreService = FirestoreService();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
 
   List users = []; //list of users that match the current user's defns
   @override
   void onInit() {
     super.onInit();
     print("hello world");
-    fetchusersThatMatchCurrentUser();
+    getUsersWithSimilarMajorNames();
   }
 
   /**
@@ -42,6 +48,28 @@ class HomeScreenController extends GetxController {
     print("This is the controller users: $users");
 
     return users;
+  }
+
+  void getUsersWithSimilarMajorNames() async {
+    String? currentUserMajor = await firestoreService.getCurrentUserMajor();
+
+    if (currentUserMajor != null) {
+      List<String> similarMajorUserNames = await firestoreService
+          .getUsersWithSameMajorNames(currentUserMajor);
+
+      if (similarMajorUserNames.isNotEmpty) {
+        print('Users with similar major: $similarMajorUserNames');
+      } else {
+        print('No users found with a similar major.');
+      }
+    } else {
+      print('Unable to retrieve current user major.');
+    }
+  }
+
+
+  void getUser() {
+    user = auth.currentUser;
   }
 
   void setState(Null Function() param0) {}

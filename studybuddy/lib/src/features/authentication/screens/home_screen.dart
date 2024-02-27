@@ -34,23 +34,23 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     print(HomeScreenController.instance.users);
     // print("The users in the homescreen: $users");
-    return AppBar();
-    // return Scaffold(
-    //   body: ListView.builder(
-    //     itemCount: 10,
-    //     itemBuilder: (context, index) {
-    //       //todo look for a way to make the users a varuable instead of having
-    //       // this full logic in the build method.
-    //       final user = HomeScreenController.instance.users[index];
-    //       return ListTile(
-    //         title: Text(user['name']['first']),
-    //         subtitle: Text(user['email']),
-    //         leading: CircleAvatar(
-    //           backgroundImage: NetworkImage(user['picture']['thumbnail']),
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
+    // return AppBar();
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          //todo look for a way to make the users a varuable instead of having
+          // this full logic in the build method.
+          final user = HomeScreenController.instance.users[index];
+          return ListTile(
+            title: Text(user['name']['first']),
+            subtitle: Text(user['email']),
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(user['picture']['thumbnail']),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

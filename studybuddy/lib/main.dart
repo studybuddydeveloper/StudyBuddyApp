@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/splash_screens/splash_screeten.dart';
 import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
+
 import 'firebase_options.dart';
 
 Future<void> main() async {
