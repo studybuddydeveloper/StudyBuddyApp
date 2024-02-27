@@ -7,6 +7,8 @@ import '../screens/main_screens/main_screen.dart';
 
 class ProfileController extends GetxController {
   static ProfileController get instance => Get.find();
+
+  final ProfileRepository _profileRepo = Get.put(ProfileRepository());
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
 
@@ -19,8 +21,6 @@ class ProfileController extends GetxController {
   void goToMainScreen() {
     Get.to(() => MainScreen());
   }
-
-  final ProfileRepository p = Get.put(ProfileRepository());
 
   // Text filled controllers to retrieve profile details from user
   final fullName = TextEditingController();
@@ -54,5 +54,14 @@ class ProfileController extends GetxController {
       college,
       about,
     );
+  }
+
+  getProfileInfo() {
+    final email = _profileRepo.firebaseUser.value!.email;
+    if (email != null) {
+      return _profileRepo.fetchExistingUserProfile(email);
+    } else {
+      Get.snackbar("Error", "Login to continue");
+    }
   }
 }

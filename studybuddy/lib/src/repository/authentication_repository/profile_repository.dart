@@ -1,14 +1,17 @@
 //this defines the backend for the profile page
 //it includes the user's profile information
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
+import 'package:studybuddy/src/utils/User_Model.dart';
 
 class ProfileRepository extends GetxController {
   //this retrieves a single instance of the class profilerepository instead of calling
   // the class every time manually
   static ProfileRepository get instance => Get.find();
+  late final Rx<User?> firebaseUser;
 
   // TODO: Add the user's profile information here
 
@@ -89,9 +92,15 @@ class ProfileRepository extends GetxController {
     //TODO Have a check to determine if the saving was successful
   }
 
-  void displayProfileInfo() {
+  Future<UserModel> fetchExistingUserProfile(String email) async {
     //TODO Add the functionality to display the user's profile information
-    // to the database of the assigned user
+    final snapshot = await studyBuddyDB
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+    final userData =
+        snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).single;
+    return userData;
   }
 // final Colleges MountHolyokeCollege = Colleges(
 //   college_id: 'mount_holyoke_college',
