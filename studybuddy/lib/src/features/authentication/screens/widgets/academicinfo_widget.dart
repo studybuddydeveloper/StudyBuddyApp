@@ -4,34 +4,35 @@ import 'package:get/get.dart';
 import '../../controllers/profile_controller.dart';
 
 class AcademicInfoWidget extends StatelessWidget {
+  final String college;
+  final String major;
+  final String classYear;
+
+  AcademicInfoWidget({
+    Key? key,
+    required this.college,
+    required this.major,
+    required this.classYear,
+  }) : super(key: key);
   final controller = Get.put(ProfileController());
 
   //TODo add default values for texts
   @override
-  Widget build(BuildContext context) =>
-      Row(
+  Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           buildWrappedButton(
             context,
-            ProfileController.instance.updatedCollege.value == '' ? 'College'
-                : ProfileController.instance.updatedCollege.value,
+            college == '' ? 'College' : college,
           ),
           buildDivider(),
-          buildWrappedButton(
-              context,
-              ProfileController.instance.updatedMajor.value == '' ? 'Major'
-                  : ProfileController.instance.updatedMajor.value),
+          buildWrappedButton(context, major == '' ? 'Major' : major),
           buildDivider(),
-          buildWrappedButton(context,
-              ProfileController.instance.updatedClassYear.value == ''
-                  ? 'Class Year'
-                  : ProfileController.instance.updatedClassYear.value),
+          buildWrappedButton(context, major == '' ? 'Class Year' : classYear),
         ],
       );
 
-  Widget buildDivider() =>
-      Container(
+  Widget buildDivider() => Container(
         height: 24,
         child: VerticalDivider(),
       );

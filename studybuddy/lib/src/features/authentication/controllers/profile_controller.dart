@@ -12,6 +12,21 @@ class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
 
+  // Get the current user's UID
+  String getCurrentUserId() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      String uid = user.uid;
+      return uid;
+    } else {
+      // Handle the case when the user is not signed in
+      // You might want to navigate to the login screen or take appropriate action
+      return '';
+    }
+  }
+
   void setUser() {
     user = auth.currentUser;
     email = TextEditingController(text: user!.email);
@@ -56,11 +71,13 @@ class ProfileController extends GetxController {
   }
 
   getProfileInfo() {
-    final email = _profileRepo.firebaseUser.value!.email;
-    if (email != null) {
-      return _profileRepo.fetchExistingUserProfile(email);
-    } else {
-      Get.snackbar("Error", "Login to continue");
-    }
+    final userId = getCurrentUserId();
+    _profileRepo.getUserProfile(userId);
+    // final email = _profileRepo.firebaseUser.value!.email;
+    // if (email != null) {
+    //   return _profileRepo.fetchExistingUserProfile(email);
+    // } else {
+    //   Get.snackbar("Error", "Login to continue");
+    // }
   }
 }

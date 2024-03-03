@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
-import 'package:studybuddy/src/utils/User_Model.dart';
 
 class ProfileRepository extends GetxController {
   //this retrieves a single instance of the class profilerepository instead of calling
@@ -21,10 +20,13 @@ class ProfileRepository extends GetxController {
   final studyBuddyDB = FirebaseFirestore.instance;
 
   final CollectionReference _collegeCollection =
-  FirebaseFirestore.instance.collection('colleges');
+      FirebaseFirestore.instance.collection('colleges');
 
   final CollectionReference _majorsCollection =
-  FirebaseFirestore.instance.collection('majors');
+      FirebaseFirestore.instance.collection('majors');
+
+  final CollectionReference _usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
   List<Map<String, dynamic>> collegesList = [
     {
@@ -78,21 +80,18 @@ class ProfileRepository extends GetxController {
     //TODO Add the functionality to save the user's profile information
     // to the database of the assigned user
     print("my fullName: $fullName");
-    final CollectionReference _usersCollection = FirebaseFirestore.instance
-        .collection('users');
-    try {
-      await _usersCollection.doc(user?.uid).update(
-          {
-            'fullName': fullName,
-            'email': email,
-            'schoolName': college,
-            'about': about,
-            'major': major,
-            'classYear': classYear,
-          }
-      );
 
-      Get.to(() => const ProfileScreen());
+    try {
+      await _usersCollection.doc(user?.uid).update({
+        'fullName': fullName,
+        'email': email,
+        'schoolName': college,
+        'about': about,
+        'major': major,
+        'classYear': classYear,
+      });
+
+      Get.to(() => ProfileScreen());
 
       // Update GetX controller values
       ProfileController.instance.updatedFullName.value = fullName;
@@ -116,17 +115,35 @@ class ProfileRepository extends GetxController {
     //TODO Have a check to determine if the saving was successful
   }
 
-  Future<UserModel> fetchExistingUserProfile(String email) async {
+  Future<Map<String, dynamic>> getUserProfile(String userId) async {
     //TODO Add the functionality to display the user's profile information
-    final snapshot = await studyBuddyDB
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .get();
-    final userData =
-        snapshot.docs
-            .map((doc) => UserModel.fromSnapshot(doc))
-            .single;
-    return userData;
+
+    try {
+      DocumentSnapshot userSnapshot = await _usersCollection.doc(userId).get();
+
+      if (userSnapshot.exists) {
+        // Convert the document snapshot data to a map
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+        print(userData);
+        return userData;
+      } else {
+        // Handle the case when the user document does not exist
+        return {};
+      }
+    } catch (e) {
+      // Handle errors or notify the user about the failure
+      print('Error fetching user profile: $e');
+      return {};
+    }
+    // final snapshot = await studyBuddyDB
+    //     .collection('users')
+    //     .where('email', isEqualTo: email)
+    //     .get();
+    // final userData =
+    //     snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).single;
+    // print(userData);
+    // return userData;
   }
 // final Colleges MountHolyokeCollege = Colleges(
 //   college_id: 'mount_holyoke_college',

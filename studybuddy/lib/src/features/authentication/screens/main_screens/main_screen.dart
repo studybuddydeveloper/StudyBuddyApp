@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
             child: ElevatedButton(
           child: Text("Click me!"),
           onPressed: () {
-            Get.to(() => const ProfileScreen());
+            Get.to(() => ProfileScreen());
           },
         )),
         SizedBox(
