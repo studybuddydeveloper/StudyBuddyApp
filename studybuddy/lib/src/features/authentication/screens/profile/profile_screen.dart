@@ -7,6 +7,7 @@ import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
 import '../../controllers/profile_controller.dart';
 import '../../models/user.dart' as modelUser;
+import '../forgot_password_screens/chat_screens/chat_screen.dart';
 import '../widgets/academicinfo_widget.dart';
 import '../widgets/appbar-widget.dart';
 import '../widgets/button_widget.dart';
@@ -143,7 +144,9 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'message',
-        onClicked: () {},
+        onClicked: () {
+          Get.to(() => ChatScreen());
+        },
       );
 
   Widget buildAbout(modelUser.User user) => Container(
