@@ -28,11 +28,14 @@ class ProfileController extends GetxController {
   final college = TextEditingController();
   final about = TextEditingController();
   final major = TextEditingController();
+  final classYear = TextEditingController();
 
   RxString updatedFullName = ''.obs;
   RxString updatedEmail = ''.obs;
   RxString updatedCollege = ''.obs;
   RxString updatedAbout = ''.obs;
+  RxString updatedMajor = ''.obs;
+  RxString updatedClassYear = ''.obs;
 
   // Add the user's profile information here
   // right now we just have the multiple colleges info
@@ -45,15 +48,11 @@ class ProfileController extends GetxController {
     print(email);
   }
 
-  void saveProfileInfo(
-      String fullName, String email, String college, String about) {
+  void saveProfileInfo(String fullName, String email, String college,
+      String about, String major, String classYear) {
     print("my name is $fullName");
-    ProfileRepository.instance.saveProfileInfo(
-      fullName,
-      email,
-      college,
-      about,
-    );
+    ProfileRepository.instance
+        .saveProfileInfo(fullName, email, college, about, major, classYear);
   }
 
   getProfileInfo() {

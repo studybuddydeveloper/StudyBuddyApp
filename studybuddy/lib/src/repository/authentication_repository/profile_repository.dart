@@ -70,8 +70,8 @@ class ProfileRepository extends GetxController {
   }
 
   //Saves the users profile information to the database
-  void saveProfileInfo(
-      String fullName, String email, String college, String about) {
+  void saveProfileInfo(String fullName, String email, String college,
+      String about, String major, String classYear) {
     //TODO Add the functionality to save the user's profile information
     // to the database of the assigned user
     print("my fullName: $fullName");
@@ -80,6 +80,8 @@ class ProfileRepository extends GetxController {
       'email': email,
       'schoolName': college,
       'about': about,
+      'major': major,
+      'classYear': classYear,
     });
     Get.to(() => const ProfileScreen());
 
@@ -88,6 +90,8 @@ class ProfileRepository extends GetxController {
     ProfileController.instance.updatedEmail.value = email;
     ProfileController.instance.updatedCollege.value = college;
     ProfileController.instance.updatedAbout.value = about;
+    ProfileController.instance.updatedMajor.value = major;
+    ProfileController.instance.updatedClassYear.value = classYear;
 
     //TODO Have a check to determine if the saving was successful
   }

@@ -18,9 +18,15 @@ class AcademicInfoWidget extends StatelessWidget {
                 : ProfileController.instance.updatedCollege.value,
           ),
           buildDivider(),
-          buildWrappedButton(context, 'Major'),
+          buildWrappedButton(
+              context,
+              ProfileController.instance.updatedMajor.value == '' ? 'Major'
+                  : ProfileController.instance.updatedMajor.value),
           buildDivider(),
-          buildWrappedButton(context, 'Year'),
+          buildWrappedButton(context,
+              ProfileController.instance.updatedClassYear.value == ''
+                  ? 'Class Year'
+                  : ProfileController.instance.updatedClassYear.value),
         ],
       );
 
