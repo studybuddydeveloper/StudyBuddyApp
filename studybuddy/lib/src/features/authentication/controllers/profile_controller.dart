@@ -30,18 +30,26 @@ class ProfileController extends GetxController {
   void setUser() {
     user = auth.currentUser;
     email = TextEditingController(text: user!.email);
+    fullName = TextEditingController(text: user!.displayName);
+    about = TextEditingController(text: user!.displayName);
     print(email.text);
   }
+
+  // void setUserName() {
+  //   user = auth.currentUser;
+  //   fullName.text = user!.displayName!;
+  //   print(fullName.text);
+  // }
 
   void goToMainScreen() {
     Get.to(() => MainScreen());
   }
 
   // Text filled controllers to retrieve profile details from user
-  final fullName = TextEditingController();
+  var fullName = TextEditingController();
   var email = TextEditingController();
   final college = TextEditingController();
-  final about = TextEditingController();
+  var about = TextEditingController();
   final major = TextEditingController();
   final classYear = TextEditingController();
 
@@ -57,6 +65,21 @@ class ProfileController extends GetxController {
   void addColleges() {
     ProfileRepository.instance.addMultipleColleges();
   }
+
+  // Future<void> defaultValues() async {
+  //   final userId = getCurrentUserId();
+  //   Map<String, dynamic> userData = {};
+  //
+  //
+  //   userData = await ProfileRepository().getUserProfile(userId);
+  //
+  //   fullName.text = userData['name'];
+  //   email.text = userData['email'];
+  //   college.text = userData['college'];
+  //   about.text = userData['about'];
+  //   major.text = userData['major'];
+  //   classYear.text = userData['classYear'];
+  // }
 
   void setEmail() {
     email = TextEditingController(text: user!.email);

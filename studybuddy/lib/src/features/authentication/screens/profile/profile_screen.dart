@@ -37,8 +37,33 @@ class _ProfileScreen extends State<ProfileScreen> {
     fetchUserProfile();
   }
 
+  String getFullName() {
+    return fullName;
+  }
+
+  String getEmail() {
+    return email;
+  }
+
+  String getCollege() {
+    return college;
+  }
+
+  String getAbout() {
+    return about;
+  }
+
+  String getMajor() {
+    return major;
+  }
+
+  String getClassYear() {
+    return classYear;
+  }
+
   Future<void> fetchUserProfile() async {
     try {
+      // TODO save all this fields to a const page to prevent constant lookup
       userId = controller.getCurrentUserId();
       userData = await ProfileRepository().getUserProfile(userId);
 
@@ -46,6 +71,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       fullName = userData['fullName'] ?? '';
       email = userData['email'] ?? '';
       college = userData['schoolName'] ?? '';
+      print(college);
       about = userData['about'] ?? '';
       major = userData['major'] ?? '';
       classYear = userData['classYear'] ?? '';
@@ -60,6 +86,8 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // controller.defaultValues();
+
     // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     const user = UserPreferences.myUser;
     // Get.put(ProfileRepository());

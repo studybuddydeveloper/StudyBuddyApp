@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
@@ -42,6 +43,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  ProfileScreen profile = ProfileScreen();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   late Future<List<String>> collegeNamesList;
@@ -115,7 +117,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         controller: controller.fullName,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          labelText: nameFieldFocused ? '' : 'Name',
+                          labelText:
+                              nameFieldFocused ? '' : controller.fullName.text,
                         ),
                         onChanged: (value) {
                           // Handle changes to the 'Name' section
