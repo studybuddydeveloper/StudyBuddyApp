@@ -12,6 +12,7 @@ class ProfileRepository extends GetxController {
   // the class every time manually
   static ProfileRepository get instance => Get.find();
   late final Rx<User?> firebaseUser;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   // TODO: Add the user's profile information here
 
@@ -20,10 +21,10 @@ class ProfileRepository extends GetxController {
   final studyBuddyDB = FirebaseFirestore.instance;
 
   final CollectionReference _collegeCollection =
-      FirebaseFirestore.instance.collection('colleges');
+  FirebaseFirestore.instance.collection('colleges');
 
   final CollectionReference _majorsCollection =
-      FirebaseFirestore.instance.collection('majors');
+  FirebaseFirestore.instance.collection('majors');
 
   List<Map<String, dynamic>> collegesList = [
     {
@@ -70,28 +71,47 @@ class ProfileRepository extends GetxController {
   }
 
   //Saves the users profile information to the database
-  void saveProfileInfo(String fullName, String email, String college,
-      String about, String major, String classYear) {
+  Future<void> saveProfileInfo(String fullName, String email, String college,
+      String about, String major, String classYear) async {
+    User? user = auth.currentUser;
+
     //TODO Add the functionality to save the user's profile information
     // to the database of the assigned user
     print("my fullName: $fullName");
-    FirebaseFirestore.instance.collection('users').doc().set({
-      'fullName': fullName,
-      'email': email,
-      'schoolName': college,
-      'about': about,
-      'major': major,
-      'classYear': classYear,
-    });
-    Get.to(() => const ProfileScreen());
+    final CollectionReference _usersCollection = FirebaseFirestore.instance
+        .collection('users');
+    try {
+      await _usersCollection.doc(user?.uid).update(
+          {
+            'fullName': fullName,
+            'email': email,
+            'schoolName': college,
+            'about': about,
+            'major': major,
+            'classYear': classYear,
+          }
+      );
 
-    // Update GetX controller values
-    ProfileController.instance.updatedFullName.value = fullName;
-    ProfileController.instance.updatedEmail.value = email;
-    ProfileController.instance.updatedCollege.value = college;
-    ProfileController.instance.updatedAbout.value = about;
-    ProfileController.instance.updatedMajor.value = major;
-    ProfileController.instance.updatedClassYear.value = classYear;
+      Get.to(() => const ProfileScreen());
+
+      // Update GetX controller values
+      ProfileController.instance.updatedFullName.value = fullName;
+      ProfileController.instance.updatedEmail.value = email;
+      ProfileController.instance.updatedCollege.value = college;
+      ProfileController.instance.updatedAbout.value = about;
+      ProfileController.instance.updatedMajor.value = major;
+      ProfileController.instance.updatedClassYear.value = classYear;
+    } catch (e) {
+      print('Error updating user profile: $e');
+    }
+    // FirebaseFirestore.instance.collection('users').doc().set({
+    //   'fullName': fullName,
+    //   'email': email,
+    //   'schoolName': college,
+    //   'about': about,
+    //   'major': major,
+    //   'classYear': classYear,
+    // });
 
     //TODO Have a check to determine if the saving was successful
   }
@@ -103,7 +123,9 @@ class ProfileRepository extends GetxController {
         .where('email', isEqualTo: email)
         .get();
     final userData =
-        snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).single;
+        snapshot.docs
+            .map((doc) => UserModel.fromSnapshot(doc))
+            .single;
     return userData;
   }
 // final Colleges MountHolyokeCollege = Colleges(

@@ -45,11 +45,13 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Method to register a new user by creating a new user with email and password
-  void registerUser(String email,
-      String schoolName,
-      String fullName,
-      String password,
-      String confirmPassword,) async {
+  void registerUser(
+    String email,
+    String schoolName,
+    String fullName,
+    String password,
+    String confirmPassword,
+  ) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -62,6 +64,11 @@ class AuthenticationRepository extends GetxController {
           .doc(userCredential.user!.uid)
           .set({
         'fullName': fullName,
+        'email': email,
+        'schoolName': '',
+        'major': '',
+        'classYear': '',
+        'about': '',
         // Add other user data as needed.
       });
       //This checks if the user is null, if not, go to the landing page
@@ -112,7 +119,7 @@ class AuthenticationRepository extends GetxController {
 
       try {
         final UserCredential userCredential =
-        await auth.signInWithPopup(authProvider);
+            await auth.signInWithPopup(authProvider);
 
         user = userCredential.user;
       } catch (e) {
@@ -122,11 +129,11 @@ class AuthenticationRepository extends GetxController {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
       final GoogleSignInAccount? googleSignInAccount =
-      await googleSignIn.signIn();
+          await googleSignIn.signIn();
 
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+            await googleSignInAccount.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
@@ -135,7 +142,7 @@ class AuthenticationRepository extends GetxController {
 
         try {
           final UserCredential userCredential =
-          await auth.signInWithCredential(credential);
+              await auth.signInWithCredential(credential);
 
           user = userCredential.user;
         } on FirebaseAuthException catch (e) {
@@ -179,6 +186,4 @@ class AuthenticationRepository extends GetxController {
   User? getCurrentUser() {
     return auth.currentUser;
   }
-
-
 }
