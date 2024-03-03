@@ -9,9 +9,12 @@ import 'package:studybuddy/src/repository/authentication_repository/exceptions/l
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
+import '../../features/authentication/screens/welcome_screen.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
+
+  late final Rx<User?> firebaseUser;
 
   //Defining firebase variables here
   final _auth = FirebaseAuth.instance;
@@ -20,26 +23,26 @@ class AuthenticationRepository extends GetxController {
 
   @override
   void onReady() {
+    firebaseUser = Rx<User?>(_auth.currentUser);
     //checks the status of the current user
-    firebaseUser = Rx(_auth.currentUser);
     //binds the stream to the user and listens to the user/what they're doing
-    // ever(firebaseUser, _setInitialScreen);
+    ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
 
   //so we can reference it anywhere in the app
-  late final Rx<User?> firebaseUser;
 
   //Defining methods to be used in the controllers here
 
-  // _setInitialScreen(User? user) {
-  //   //if user has been logged out and is null, go to welcome screen
-  //   if (user == null) {
-  //     Get.offAll(() => const WelcomeScreen());
-  //   } else {
-  //     Get.offAll(() => const MainScreen());
-  //   }
-  // }
+  _setInitialScreen(User? user) {
+    print("hello world");
+    //if user has been logged out and is null, go to welcome screen
+    if (user == null) {
+      Get.offAll(() => const WelcomeScreen());
+    } else {
+      Get.offAll(() => const MainScreen());
+    }
+  }
 
   /// Method to register a new user by creating a new user with email and password
   void registerUser(
@@ -61,6 +64,11 @@ class AuthenticationRepository extends GetxController {
           .doc(userCredential.user!.uid)
           .set({
         'fullName': fullName,
+        'email': email,
+        'schoolName': '',
+        'major': '',
+        'classYear': '',
+        'about': '',
         // Add other user data as needed.
       });
       //This checks if the user is null, if not, go to the landing page

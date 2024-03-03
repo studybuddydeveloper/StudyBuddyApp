@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 
-class SplashScreenController extends GetxController{
-
+class SplashScreenController extends GetxController {
   //this is a singleton class that can be accessed from anywhere in the app
   //We don't have to call the instance of the class to access its methods
   static SplashScreenController get instance => Get.find();
@@ -14,6 +12,6 @@ class SplashScreenController extends GetxController{
     animate.value = true;
     await Future.delayed(const Duration(milliseconds: 2000));
     //destroys the current splash screen and replaces it with the welcome screen
-    Get.to(const WelcomeScreen());
+    // Get.to(const WelcomeScreen());
   }
 }

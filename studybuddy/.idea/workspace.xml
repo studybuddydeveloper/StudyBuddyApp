@@ -4,38 +4,33 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb32dbb2-5d36-484e-a534-42f799136c4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/profile/cartoon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/constants/colors.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/constants/colors.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/constants/image_strings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/constants/image_strings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/constants/text_strings.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/constants/text_strings.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/controllers/onboarding_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/controllers/onboarding_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/controllers/splash_screen_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/controllers/splash_screen_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/chat_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/landing_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/landing_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/onboarding_page_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/onboarding_page_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/splash_screens/splash_screeten.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/splash_screens/splash_screeten.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/update_profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/update_profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/welcome_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/welcome_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/sign_up_form_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/sign_up_form_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/repository/authentication_repository/authentication_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/repository/authentication_repository/authentication_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/utils/theme/theme.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/utils/theme/theme.dart" afterDir="false" />
+    <list default="true" id="cb32dbb2-5d36-484e-a534-42f799136c4c" name="Changes" comment="Enabling forgot password option">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/controllers/profile_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/controllers/profile_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/main_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/main_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/academicinfo_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/academicinfo_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/repository/authentication_repository/profile_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/repository/authentication_repository/profile_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
@@ -53,7 +48,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2X8cOfOPfC8cGner1vZUORbnERw" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -79,6 +74,12 @@
       <recent name="C:\Users\cakan\OneDrive - Mount Holyoke College\Desktop\GitHub Repos\StudyBuddyApp\studybuddy\lib\src\features\authentication\screens\profile" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="main" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -103,5 +104,26 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/login_screen.dart</url>
+          <line>92</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/repository/users_repository/users_repository.dart</url>
+          <line>25</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart</url>
+          <line>118</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
