@@ -25,6 +25,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   String userId = '';
   Map<String, dynamic> userData = {};
 
+  String meetingMode = '';
   String fullName = '';
   String email = '';
   String college = '';
@@ -87,6 +88,8 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // controller.addMeetingMode();
+
     // controller.defaultValues();
 
     // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -117,6 +120,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                 const SizedBox(height: 24),
                 AcademicInfoWidget(
                     college: college, major: major, classYear: classYear),
+                const SizedBox(height: 24),
+                buildMeetingMode(user),
                 const SizedBox(height: 48),
                 buildAbout(user),
                 // controller.getProfileInfo(),
@@ -139,6 +144,18 @@ class _ProfileScreen extends State<ProfileScreen> {
             email == "" ? 'Your Email' : email,
             style: TextStyle(color: Colors.grey),
           )
+        ],
+      );
+
+  Widget buildMeetingMode(modelUser.User user) => Column(
+        children: [
+          Text(
+            meetingMode == "I prefere meeting $meetingMode"
+                ? 'Your Meeting Preference'
+                : meetingMode,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 4),
         ],
       );
 
