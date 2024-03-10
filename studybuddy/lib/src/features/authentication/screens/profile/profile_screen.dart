@@ -7,6 +7,7 @@ import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
 import '../../controllers/profile_controller.dart';
 import '../../models/user.dart' as modelUser;
+import '../forgot_password_screens/chat_screens/chat_screen.dart';
 import '../widgets/academicinfo_widget.dart';
 import '../widgets/appbar-widget.dart';
 import '../widgets/button_widget.dart';
@@ -24,6 +25,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   String userId = '';
   Map<String, dynamic> userData = {};
 
+  String meetingMode = '';
   String fullName = '';
   String email = '';
   String college = '';
@@ -86,6 +88,8 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // controller.addMeetingMode();
+
     // controller.defaultValues();
 
     // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -116,6 +120,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                 const SizedBox(height: 24),
                 AcademicInfoWidget(
                     college: college, major: major, classYear: classYear),
+                const SizedBox(height: 24),
+                buildMeetingMode(user),
                 const SizedBox(height: 48),
                 buildAbout(user),
                 // controller.getProfileInfo(),
@@ -141,9 +147,23 @@ class _ProfileScreen extends State<ProfileScreen> {
         ],
       );
 
+  Widget buildMeetingMode(modelUser.User user) => Column(
+        children: [
+          Text(
+            meetingMode == "I prefere meeting $meetingMode"
+                ? 'Your Meeting Preference'
+                : meetingMode,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const SizedBox(height: 4),
+        ],
+      );
+
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'message',
-        onClicked: () {},
+        onClicked: () {
+          Get.to(() => ChatScreen());
+        },
       );
 
   Widget buildAbout(modelUser.User user) => Container(

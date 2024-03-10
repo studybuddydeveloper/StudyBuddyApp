@@ -72,6 +72,16 @@ class ProfileRepository extends GetxController {
     });
   }
 
+  void addMeetingMode() {
+    _usersCollection
+        .add({
+          'meetingMode': 'in-person',
+          'meetingMode': 'virtual',
+        })
+        .then((value) => print("Meeting Mode Added"))
+        .catchError((error) => print("Failed to add meeting mode: $error"));
+  }
+
   //Saves the users profile information to the database
   Future<void> saveProfileInfo(String fullName, String email, String college,
       String about, String major, String classYear) async {

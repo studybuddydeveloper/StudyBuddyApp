@@ -66,6 +66,10 @@ class ProfileController extends GetxController {
     ProfileRepository.instance.addMultipleColleges();
   }
 
+  void addMeetingMode() {
+    ProfileRepository.instance.addMeetingMode();
+  }
+
   // Future<void> defaultValues() async {
   //   final userId = getCurrentUserId();
   //   Map<String, dynamic> userData = {};
