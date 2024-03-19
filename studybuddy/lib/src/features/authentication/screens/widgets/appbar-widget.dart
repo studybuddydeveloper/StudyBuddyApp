@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
 
-AppBar buildAppBar(BuildContext context) {
+AppBar buildAppBar(BuildContext context, {required Text title}) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
   const icon = CupertinoIcons.moon_stars;
 
   return AppBar(
+    title: title,
+    centerTitle: true,
     leading: const BackButton(),
     backgroundColor: Colors.transparent,
     elevation: 0,
