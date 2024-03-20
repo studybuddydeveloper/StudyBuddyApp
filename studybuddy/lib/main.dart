@@ -1,11 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/screens/splash_screens/splash_screeten.dart';
-import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
-
-import 'firebase_options.dart';
 
 Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
@@ -13,9 +9,9 @@ Future<void> main() async {
   // //initializes firebase for the specific platform that the app is being run on
   // //aka entry point for accessing firebase
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      // // //then we initialize the authentication repository
-      .then((value) => Get.put(AuthenticationRepository()));
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  //     // // //then we initialize the authentication repository
+  // .then((value) => Get.put(AuthenticationRepository()));
   runApp(const MyApp());
 }
 
@@ -33,7 +29,7 @@ class MyApp extends StatelessWidget {
       //page transitions
       defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
-      home: SplashScreen(),
+      home: ScheduleGridWidget(),
     );
   }
 }
