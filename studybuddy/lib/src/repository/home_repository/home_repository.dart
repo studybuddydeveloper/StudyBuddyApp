@@ -49,6 +49,8 @@ class HomeRepository {
           uid: doc.id,
           displayName: data['displayName'],
           college: data['college'],
+          // "monday (3-5)"
+          // "monday": ["2-7"]
           // Add other user details as needed
         );
       }).toList();
