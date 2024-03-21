@@ -100,7 +100,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     // m_controller.addMajors();
     return Builder(
         builder: (context) => Scaffold(
-            appBar: buildAppBar(context),
+            appBar: buildAppBar(context, title: Text('Profile')),
             body: ListView(
               physics: const BouncingScrollPhysics(),
               children: [

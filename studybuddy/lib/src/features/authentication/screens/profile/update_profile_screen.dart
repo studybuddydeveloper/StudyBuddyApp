@@ -70,7 +70,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) => Builder(
         builder: (context) => Scaffold(
-          appBar: buildAppBar(context),
+          appBar: buildAppBar(context, title: Text('Profile')),
           floatingActionButton: FloatingActionButton(
               //TODO Add the functionality to save the user's profile information
               // to the database of the assigned user

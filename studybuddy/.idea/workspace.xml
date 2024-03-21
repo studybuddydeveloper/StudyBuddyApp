@@ -6,19 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cb32dbb2-5d36-484e-a534-42f799136c4c" name="Changes" comment="Enabling forgot password option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/controllers/profile_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/controllers/profile_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/main_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/main_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/academicinfo_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/academicinfo_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/repository/authentication_repository/profile_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/repository/authentication_repository/profile_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +110,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart</url>
-          <line>118</line>
+          <line>120</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
