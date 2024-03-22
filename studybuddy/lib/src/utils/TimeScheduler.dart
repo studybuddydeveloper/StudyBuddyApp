@@ -38,20 +38,34 @@ class TimeScheduler extends GetxController {
   /**
    * this saves the user's time schedule to the database in the time-schedule collection
    */
-  void saveToDatabase(String day, String start, String end) {
+  Future<void> saveToDatabase(String day, String start, String end) async {
     // save to database
-    CollectionReference timeScheduleCollection =
-        FirebaseFirestore.instance.collection('time-schedule');
 
-    // Right now, we only let users select one timeslot per day
+    try {
+      CollectionReference timeScheduleCollection =
+          FirebaseFirestore.instance.collection('time-schedule');
 
-    // TODO: Eventually, what we would want to do Is have them select multiple timeslots per day
-    // by setting startTimeOfDay and endTimeOfDay to be lists of strings
-    timeScheduleCollection.doc(uid).set({
-      'dayOfWeek': day,
-      'startTimeOfDay': start,
-      'endTimeOfDay': end,
-    });
+      // Right now, we only let users select one timeslot per day
+
+      // TODO: Eventually, what we would want to do Is have them select multiple timeslots per day
+      // by setting startTimeOfDay and endTimeOfDay to be lists of strings
+
+      // Reference to to the users document
+
+      DocumentReference userDocRef = timeScheduleCollection.doc(uid);
+
+      // Reference to the appointment subcollection within the user's document
+      CollectionReference appointmentsCollection =
+          userDocRef.collection('appointments');
+
+      await appointmentsCollection.add({
+        'dayOfWeek': day,
+        'startTimeOfDay': start,
+        'endTimeOfDay': end,
+      });
+    } catch (e) {
+      print("Error saving data to the database");
+    }
   }
 
   // void setTimeSchedule(Map<String, List<String>> timeSchedule) {
