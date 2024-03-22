@@ -1,39 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/utils/UserAvailabilityModel.dart';
 
 /**
  * This class serves as the backend for the time scheduling of the user.
  */
 class TimeScheduler extends GetxController {
   static TimeScheduler get instance => Get.find();
-
-  // final _userAvailability = Get.put(UserAvailabilityModel(
-  //     dayOfWeek: dayOfWeek,
-  //     startTime: startTime,
-  //     endTime: endTime)
-  // )
-  // UserAvailabilityModel _userAvailabilityModel = UserAvailabilityModel.instance;
-
-  // final Map<String, List<String>> timeSchedule;
-  // final List<String> dayTimeOfWeek;
-  // final List<String> dayOfWeek;
-  // final List<String> startTimeOfDay;
-  // final List<String> endTimeOfDay;
-  // final String dayOfWeek;
-  // final String startTimeOfDay;
-  // final String endTimeOfDay;
   final String uid;
 
   //
   // var timeSchedule;
   //
   // // this creates an object representation of the user's time schedule for a specific day
-  TimeScheduler(
-      {
-      // required this.dayOfWeek,
-      // required this.startTimeOfDay,
-      // required this.endTimeOfDay,
-      required this.uid}) {}
+  TimeScheduler({required this.uid}) {}
 
   /**
    * this saves the user's time schedule to the database in the time-schedule collection
@@ -66,6 +46,20 @@ class TimeScheduler extends GetxController {
     } catch (e) {
       print("Error saving data to the database");
     }
+  }
+
+  Future<List<UserAvailabilityModel>> getUserAppointments() async {
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('time-schedule')
+        .doc(uid)
+        .collection('appointments')
+        .get();
+
+    // print("The querysnapshot: ${querySnapshot.docs.length}");
+    return querySnapshot.docs.map((doc) {
+      // print("yes her");
+      return UserAvailabilityModel.fromJson(doc.data() as Map<String, dynamic>);
+    }).toList();
   }
 
   // void setTimeSchedule(Map<String, List<String>> timeSchedule) {
@@ -150,8 +144,6 @@ class TimeScheduler extends GetxController {
       });
     }
 
-    // List of matching users looks like:
-    // ['user1ID', 'user2ID', 'user3ID']
     return listOfMatchingUsers;
   }
 

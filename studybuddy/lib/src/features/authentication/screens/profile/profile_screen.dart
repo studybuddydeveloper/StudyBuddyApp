@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/main_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
 import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
+import 'package:studybuddy/src/utils/TimeScheduler.dart';
 import 'package:studybuddy/src/utils/UserAvailabilityModel.dart';
 
 import '../../../../repository/authentication_repository/profile_repository.dart';
@@ -221,70 +222,67 @@ class UserAvailability extends StatefulWidget {
 class _UserAvailability extends State<UserAvailability> {
   List<UserAvailabilityModel> userAvailability = [];
 
+  final TimeScheduler timeScheduler =
+      TimeScheduler(uid: ProfileController.instance.getCurrentUserId());
+
   @override
   Widget build(BuildContext context) {
-    if (userAvailability.isEmpty) {
-      return Builder(builder: (context) {
-        return Scaffold(
-            appBar: buildAppBar(context,
-                title: Text("User's Availability"),
-                leading: BackButton(
-                    onPressed: () => Get.to(() => ScheduleGridWidget()))),
-            body: ListView(children: [
-              Text("Uh Oh, seems you haven't set your availability yet."
-                  " Click the button below to begin!"),
-              SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
-                child: Text("Set up your availability"),
-                onPressed: () => Get.to(() => ScheduleGridWidget()),
-              )
-            ]));
-      });
-    }
-
-    return ListView.builder(
-        itemCount: userAvailability.length,
-        itemBuilder: (context, index) {
-          UserAvailabilityModel availability = userAvailability[index];
-
-          return ListTile(
-            title: Text(availability.dayOfWeek),
-            subtitle: Text('$availability.startTime - $availability.endTime'),
-          );
-        });
+    return Scaffold(
+        appBar: buildAppBar(context,
+            title: Text('User Profile'),
+            leading: BackButton(
+              onPressed: () => Get.to(() => ProfileScreen()),
+            )),
+        body: Center(
+            child: FutureBuilder<List<UserAvailabilityModel>>(
+                future: timeScheduler.getUserAppointments(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    print("waiting");
+                    return CircularProgressIndicator(
+                      color: Colors.black,
+                    );
+                  } else if (snapshot.hasError) {
+                    print(timeScheduler.getUserAppointments());
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData.isBlank!) {
+                    return Column(
+                      children: [
+                        Text(
+                            "Uh Oh, looks like you've not set your availability yet"
+                            "Click below to continue"),
+                        SizedBox(height: 50),
+                        ElevatedButton(
+                            onPressed: () => Get.to(() => ScheduleGridWidget()),
+                            child: Text("Add your availability"))
+                      ],
+                    );
+                  } else {
+                    final appointments = snapshot.data!;
+                    return Column(
+                      children: [
+                        ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: appointments.length,
+                          itemBuilder: (context, index) {
+                            final appointment = appointments[index];
+                            return ListTile(
+                              title: Text('Date: ${appointment.dayOfWeek}'),
+                              subtitle: Text(
+                                  'Start: ${appointment.startTime} - End: ${appointment.endTime}'),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => Get.to(() => ScheduleGridWidget()),
+                            child: Text("Update your availability"))
+                      ],
+                    );
+                  }
+                })));
   }
 }
-
-//
-//   Text(
-//   'Your Availability',
-//   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-//   ),
-//   const SizedBox(height: 4),
-//   Row(children: [
-//   SizedBox(
-//   height: 100,
-//   width: 100,
-//   child: Text(
-//   "$dayOfWeek",
-//   ),
-//   ),
-//   SizedBox(width: 50),
-//   SizedBox(
-//   height: 100,
-//   width: 100,
-//   child: Text(
-//   "$startTime",
-//   ),
-//   ),
-//   SizedBox(
-//   height: 100,
-//   width: 100,
-//   child: Text(
-//   "$endTime",
-//   ),
-//   ),
-//   ])
-//   ],

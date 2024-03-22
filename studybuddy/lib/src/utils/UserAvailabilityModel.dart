@@ -9,11 +9,10 @@ class UserAvailabilityModel extends GetxController {
   final String startTime;
   final String endTime;
 
-  UserAvailabilityModel({
-    required this.dayOfWeek,
-    required this.startTime,
-    required this.endTime
-  });
+  UserAvailabilityModel(
+      {required this.dayOfWeek,
+      required this.startTime,
+      required this.endTime});
 
   String getDayOfWeek() {
     return dayOfWeek;
@@ -21,6 +20,14 @@ class UserAvailabilityModel extends GetxController {
 
   String getEndTime() {
     return endTime;
+  }
+
+  factory UserAvailabilityModel.fromJson(Map<String, dynamic> json) {
+    print("The jso: $json");
+    return UserAvailabilityModel(
+        dayOfWeek: json['dayOfWeek'],
+        startTime: json['startTimeOfDay'],
+        endTime: json['endTimeOfDay']);
   }
 //
 // String getStartTime(){
@@ -34,6 +41,4 @@ class UserAvailabilityModel extends GetxController {
 // setEndTime(String end){
 //   endTime = end;
 // }
-
-
 }
