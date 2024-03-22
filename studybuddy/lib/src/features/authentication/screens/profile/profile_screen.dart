@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/main_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
+import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
+import 'package:studybuddy/src/utils/UserAvailabilityModel.dart';
 
 import '../../../../repository/authentication_repository/profile_repository.dart';
 import '../../../../utils/Majors.dart';
@@ -32,6 +35,15 @@ class _ProfileScreen extends State<ProfileScreen> {
   String about = '';
   String major = '';
   String classYear = '';
+
+  late String dayOfWeek = '';
+  late String startTime = '';
+  late String endTime = '';
+
+  late Map<String, String> selectedStartTimes = {};
+
+// Declare a map to store selected end times for each date
+  late Map<String, String> selectedEndTimes = {};
 
   @override
   void initState() {
@@ -100,7 +112,11 @@ class _ProfileScreen extends State<ProfileScreen> {
     // m_controller.addMajors();
     return Builder(
         builder: (context) => Scaffold(
-            appBar: buildAppBar(context, title: Text('Profile')),
+            appBar: buildAppBar(context,
+                title: Text('Profile'),
+                leading: BackButton(
+                  onPressed: () => Get.offAll(() => MainScreen()),
+                )),
             body: ListView(
               physics: const BouncingScrollPhysics(),
               children: [
@@ -124,8 +140,14 @@ class _ProfileScreen extends State<ProfileScreen> {
                 buildMeetingMode(user),
                 const SizedBox(height: 48),
                 buildAbout(user),
-                // controller.getProfileInfo(),
 
+                const SizedBox(height: 48),
+
+                ElevatedButton(
+                    onPressed: () => Get.offAll(() => UserAvailability()),
+                    child: Text("Click to view your availability")),
+                // controller.getProfileInfo(),
+                const SizedBox(height: 48),
                 ElevatedButton(
                     child: Text("Go to Home"),
                     onPressed: () => controller.goToMainScreen())
@@ -185,4 +207,84 @@ class _ProfileScreen extends State<ProfileScreen> {
       );
 }
 
+class UserAvailability extends StatefulWidget {
+  @override
+  _UserAvailability createState() => _UserAvailability();
+}
+// Do some null checks here first to check if the availability pulled from the database
+// does not exist
+
+/**
+ * Availability looks like a grid of cards
+ * Monday | 5pm | 6pm |
+ */
+class _UserAvailability extends State<UserAvailability> {
+  List<UserAvailabilityModel> userAvailability = [];
+
+  @override
+  Widget build(BuildContext context) {
+    if (userAvailability.isEmpty) {
+      return Builder(builder: (context) {
+        return Scaffold(
+            appBar: buildAppBar(context,
+                title: Text("User's Availability"),
+                leading: BackButton(
+                    onPressed: () => Get.to(() => ScheduleGridWidget()))),
+            body: ListView(children: [
+              Text("Uh Oh, seems you haven't set your availability yet."
+                  " Click the button below to begin!"),
+              SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                child: Text("Set up your availability"),
+                onPressed: () => Get.to(() => ScheduleGridWidget()),
+              )
+            ]));
+      });
+    }
+
+    return ListView.builder(
+        itemCount: userAvailability.length,
+        itemBuilder: (context, index) {
+          UserAvailabilityModel availability = userAvailability[index];
+
+          return ListTile(
+            title: Text(availability.dayOfWeek),
+            subtitle: Text('$availability.startTime - $availability.endTime'),
+          );
+        });
+  }
+}
+
 //
+//   Text(
+//   'Your Availability',
+//   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+//   ),
+//   const SizedBox(height: 4),
+//   Row(children: [
+//   SizedBox(
+//   height: 100,
+//   width: 100,
+//   child: Text(
+//   "$dayOfWeek",
+//   ),
+//   ),
+//   SizedBox(width: 50),
+//   SizedBox(
+//   height: 100,
+//   width: 100,
+//   child: Text(
+//   "$startTime",
+//   ),
+//   ),
+//   SizedBox(
+//   height: 100,
+//   width: 100,
+//   child: Text(
+//   "$endTime",
+//   ),
+//   ),
+//   ])
+//   ],

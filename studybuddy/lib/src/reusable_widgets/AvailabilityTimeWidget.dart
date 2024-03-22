@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/time_scheduling_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../features/authentication/screens/widgets/appbar-widget.dart';
 
@@ -46,7 +48,10 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       // align: 'center',
-                    )), // Set the title text
+                    )),
+                // Set the title text
+                leading:
+                    BackButton(onPressed: () => Get.to(() => ProfileScreen())),
               ),
               body: SingleChildScrollView(
                 child: Container(
@@ -474,7 +479,6 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
    */
   Widget buildDropdownButton(
       String selectedValue, String dayOfWeek, bool isStartTime) {
-    // print("selected value is $selectedValue");
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       // Add padding
@@ -492,15 +496,19 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
           // TODO: CHange this value to the updated value when it's changed on the screen
           setState(() {
             if (!isStartTime) {
-              print("new end is $newValue");
+              // print("new end is $newValue");
               // int.parse(selectedEndTimes[dayOfWeek]!.split(":")[0])
               selectedEndTimes[dayOfWeek] = newValue!;
-              currDateString += "-$newValue";
-              userAvailability.add(currDateString);
+              // currDateString += "-$newValue";
+              var curr = selectedEndTimes[dayOfWeek];
+              var cur = selectedStartTimes[dayOfWeek];
+              userAvailability.add('$dayOfWeek $cur-$curr');
+
+              print("the user availa: $userAvailability");
             } else {
-              print("hello word");
-              print("new value is $newValue");
-              currDateString += "$dayOfWeek $newValue";
+              // print("hello word");
+              // print("new value is $newValue");
+              // currDateString += "$dayOfWeek $newValue";
               selectedStartTimes[dayOfWeek] = newValue!;
             }
           })

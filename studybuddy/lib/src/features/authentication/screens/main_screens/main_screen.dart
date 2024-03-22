@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
       children: [
         Container(
             child: ElevatedButton(
-          child: Text("Click me!"),
+          child: Text("Go to Profile Page"),
           onPressed: () {
             Get.to(() => ProfileScreen());
           },
