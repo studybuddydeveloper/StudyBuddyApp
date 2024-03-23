@@ -154,14 +154,6 @@ class HomeRepository extends GetxController {
                 .where(FieldPath.documentId, isEqualTo: p_users.uid)
                 .get();
 
-            // List<User_Main> users = querySnapshot.docs.map((doc) {
-            //   Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-            //   return User_Main(
-            //       uid: doc.id,
-            //       displayName: data['fullName'],
-            //       college: data['schoolName'],
-            //       major: data['major']);
-            // }).toList();
 
             QueryDocumentSnapshot doc = querySnapshot.docs.first;
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;

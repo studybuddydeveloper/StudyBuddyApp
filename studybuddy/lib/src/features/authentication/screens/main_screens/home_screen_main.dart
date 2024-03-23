@@ -69,6 +69,71 @@ class _HomeScreenState extends State<HomeScreenMain> {
     }
 
     return Scaffold(
+      drawer:
+          // IconButton(
+          //   onPressed: () =>
+          //   {
+          Drawer(
+              child: ListView(
+        children: [
+          FilledButton(
+            onPressed: null,
+            // TODO update with the actual school name of user
+            child: Text("School"),
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          VerticalDivider(
+            thickness: 1,
+            indent: 1,
+          ),
+          FilledButton(
+              onPressed: null,
+              // TODO update with the actual school name of user
+              child: Text("Major")),
+          SizedBox(
+            height: 24,
+          ),
+          VerticalDivider(
+            thickness: 1,
+            indent: 1,
+          ),
+          OutlinedButton(
+            onPressed: () => {},
+            child: Text("Time"),
+          ),
+          Row(
+            children: [
+              Chip(
+                label: Text("In-Person"),
+                onDeleted: () => {},
+                deleteIcon: Icon(Icons.close),
+              ),
+              Chip(
+                label: Text("Virtual"),
+                onDeleted: () => {},
+                deleteIcon: Icon(Icons.close),
+              ),
+              Chip(
+                label: Text("Hybrid"),
+                onDeleted: () => {},
+                deleteIcon: Icon(Icons.close),
+                // clipBehavior: ,
+              )
+            ],
+          ),
+          SizedBox(
+            height: 24,
+          ),
+          VerticalDivider(
+            thickness: 1,
+            indent: 1,
+          ),
+          ElevatedButton(onPressed: () => {}, child: Text("Apply"))
+        ],
+      )),
+      // icon: Icon(Icons.filter_alt_rounded),),
       appBar: AppBar(
         title: const Text('College Buddies'),
       ),
