@@ -5,15 +5,15 @@ import 'package:studybuddy/src/features/authentication/controllers/profile_contr
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 import 'package:studybuddy/src/repository/home_repository/home_repository.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreenMain extends StatefulWidget {
+  const HomeScreenMain({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenMain> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<User>> users;
+class _HomeScreenState extends State<HomeScreenMain> {
+  late Future<List<User_Main>> users;
   final _Pcontroller = Get.put(ProfileController());
 
   HomeRepository _homeRepo = HomeRepository();
@@ -22,17 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    print("about t enter");
-    users = _homeRepo.fetchUserProfile();
+    users = _homeRepo.fetchUsersAvailability();
 
     college = _homeRepo.college;
-    print("The college $college");
     // update this to a controller
   }
 
   @override
   Widget build(BuildContext context) {
-    void showUserProfile(User user) {
+    void showUserProfile(User_Main user) {
       print("The display $user.displayName");
 
       showModalBottomSheet(
@@ -52,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 10.0),
                 Text('Name: ${user.displayName}'),
-                Text('College: ${college}'),
+                Text('College: ${user.college}'),
+                // Text()
                 // Add other user details as needed
                 SizedBox(height: 20.0),
                 ElevatedButton(
@@ -80,15 +79,24 @@ class _HomeScreenState extends State<HomeScreen> {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
+          } else if (snapshot.data!.isEmpty) {
+            return Text(
+                "Uh oh, looks like we don't have any recommendations for you yet!");
           } else {
-            List<User> userList = snapshot.data as List<User>;
+            List<User_Main> userList = snapshot.data as List<User_Main>;
             print("the display $userList");
             return ListView.builder(
               itemCount: userList.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(userList[index].displayName ?? 'no name'),
-                  subtitle: Text('College: $college'),
+                  subtitle: Row(children: [
+                    Text('College: ${userList[index].college}'),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    Text('Major: ${userList[index].major}')
+                  ]),
                   onTap: () => showUserProfile(userList[index]),
                 );
               },

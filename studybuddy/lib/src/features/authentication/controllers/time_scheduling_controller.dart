@@ -10,7 +10,7 @@ import '../../../utils/UserAvailabilityModel.dart';
  */
 
 class TimeSchedulingController extends GetxController {
-  final List<String> userAvailability;
+  List<String> userAvailability;
 
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   late TimeScheduler _timeScheduler;
@@ -23,6 +23,8 @@ class TimeSchedulingController extends GetxController {
   TimeSchedulingController({
     required this.userAvailability,
   });
+
+  // TimeSchedulingController(){}
 
   static TimeSchedulingController get instance => Get.find();
 
