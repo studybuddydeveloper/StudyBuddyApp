@@ -17,6 +17,8 @@ class _HomeScreenState extends State<HomeScreenMain> {
   bool isInpersonChecked = false;
   bool isHybridChecked = false;
   bool isVirtualChecked = false;
+  bool isSchoolChecked = true;
+  bool isMajorChecked = false;
 
   // final _Pcontroller = Get.put(ProfileController());
 
@@ -106,47 +108,55 @@ class _HomeScreenState extends State<HomeScreenMain> {
                     indent: 1,
                     color: Colors.black,
                   ),
-                  FilledButton(
-                    onPressed: null,
-                    // TODO update with the actual school name of user
-                    child: Text(
-                      "School",
+                  CheckboxListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    side: BorderSide(color: Colors.black),
+                    tileColor: Colors.white,
+                    title: Text(
+                      'SCHOOL',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(100, 50)),
-                    ),
+                    value: isSchoolChecked,
+                    // Set the initial value of the checkbox
+                    onChanged: null,
                   ),
-                  FilledButton(
-                    onPressed: () => {},
-                    // TODO update with the actual school name of user
-                    child: Text(
-                      "Major",
+
+                  CheckboxListTile(
+                    tileColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    title: Text(
+                      'MAJOR',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      fixedSize: MaterialStateProperty.all(Size(100, 50)),
-                    ),
+                    value: isMajorChecked,
+                    // Set the initial value of the checkbox
+                    onChanged: (newValue) {
+                      // Handle checkbox state change
+                      setState(() {
+                        isMajorChecked = newValue!;
+                      });
+                    },
+                    selectedTileColor: Colors.black,
                   ),
                   CheckboxListTile(
                     tileColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    // hoverColor: Colors.black,
-                    // activeColor: Colors.black,
-                    // backgroundColor: Colors.black,
                     title: Text(
-                      'Time',
+                      'TIME',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -173,14 +183,13 @@ class _HomeScreenState extends State<HomeScreenMain> {
                           width: 150,
                           height: 50,
                           child: CheckboxListTile(
-                            fillColor: MaterialStateProperty.all(Colors.yellow),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             side: BorderSide(color: Colors.black),
                             tileColor: Colors.white,
                             title: Text(
-                              'In Person',
+                              'IN PERSON',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -195,7 +204,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                                 isInpersonChecked = newValue!;
                               });
                             },
-                            selectedTileColor: Colors.yellow,
                           ),
                         ),
                         SizedBox(
@@ -209,11 +217,10 @@ class _HomeScreenState extends State<HomeScreenMain> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             side: BorderSide(color: Colors.black),
-                            fillColor: MaterialStateProperty.all(Colors.yellow),
 
                             tileColor: Colors.white,
                             title: Text(
-                              'Virtual',
+                              'VIRTUAL',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -228,7 +235,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                                 isVirtualChecked = newValue!;
                               });
                             },
-                            selectedTileColor: Colors.yellow,
                           ),
                         ),
                         SizedBox(
@@ -238,14 +244,13 @@ class _HomeScreenState extends State<HomeScreenMain> {
                           width: 150,
                           height: 50,
                           child: CheckboxListTile(
-                            fillColor: MaterialStateProperty.all(Colors.yellow),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             side: BorderSide(color: Colors.black),
                             tileColor: Colors.white,
                             title: Text(
-                              'Hybrid',
+                              'HYBRID',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -260,7 +265,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                                 isHybridChecked = newValue!;
                               });
                             },
-                            selectedTileColor: Colors.yellow,
                           ),
                         ),
                         SizedBox(
