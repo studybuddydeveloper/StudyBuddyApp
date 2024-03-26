@@ -12,6 +12,12 @@ class HomeScreenMain extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreenMain> {
   late Future<List<User_Main>> users;
 
+  bool isTimeChecked =
+      false; // Define a boolean variable to track the state of the checkbox
+  bool isInpersonChecked = false;
+  bool isHybridChecked = false;
+  bool isVirtualChecked = false;
+
   // final _Pcontroller = Get.put(ProfileController());
 
   // HomeRepository _homeRepo = HomeRepository();
@@ -72,7 +78,7 @@ class _HomeScreenState extends State<HomeScreenMain> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(
@@ -86,7 +92,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                       ),
                     ],
                   ),
-
                   Text(
                     'Filter by:',
                     style: TextStyle(
@@ -95,7 +100,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   //TODO Include vertical line
                   const Divider(
                     thickness: 1,
@@ -134,24 +138,28 @@ class _HomeScreenState extends State<HomeScreenMain> {
                     ),
                   ),
                   CheckboxListTile(
-                    tileColor: Colors.black,
-                    overlayColor: MaterialStateProperty.all(Colors.cyanAccent),
+                    tileColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     // hoverColor: Colors.black,
-                    checkColor: Colors.cyanAccent,
                     // activeColor: Colors.black,
                     // backgroundColor: Colors.black,
                     title: Text(
                       'Time',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    value: false,
+                    value: isTimeChecked,
                     // Set the initial value of the checkbox
                     onChanged: (newValue) {
                       // Handle checkbox state change
+                      setState(() {
+                        isTimeChecked = newValue!;
+                      });
                     },
                     selectedTileColor: Colors.black,
                   ),
@@ -165,68 +173,99 @@ class _HomeScreenState extends State<HomeScreenMain> {
                           width: 150,
                           height: 50,
                           child: CheckboxListTile(
+                            fillColor: MaterialStateProperty.all(Colors.yellow),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             side: BorderSide(color: Colors.black),
                             tileColor: Colors.white,
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.cyanAccent),
                             title: Text(
-                              'Time',
+                              'In Person',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            value: false,
+                            value: isInpersonChecked,
                             // Set the initial value of the checkbox
                             onChanged: (newValue) {
                               // Handle checkbox state change
+                              setState(() {
+                                isInpersonChecked = newValue!;
+                              });
                             },
-                            selectedTileColor: Colors.black,
+                            selectedTileColor: Colors.yellow,
                           ),
                         ),
                         SizedBox(
                           width: 24,
                         ),
-                        Chip(
-                          // color: MaterialStateProperty.all(Colors.black),
-                          label: const Text("In-Person",
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+                            fillColor: MaterialStateProperty.all(Colors.yellow),
+
+                            tileColor: Colors.white,
+                            title: Text(
+                              'Virtual',
                               style: TextStyle(
+                                color: Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                              )),
-                          onDeleted: () => {},
-                          deleteIcon: Icon(Icons.close),
+                              ),
+                            ),
+                            value: isVirtualChecked,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                              setState(() {
+                                isVirtualChecked = newValue!;
+                              });
+                            },
+                            selectedTileColor: Colors.yellow,
+                          ),
                         ),
                         SizedBox(
                           width: 24,
                         ),
-                        Chip(
-                          // color: MaterialStateProperty.all(Colors.black),
-                          label: const Text("Virtual",
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            fillColor: MaterialStateProperty.all(Colors.yellow),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+                            tileColor: Colors.white,
+                            title: Text(
+                              'Hybrid',
                               style: TextStyle(
+                                color: Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                              )),
-                          onDeleted: () => {},
-                          deleteIcon: Icon(Icons.close),
+                              ),
+                            ),
+                            value: isHybridChecked,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                              setState(() {
+                                isHybridChecked = newValue!;
+                              });
+                            },
+                            selectedTileColor: Colors.yellow,
+                          ),
                         ),
                         SizedBox(
                           width: 24,
                         ),
-                        Chip(
-                          // color: MaterialStateProperty.all(Colors.black),
-                          label: const Text("Hybrid",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          onDeleted: () => {},
-                          deleteIcon: Icon(Icons.close),
-                        )
                       ],
                     ),
                   ),
