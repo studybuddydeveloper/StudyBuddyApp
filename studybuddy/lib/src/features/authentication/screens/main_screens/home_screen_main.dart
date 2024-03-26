@@ -1,9 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
-import 'package:studybuddy/src/repository/home_repository/home_repository.dart';
 
 class HomeScreenMain extends StatefulWidget {
   const HomeScreenMain({super.key});
@@ -14,17 +11,18 @@ class HomeScreenMain extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreenMain> {
   late Future<List<User_Main>> users;
-  final _Pcontroller = Get.put(ProfileController());
 
-  HomeRepository _homeRepo = HomeRepository();
+  // final _Pcontroller = Get.put(ProfileController());
+
+  // HomeRepository _homeRepo = HomeRepository();
   String college = '';
 
   @override
   void initState() {
     super.initState();
-    users = _homeRepo.fetchUsersAvailability();
+    // users = _homeRepo.fetchUsersAvailability();
 
-    college = _homeRepo.college;
+    // college = _homeRepo.college;
     // update this to a controller
   }
 
@@ -69,106 +67,218 @@ class _HomeScreenState extends State<HomeScreenMain> {
     }
 
     return Scaffold(
-      drawer:
-          // IconButton(
-          //   onPressed: () =>
-          //   {
-          Drawer(
-              child: ListView(
-        children: [
-          FilledButton(
-            onPressed: null,
-            // TODO update with the actual school name of user
-            child: Text("School"),
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          VerticalDivider(
-            thickness: 1,
-            indent: 1,
-          ),
-          FilledButton(
-              onPressed: null,
-              // TODO update with the actual school name of user
-              child: Text("Major")),
-          SizedBox(
-            height: 24,
-          ),
-          VerticalDivider(
-            thickness: 1,
-            indent: 1,
-          ),
-          OutlinedButton(
-            onPressed: () => {},
-            child: Text("Time"),
-          ),
-          Row(
-            children: [
-              Chip(
-                label: Text("In-Person"),
-                onDeleted: () => {},
-                deleteIcon: Icon(Icons.close),
-              ),
-              Chip(
-                label: Text("Virtual"),
-                onDeleted: () => {},
-                deleteIcon: Icon(Icons.close),
-              ),
-              Chip(
-                label: Text("Hybrid"),
-                onDeleted: () => {},
-                deleteIcon: Icon(Icons.close),
-                // clipBehavior: ,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 24,
-          ),
-          VerticalDivider(
-            thickness: 1,
-            indent: 1,
-          ),
-          ElevatedButton(onPressed: () => {}, child: Text("Apply"))
-        ],
-      )),
-      // icon: Icon(Icons.filter_alt_rounded),),
-      appBar: AppBar(
-        title: const Text('College Buddies'),
-      ),
-      body: FutureBuilder(
-        future: users,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.data!.isEmpty) {
-            return Text(
-                "Uh oh, looks like we don't have any recommendations for you yet!");
-          } else {
-            List<User_Main> userList = snapshot.data as List<User_Main>;
-            print("the display $userList");
-            return ListView.builder(
-              itemCount: userList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(userList[index].displayName ?? 'no name'),
-                  subtitle: Row(children: [
-                    Text('College: ${userList[index].college}'),
-                    SizedBox(
-                      width: 50,
+        drawer: Drawer(
+            backgroundColor: Colors.white,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.pop(context); // Close the drawer
+                        },
+                      ),
+                    ],
+                  ),
+
+                  Text(
+                    'Filter by:',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text('Major: ${userList[index].major}')
-                  ]),
-                  onTap: () => showUserProfile(userList[index]),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
+                  ),
+
+                  //TODO Include vertical line
+                  const Divider(
+                    thickness: 1,
+                    indent: 1,
+                    color: Colors.black,
+                  ),
+                  FilledButton(
+                    onPressed: null,
+                    // TODO update with the actual school name of user
+                    child: Text(
+                      "School",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      fixedSize: MaterialStateProperty.all(Size(100, 50)),
+                    ),
+                  ),
+                  FilledButton(
+                    onPressed: () => {},
+                    // TODO update with the actual school name of user
+                    child: Text(
+                      "Major",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      fixedSize: MaterialStateProperty.all(Size(100, 50)),
+                    ),
+                  ),
+                  CheckboxListTile(
+                    tileColor: Colors.black,
+                    overlayColor: MaterialStateProperty.all(Colors.cyanAccent),
+                    // hoverColor: Colors.black,
+                    checkColor: Colors.cyanAccent,
+                    // activeColor: Colors.black,
+                    // backgroundColor: Colors.black,
+                    title: Text(
+                      'Time',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    value: false,
+                    // Set the initial value of the checkbox
+                    onChanged: (newValue) {
+                      // Handle checkbox state change
+                    },
+                    selectedTileColor: Colors.black,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+                            tileColor: Colors.white,
+                            overlayColor:
+                                MaterialStateProperty.all(Colors.cyanAccent),
+                            title: Text(
+                              'Time',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            value: false,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                            },
+                            selectedTileColor: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Chip(
+                          // color: MaterialStateProperty.all(Colors.black),
+                          label: const Text("In-Person",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          onDeleted: () => {},
+                          deleteIcon: Icon(Icons.close),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Chip(
+                          // color: MaterialStateProperty.all(Colors.black),
+                          label: const Text("Virtual",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          onDeleted: () => {},
+                          deleteIcon: Icon(Icons.close),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Chip(
+                          // color: MaterialStateProperty.all(Colors.black),
+                          label: const Text("Hybrid",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          onDeleted: () => {},
+                          deleteIcon: Icon(Icons.close),
+                        )
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: () => {},
+                      child: Text("Apply",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          )))
+                ],
+              ),
+            )),
+        // icon: Icon(Icons.filter_alt_rounded),),
+        appBar: AppBar(
+          title: const Text('College Buddies'),
+        ),
+        body: Text('College: $college')
+
+        // FutureBuilder(
+        //   future: users,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return CircularProgressIndicator();
+        //     } else if (snapshot.hasError) {
+        //       return Text('Error: ${snapshot.error}');
+        //     } else if (snapshot.data!.isEmpty) {
+        //       return Text(
+        //           "Uh oh, looks like we don't have any recommendations for you yet!");
+        //     } else {
+        //       List<User_Main> userList = snapshot.data as List<User_Main>;
+        //       print("the display $userList");
+        //       return ListView.builder(
+        //         itemCount: userList.length,
+        //         itemBuilder: (context, index) {
+        //           return ListTile(
+        //             title: Text(userList[index].displayName ?? 'no name'),
+        //             subtitle: Row(children: [
+        //               Text('College: ${userList[index].college}'),
+        //               SizedBox(
+        //                 width: 50,
+        //               ),
+        //               Text('Major: ${userList[index].major}')
+        //             ]),
+        //             onTap: () => showUserProfile(userList[index]),
+        //           );
+        //         },
+        //       );
+        //     }
+        //   },
+        // ),
+        );
   }
 }
