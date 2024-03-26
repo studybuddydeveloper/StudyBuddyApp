@@ -1,61 +1,114 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
+import 'package:studybuddy/src/repository/home_repository/home_repository.dart';
 
 import '../../../repository/users_repository/users_repository.dart';
+import '../../../utils/User_Data.dart';
+import '../screens/main_screens/user.dart';
 
 /**
  * This controller fetches data from the database to be displayed on the home screen
  */
 class HomeScreenController extends GetxController {
   static HomeScreenController get instance => Get.find();
-  FirestoreService firestoreService = FirestoreService();
+
+  final firestoreService = Get.put(FirestoreService());
+
+  late HomeRepository homeRepository;
+
+  final pController = Get.put(ProfileController());
+
+  final UserData userData;
+
+  HomeScreenController({required this.userData}) {
+    homeRepository = Get.put(HomeRepository(userData: userData));
+  }
+
   FirebaseAuth auth = FirebaseAuth.instance;
   User? user;
+  String? college = '';
+  String? major = '';
 
-  List users = []; //list of users that match the current user's defns
+  List<User_Main> users =
+      []; //list of users that match the current user's defns
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    print("hello world");
-    getUsersWithSimilarMajorNames();
+    college = await firestoreService.getCurrentUserCollege();
+    major = await firestoreService.getCurrentUserMajor();
   }
 
   /**
-   * This fetches users from the database that match the set defns of the current user
-   * It includes: school, major, and meeting mode
+   * This fetches users from the database that are in the same college as the current user
    */
-  Future<List> fetchusersThatMatchCurrentUser() async {
-    const url2 = '''https://firestore.googleapis.com/v1/projects/
-    studybuddyapp-93539/databases/(default)/
-        ''';
-    const url = 'https://randomuser.me/api/?results=10';
-    final uri = Uri.parse(url2);
+  Future<List<User_Main>> fetchUsersInSameCollege() async {
+    print("The current user college in fetch_home_ctrler: ${userData.college}");
+    List<User_Main> usersInSameCollege = [];
+    if (college != null) {
+      usersInSameCollege = await homeRepository.fetchUsersInSameCollege();
 
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
+      if (usersInSameCollege.isNotEmpty) {
+        print('Users in the same college: $usersInSameCollege');
+      } else {
+        print('No users found in the same college.');
+      }
+    } else {
+      print('Unable to retrieve current user college.');
+    }
 
-    print("The json is: $json");
-    users = json['results'];
-    setState(() {
-      users = json('results');
-    });
-    print("fetching data is done");
+    return usersInSameCollege;
+  }
 
-    print("This is the controller users: $users");
+  /**
+   * This fetches users from the database that are in the same major as the current user
+   */
+  Future<List<User_Main>> fetchUsersInSameMajor() async {
+    List<User_Main> usersInSameMajor = [];
 
-    return users;
+    if (major != null) {
+      usersInSameMajor =
+          await homeRepository.fetchUsersWithSameMajor(userData.major);
+
+      if (usersInSameMajor.isNotEmpty) {
+        print('Users in the same college: $usersInSameMajor');
+      } else {
+        print('No users found in the same college.');
+      }
+    } else {
+      print('Unable to retrieve current user college.');
+    }
+    return usersInSameMajor;
+  }
+
+  /**
+   * This fetches users from the database that have the same availability
+   */
+
+  Future<List<User_Main>> fetchUsersWithSameAvailability() async {
+    List<User_Main> usersWithSameAvailability = [];
+
+    if (user != null) {
+      usersWithSameAvailability =
+          await homeRepository.fetchUsersWithSameAvailability();
+
+      if (usersWithSameAvailability.isNotEmpty) {
+        print('Users with the same availability: $usersWithSameAvailability');
+      } else {
+        print('No users found with the same availability.');
+      }
+    } else {
+      print('Unable to retrieve current user availability.');
+    }
+    return usersWithSameAvailability;
   }
 
   void getUsersWithSimilarMajorNames() async {
     String? currentUserMajor = await firestoreService.getCurrentUserMajor();
 
     if (currentUserMajor != null) {
-      List<String> similarMajorUserNames = await firestoreService
-          .getUsersWithSameMajorNames(currentUserMajor);
+      List<String> similarMajorUserNames =
+          await firestoreService.getUsersWithSameMajorNames(currentUserMajor);
 
       if (similarMajorUserNames.isNotEmpty) {
         print('Users with similar major: $similarMajorUserNames');
@@ -66,7 +119,6 @@ class HomeScreenController extends GetxController {
       print('Unable to retrieve current user major.');
     }
   }
-
 
   void getUser() {
     user = auth.currentUser;
