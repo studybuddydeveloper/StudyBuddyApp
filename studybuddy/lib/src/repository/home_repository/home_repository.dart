@@ -7,33 +7,72 @@ import 'package:studybuddy/src/features/authentication/screens/main_screens/user
 
 import '../../features/authentication/controllers/profile_controller.dart';
 import '../../features/authentication/models/UserAvailabilityModel.dart';
-import '../authentication_repository/profile_repository.dart';
+import '../../utils/User_Data.dart';
 
 class HomeRepository extends GetxController {
+  static HomeRepository get instance => Get.find();
+
   ProfileController _Pcontroller = ProfileController();
+
+  // final UserData _userData = Get.find<UserData>();
+
+  late final UserData userData;
+
+  HomeRepository({required this.userData}) {}
 
   // TimeSchedulingController _tController = TimeSchedulingController(userAvailability: userAvailability)
   String college = '';
   String uid = '';
+  String major = '';
 
-  HomeRepository() {
-    uid = _Pcontroller.getCurrentUserId();
+  @override
+  onInit() {
+    super.onInit();
+    uid = userData.userId!;
+    major = userData.major!;
+    college = userData.college!;
   }
 
   /**
    * Default fetch based on college
    */
-  Future<List<User_Main>> fetchSimilarUsersCollege() async {
-    List<User_Main> users = [];
-
-    Map<String, dynamic> userData = {};
-
+  Future<List<User_Main>> fetchUsersInSameCollege() async {
+    // Map<String, dynamic> userData = {};
     try {
-      // Access the user data fields
-      college = userData['schoolName'] ?? '';
+      // TODO save all this fields to a const page to prevent constant lookup
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
           .where('schoolName', isEqualTo: college)
+          .where(FieldPath.documentId, isNotEqualTo: uid)
+          .get();
+
+      List<User_Main> users = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return User_Main(
+            uid: doc.id,
+            displayName: data['fullName'],
+            college: data['schoolName'],
+            major: data['major']);
+      }).toList();
+      return users;
+    } catch (e) {
+      print('Error fetching user profile: $e');
+    }
+    return [];
+  }
+
+  /**
+   * Default fetch based on major
+   */
+  Future<List<User_Main>> fetchUsersWithSameMajor(String? major) async {
+    List<User_Main> users = [];
+
+    try {
+      // Access the user data fields
+      // college = userData['schoolName'] ?? '';
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('major', isEqualTo: major)
           .where(FieldPath.documentId, isNotEqualTo: uid)
           .get();
       List<User_Main> users = querySnapshot.docs.map((doc) {
@@ -52,47 +91,36 @@ class HomeRepository extends GetxController {
   }
 
   /**
-   * Default fetch based on college
+   * TODO
+   * Fetch users based on default AND meeting preference
    */
-  Future<List<User_Main>> fetchUserProfileDefault() async {
+
+  Future<List<User_Main>> fetchUsersWithSameMeetingPref() async {
+    List<User_Main> users = [];
     Map<String, dynamic> userData = {};
 
     try {
-      // TODO save all this fields to a const page to prevent constant lookup
-      userData = await ProfileRepository().getUserProfile(uid);
-
       // Access the user data fields
       college = userData['schoolName'] ?? '';
+
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .where('schoolName', isEqualTo: college)
-          .where(FieldPath.documentId, isNotEqualTo: uid)
+          .where('meeting-preference', isEqualTo: college)
+          .where('')
           .get();
-      List<User_Main> users = querySnapshot.docs.map((doc) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return User_Main(
-            uid: doc.id,
-            displayName: data['fullName'],
-            college: data['schoolName'],
-            major: data['major']);
-      }).toList();
-      return users;
     } catch (e) {
-      // Handle errors or notify the user about the failure
-      print('Error fetching user profile: $e');
+      print('Error fetching similar users: $e');
     }
-    return [];
+
+    return users;
   }
 
   /**
    * Fetch users based on default AND Availability
    */
-
-  Future<List<User_Main>> fetchUsersAvailability() async {
+  Future<List<User_Main>> fetchUsersWithSameAvailability() async {
     List<User_Main> users = [];
 
-    // List<User_Main> defaultUsers = []
-    // define the current user availability
     List<UserAvailabilityModel> currUserAvailability = [];
     // define the usersAvailability
     List<UserAvailabilityModel> usersAvailability = [];
@@ -102,11 +130,8 @@ class HomeRepository extends GetxController {
         .collection("time-schedule/${uid}/appointments")
         .get();
 
-    // print("THE querysnap: ${querySnapshot.docs.first}");
-
     for (var coll in querySnapshot.docs) {
       Map<String, dynamic> data = coll.data() as Map<String, dynamic>;
-      // print("My edata: ${data}");
       UserAvailabilityModel model = UserAvailabilityModel(
         dayOfWeek: data['dayOfWeek'],
         startTime: data['startTimeOfDay'],
@@ -120,11 +145,7 @@ class HomeRepository extends GetxController {
 
     // now, we rely on existing methods to get all the users from the same
     // defaults as the curr user
-    final List<User_Main> defaultUsers = await fetchUserProfileDefault();
-
-    // now go through the availability of curr user
-    //   for each of it's availability, if the start time and end time and date are
-    // exactly the same with the current user, then add to the users lis
+    final List<User_Main> defaultUsers = await fetchUsersInSameCollege();
 
     for (UserAvailabilityModel model in currUserAvailability) {
       var day = model.dayOfWeek;
@@ -140,11 +161,8 @@ class HomeRepository extends GetxController {
             .collection("time-schedule/${p_users.uid}/appointments")
             .get();
 
-        // print("THE querysnap: ${querySnapshot.docs.first}");
-
         for (var coll in querySnapshot.docs) {
           Map<String, dynamic> data = coll.data() as Map<String, dynamic>;
-          // print("My edata: ${data}");
           if (data['dayOfWeek'] == day &&
               data['startTimeOfDay'] == start &&
               data['endTimeOfDay'] == end) {
@@ -154,7 +172,6 @@ class HomeRepository extends GetxController {
                 .where(FieldPath.documentId, isEqualTo: p_users.uid)
                 .get();
 
-
             QueryDocumentSnapshot doc = querySnapshot.docs.first;
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
             User_Main m = User_Main(
@@ -163,44 +180,11 @@ class HomeRepository extends GetxController {
               college: data['schoolName'],
               major: data['major'],
             );
-            print(m.displayName);
-
             users.add(m);
           }
         }
       }
     }
-    print("The currUser: $currUserAvailability");
-    print(users);
-    return users;
-  }
-
-  /**
-   * TODO
-   * Fetch users based on default AND meeting preference
-   */
-
-  Future<List<User_Main>> fetchUsersMeetingPref() async {
-    List<User_Main> users = [];
-
-    return users;
-  }
-
-  Future<List<User_Main>> getUsersInSameCollege(String college) async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('college', isEqualTo: college)
-        .where('')
-        .get();
-
-    List<User_Main> users = querySnapshot.docs.map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return User_Main(
-          uid: doc.id,
-          displayName: data['displayName'],
-          college: data['schoolName'],
-          major: data['major']);
-    }).toList();
     return users;
   }
 }

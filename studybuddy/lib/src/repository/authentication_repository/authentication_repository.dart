@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
-import 'package:studybuddy/src/features/authentication/screens/splash_screens/splash_screeten.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
@@ -26,7 +25,7 @@ class AuthenticationRepository extends GetxController {
     firebaseUser = Rx<User?>(_auth.currentUser);
     //checks the status of the current user
     //binds the stream to the user and listens to the user/what they're doing
-    ever(firebaseUser, _setInitialScreen);
+    // ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
 
@@ -34,15 +33,15 @@ class AuthenticationRepository extends GetxController {
 
   //Defining methods to be used in the controllers here
 
-  _setInitialScreen(User? user) {
-    print("hello world");
-    //if user has been logged out and is null, go to welcome screen
-    if (user == null) {
-      Get.offAll(() => SplashScreen());
-    } else {
-      Get.offAll(() => const MainScreen());
-    }
-  }
+  // _setInitialScreen(User? user) {
+  //   print("hello world");
+  //   //if user has been logged out and is null, go to welcome screen
+  //   if (user == null) {
+  //     Get.offAll(() => SplashScreen());
+  //   } else {
+  //     Get.offAll(() => const MainScreen());
+  //   }
+  // }
 
   /// Method to register a new user by creating a new user with email and password
   void registerUser(
