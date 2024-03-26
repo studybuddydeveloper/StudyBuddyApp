@@ -1,7 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
+import 'package:provider/provider.dart';
+import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
+import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:studybuddy/src/utils/User_Data.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
+
+import 'firebase_options.dart';
 
 Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
@@ -9,10 +15,18 @@ Future<void> main() async {
   // //initializes firebase for the specific platform that the app is being run on
   // //aka entry point for accessing firebase
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-  //     // // //then we initialize the authentication repository
-  // .then((value) => Get.put(AuthenticationRepository()));
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      // // //then we initialize the authentication repository
+      .then((value) => Get.put(AuthenticationRepository()));
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => UserData(),
+      child: MyApp(),
+    ),
+  );
+
+  // Register UserData with GetX
+  Get.put(UserData());
 }
 
 class MyApp extends StatelessWidget {
@@ -21,6 +35,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Provider.of<UserData>(context, listen: false).initializeUserDetails();
     return GetMaterialApp(
       title: 'Study Buddy',
       theme: SAppTheme.lightTheme,
@@ -29,7 +44,7 @@ class MyApp extends StatelessWidget {
       //page transitions
       defaultTransition: Transition.rightToLeftWithFade,
       transitionDuration: const Duration(milliseconds: 500),
-      home: ScheduleGridWidget(),
+      home: WelcomeScreen(),
     );
   }
 }
