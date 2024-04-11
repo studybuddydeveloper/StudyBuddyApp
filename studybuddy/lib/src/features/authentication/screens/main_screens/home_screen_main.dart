@@ -131,277 +131,348 @@ class _HomeScreenState extends State<HomeScreenMain> {
     }
 
     return Scaffold(
-      drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.pop(context); // Close the drawer
-                      },
-                    ),
-                  ],
-                ),
-                Text(
-                  'Filter by:',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                //TODO Include vertical line
-                const Divider(
-                  thickness: 1,
-                  indent: 1,
-                  color: Colors.black,
-                ),
-                CheckboxListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  side: BorderSide(color: Colors.black),
-                  tileColor: Colors.white,
-                  title: Text(
-                    'SCHOOL',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  value: isSchoolChecked,
-                  // Set the initial value of the checkbox
-                  onChanged: null,
-                ),
-
-                CheckboxListTile(
-                  tileColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  title: Text(
-                    'MAJOR',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  value: isMajorChecked,
-                  // Set the initial value of the checkbox
-                  onChanged: (newValue) {
-                    // Handle checkbox state change
-                    setState(() {
-                      isMajorChecked = newValue!;
-                    });
-                  },
-                  selectedTileColor: Colors.black,
-                ),
-                CheckboxListTile(
-                  tileColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  title: Text(
-                    'TIME',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  value: isTimeChecked,
-                  // Set the initial value of the checkbox
-                  onChanged: (newValue) {
-                    // Handle checkbox state change
-                    setState(() {
-                      isTimeChecked = newValue!;
-                    });
-                  },
-                  selectedTileColor: Colors.black,
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        drawer: Drawer(
+            backgroundColor: Colors.white,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        width: 150,
-                        height: 50,
-                        child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          side: BorderSide(color: Colors.black),
-                          tileColor: Colors.white,
-                          title: Text(
-                            'IN PERSON',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          value: isInpersonChecked,
-                          // Set the initial value of the checkbox
-                          onChanged: (newValue) {
-                            // Handle checkbox state change
-                            setState(() {
-                              isInpersonChecked = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: 24,
-                      ),
-                      Container(
-                        width: 150,
-                        height: 50,
-                        child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          side: BorderSide(color: Colors.black),
-
-                          tileColor: Colors.white,
-                          title: Text(
-                            'VIRTUAL',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          value: isVirtualChecked,
-                          // Set the initial value of the checkbox
-                          onChanged: (newValue) {
-                            // Handle checkbox state change
-                            setState(() {
-                              isVirtualChecked = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: 24,
-                      ),
-                      Container(
-                        width: 150,
-                        height: 50,
-                        child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          side: BorderSide(color: Colors.black),
-                          tileColor: Colors.white,
-                          title: Text(
-                            'HYBRID',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          value: isHybridChecked,
-                          // Set the initial value of the checkbox
-                          onChanged: (newValue) {
-                            // Handle checkbox state change
-                            setState(() {
-                              isHybridChecked = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: 24,
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.pop(context); // Close the drawer
+                        },
                       ),
                     ],
                   ),
-                ),
-                ElevatedButton(
-                    onPressed: () => {
-                          if (isMajorChecked)
-                            {
-                              users = _hController.fetchUsersInSameMajor(),
-                            }
-
-                          // take away the else
-                          else if (isTimeChecked)
-                            {
-                              // users get intersected with the users
-                              // that have the same availability
-                              users =
-                                  _hController.fetchUsersWithSameAvailability(),
-                            },
-                          Navigator.pop(context),
-                        },
-                    child: Text("Apply",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        )))
-              ],
-            ),
-          )),
-      // icon: Icon(Icons.filter_alt_rounded),),
-      appBar: AppBar(
-        title: const Text('College Buddies'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              Get.to(() => ProfileScreen());
-            },
-          ),
-        ],
-      ),
-      body:
-          // Text('College: $college'),
-          FutureBuilder(
-        future: users,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.data!.isEmpty) {
-            return Text(
-                "Uh oh, looks like we don't have any recommendations for you yet!");
-          } else {
-            List<User_Main> userList = snapshot.data as List<User_Main>;
-            return ListView.builder(
-              padding: EdgeInsets.all(16.0),
-              itemCount: userList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  tileColor: Colors.black,
-                  title: Text(userList[index].displayName ?? 'no name'),
-                  subtitle: Row(children: [
-                    Text('College: ${userList[index].college}'),
-                    SizedBox(
-                      width: 50,
+                  Text(
+                    'Filter by:',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text('Major: ${userList[index].major}')
-                  ]),
-                  onTap: () => showUserProfile(userList[index]),
-                );
+                  ),
+                  //TODO Include vertical line
+                  const Divider(
+                    thickness: 1,
+                    indent: 1,
+                    color: Colors.black,
+                  ),
+                  CheckboxListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    side: BorderSide(color: Colors.black),
+                    tileColor: Colors.white,
+                    title: Text(
+                      'SCHOOL',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    value: isSchoolChecked,
+                    // Set the initial value of the checkbox
+                    onChanged: null,
+                  ),
+
+                  CheckboxListTile(
+                    tileColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    title: Text(
+                      'MAJOR',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    value: isMajorChecked,
+                    // Set the initial value of the checkbox
+                    onChanged: (newValue) {
+                      // Handle checkbox state change
+                      setState(() {
+                        isMajorChecked = newValue!;
+                      });
+                    },
+                    selectedTileColor: Colors.black,
+                  ),
+                  CheckboxListTile(
+                    tileColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    title: Text(
+                      'TIME',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    value: isTimeChecked,
+                    // Set the initial value of the checkbox
+                    onChanged: (newValue) {
+                      // Handle checkbox state change
+                      setState(() {
+                        isTimeChecked = newValue!;
+                      });
+                    },
+                    selectedTileColor: Colors.black,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+                            tileColor: Colors.white,
+                            title: Text(
+                              'IN PERSON',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            value: isInpersonChecked,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                              setState(() {
+                                isInpersonChecked = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+
+                            tileColor: Colors.white,
+                            title: Text(
+                              'VIRTUAL',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            value: isVirtualChecked,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                              setState(() {
+                                isVirtualChecked = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                        Container(
+                          width: 150,
+                          height: 50,
+                          child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.black),
+                            tileColor: Colors.white,
+                            title: Text(
+                              'HYBRID',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            value: isHybridChecked,
+                            // Set the initial value of the checkbox
+                            onChanged: (newValue) {
+                              // Handle checkbox state change
+                              setState(() {
+                                isHybridChecked = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 24,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                      onPressed: () => {
+                            if (isMajorChecked)
+                              {
+                                users = _hController.fetchUsersInSameMajor(),
+                              }
+
+                            // take away the else
+                            else if (isTimeChecked)
+                              {
+                                // users get intersected with the users
+                                // that have the same availability
+                                users = _hController
+                                    .fetchUsersWithSameAvailability(),
+                              },
+                            Navigator.pop(context),
+                          },
+                      child: Text("Apply",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          )))
+                ],
+              ),
+            )),
+        // icon: Icon(Icons.filter_alt_rounded),),
+        appBar: AppBar(
+          title: const Text('College Buddies'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () {
+                Get.to(() => ProfileScreen());
               },
-            );
-          }
-        },
-      ),
-    );
+            ),
+          ],
+        ),
+        body:
+            // Text('College: $college'),
+            FutureBuilder(
+                future: users,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.data!.isEmpty) {
+                    return Text(
+                        "Uh oh, looks like we don't have any recommendations for you yet!");
+                  } else {
+                    List<User_Main> userList = snapshot.data as List<User_Main>;
+
+                    return ListView.builder(
+                      padding: EdgeInsets.all(16.0),
+                      itemCount: userList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          tileColor: Colors.black,
+                          title: Text(userList[index].displayName ?? 'no name'),
+                          subtitle: Row(children: [
+                            Text('College: ${userList[index].college}'),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Text('Major: ${userList[index].major}')
+                          ]),
+                          onTap: () => showUserProfile(userList[index]),
+                        );
+                      },
+                    );
+                    // return LayoutBuilder(builder:
+                    //     (BuildContext context, BoxConstraints constraints) {
+                    //   double screenWidth = 500;
+                    //   int crossAxisCount = (screenWidth / 300).round();
+                    //   return GridView.builder(
+                    //       gridDelegate:
+                    //           SliverGridDelegateWithFixedCrossAxisCount(
+                    //         crossAxisCount: crossAxisCount,
+                    //         crossAxisSpacing: 20.0,
+                    //         mainAxisSpacing: 20.0,
+                    //       ),
+                    //       itemCount: userList.length,
+                    //       itemBuilder: (context, index) {
+                    //         return GestureDetector(
+                    //             onTap: () => showUserProfile(userList[index]),
+                    //             child: Container(
+                    //               padding: EdgeInsets.all(8.0),
+                    //               decoration: BoxDecoration(
+                    //                 color: Colors.black,
+                    //                 borderRadius: BorderRadius.circular(8.0),
+                    //               ),
+                    //               child: Column(
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   Text(
+                    //                     userList[index].displayName ??
+                    //                         'no name',
+                    //                     style: TextStyle(color: Colors.white),
+                    //                   ),
+                    //                   SizedBox(height: 8.0),
+                    //                   Row(
+                    //                     children: [
+                    //                       Text(
+                    //                         'College: ${userList[index].college}',
+                    //                         style:
+                    //                             TextStyle(color: Colors.white),
+                    //                       ),
+                    //                       SizedBox(width: 20),
+                    //                       Text(
+                    //                         'Major: ${userList[index].major}',
+                    //                         style:
+                    //                             TextStyle(color: Colors.white),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ));
+                    //       });
+                    // });
+                  }
+                }));
   }
+
+/**
+ *  return ListView.builder(
+    padding: EdgeInsets.all(16.0),
+    itemCount: userList.length,
+    itemBuilder: (context, index) {
+    return ListTile(
+    tileColor: Colors.black,
+    title: Text(userList[index].displayName ?? 'no name'),
+    subtitle: Row(children: [
+    Text('College: ${userList[index].college}'),
+    SizedBox(
+    width: 50,
+    ),
+    Text('Major: ${userList[index].major}')
+    ]),
+    onTap: () => showUserProfile(userList[index]),
+    );
+    },
+    );
+ */
 }
