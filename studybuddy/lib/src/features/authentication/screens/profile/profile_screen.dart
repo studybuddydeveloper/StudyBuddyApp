@@ -86,7 +86,6 @@ class _ProfileScreen extends State<ProfileScreen> {
       fullName = userData['fullName'] ?? '';
       email = userData['email'] ?? '';
       college = userData['schoolName'] ?? '';
-      print(college);
       about = userData['about'] ?? '';
       major = userData['major'] ?? '';
       classYear = userData['classYear'] ?? '';
@@ -101,16 +100,9 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.addMeetingMode();
-
-    // controller.defaultValues();
-
-    // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     const user = UserPreferences.myUser;
-    // Get.put(ProfileRepository());
     controller.setUser();
     final m_controller = Get.put(Majors());
-    // m_controller.addMajors();
     return Builder(
         builder: (context) => Scaffold(
             appBar: buildAppBar(context,
@@ -212,8 +204,6 @@ class UserAvailability extends StatefulWidget {
   @override
   _UserAvailability createState() => _UserAvailability();
 }
-// Do some null checks here first to check if the availability pulled from the database
-// does not exist
 
 /**
  * Availability looks like a grid of cards

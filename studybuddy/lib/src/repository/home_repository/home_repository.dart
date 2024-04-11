@@ -62,6 +62,20 @@ class HomeRepository extends GetxController {
   }
 
   /**
+   * Default fetch based on filters
+   */
+  Future<List<User_Main>> fetchUsersBasedFilters(List<String> names) async {
+    List<User_Main> users = [];
+
+    // for each filter name in names,
+    // append a where to the query
+
+
+    return users;
+  }
+
+
+  /**
    * Default fetch based on major
    */
   Future<List<User_Main>> fetchUsersWithSameMajor(String? major) async {
@@ -117,6 +131,7 @@ class HomeRepository extends GetxController {
 
   /**
    * Fetch users based on default AND Availability
+   * TODO Add error handling
    */
   Future<List<User_Main>> fetchUsersWithSameAvailability() async {
     List<User_Main> users = [];
@@ -137,7 +152,6 @@ class HomeRepository extends GetxController {
         startTime: data['startTimeOfDay'],
         endTime: data['endTimeOfDay'],
       );
-
       currUserAvailability.add(model);
     }
 
@@ -154,6 +168,9 @@ class HomeRepository extends GetxController {
 
       // now we go through all the default users
 
+      // TODO check if the default user is not in the RETURNED list already
+      // TODO update the list by removing users already matched from defaultusers
+      // TODO can utilize two lists
       for (User_Main p_users in defaultUsers) {
         // get their own availability(poor cubic solution, will need to optimize later
 
@@ -163,6 +180,12 @@ class HomeRepository extends GetxController {
 
         for (var coll in querySnapshot.docs) {
           Map<String, dynamic> data = coll.data() as Map<String, dynamic>;
+
+          //Lines 180 - 182, invocation should be an invocation of the user availablity model
+          // the user availability models will do the comparison
+
+          // might end up with duplicates because of multiple overlaps with the same
+          // user
           if (data['dayOfWeek'] == day &&
               data['startTimeOfDay'] == start &&
               data['endTimeOfDay'] == end) {
@@ -174,6 +197,8 @@ class HomeRepository extends GetxController {
 
             QueryDocumentSnapshot doc = querySnapshot.docs.first;
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+
             User_Main m = User_Main(
               uid: doc.id,
               displayName: data['fullName'],

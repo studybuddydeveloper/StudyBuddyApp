@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../repository/home_repository/home_repository.dart';
 import '../../../../utils/User_Data.dart';
@@ -286,8 +287,12 @@ class _HomeScreenState extends State<HomeScreenMain> {
                             {
                               users = _hController.fetchUsersInSameMajor(),
                             }
+
+                          // take away the else
                           else if (isTimeChecked)
                             {
+                              // users get intersected with the users
+                              // that have the same availability
                               users =
                                   _hController.fetchUsersWithSameAvailability(),
                             },
@@ -305,6 +310,14 @@ class _HomeScreenState extends State<HomeScreenMain> {
       // icon: Icon(Icons.filter_alt_rounded),),
       appBar: AppBar(
         title: const Text('College Buddies'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              Get.to(() => ProfileScreen());
+            },
+          ),
+        ],
       ),
       body:
           // Text('College: $college'),
@@ -321,9 +334,11 @@ class _HomeScreenState extends State<HomeScreenMain> {
           } else {
             List<User_Main> userList = snapshot.data as List<User_Main>;
             return ListView.builder(
+              padding: EdgeInsets.all(16.0),
               itemCount: userList.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  tileColor: Colors.black,
                   title: Text(userList[index].displayName ?? 'no name'),
                   subtitle: Row(children: [
                     Text('College: ${userList[index].college}'),

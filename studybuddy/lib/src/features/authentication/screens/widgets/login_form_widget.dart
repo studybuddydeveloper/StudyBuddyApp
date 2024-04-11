@@ -2,31 +2,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/login_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/forget_password_model_bottom_sheet.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../constants/text_strings.dart';
-import '../main_screens/main_screen.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
-
 
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
 
+bool isDarkTheme(BuildContext context) {
+  var brightness = Theme.of(context).brightness;
+  return brightness == Brightness.dark;
+}
+
 class _LoginFormState extends State<LoginForm> {
-
-  bool isIconVisible = false;
-
-
-  void toggleIconVisibility() {
-    isIconVisible = !isIconVisible;
-  }
+  bool isIconVisible = true;
 
   @override
   Widget build(BuildContext context) {
+    // var mediaQuery = MediaQuery.of(context);
+    // var brightness = mediaQuery.platformBrightness;
+    // var isDarkMode = Brightness.dark;
+
+    final darkness = isDarkTheme(context);
+
     final formKey = GlobalKey<FormState>();
 
     final controller = Get.put(LoginController());
@@ -40,7 +43,7 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter your full name';
+                    return 'Please enter email';
                   }
                   return null;
                 },
@@ -48,7 +51,10 @@ class _LoginFormState extends State<LoginForm> {
                 decoration: const InputDecoration(
                   labelText: sEmail,
                   hintText: sEmailHint,
-                  prefixIcon: Icon(Icons.person_2_outlined),
+                  prefixIconColor: Colors.black,
+                  prefixIcon: Icon(
+                    Icons.person_2_outlined,
+                  ),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -56,6 +62,7 @@ class _LoginFormState extends State<LoginForm> {
                 height: 10,
               ),
               TextFormField(
+                obscureText: isIconVisible,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter your password';
@@ -65,16 +72,24 @@ class _LoginFormState extends State<LoginForm> {
                 controller: controller.password,
                 decoration: InputDecoration(
                     labelText: sPassword,
+                    prefixIcon: Icon(
+                      Icons.key_sharp,
+                      color: darkness ? Colors.white : Colors.black,
+                    ),
                     suffixIcon: IconButton(
                       onPressed: () {
-                        toggleIconVisibility();
+                        setState(() {
+                          isIconVisible = !isIconVisible;
+                        });
                       },
-                      icon: isIconVisible ? const Icon(Icons.visibility_off_outlined)
+                      icon: isIconVisible
+                          ? const Icon(
+                              Icons.visibility_off,
+                            )
                           : const Icon(Icons.visibility),
                     ),
                     border: const OutlineInputBorder(),
-                    hintText: sPassword
-                ),
+                    hintText: sPassword),
               ),
               const SizedBox(
                 height: 10,
@@ -90,7 +105,6 @@ class _LoginFormState extends State<LoginForm> {
                   child: const Text(
                     sForgotPassword,
                     style: TextStyle(
-                      color: sSecondaryColor,
                       fontSize: 15,
                     ),
                   ),
@@ -101,34 +115,29 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: sSecondaryColor,
-                  ),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                        loginWithEmailAndPassword(controller.email.text, controller.password.text).then((value) {
-                          if (value != null) {
-                            Get.to(() => const MainScreen());
-                          } else {
-                            Get.snackbar('Error', 'Error logging in');
-                          }
-                        });
+                      loginWithEmailAndPassword(
+                              controller.email.text, controller.password.text)
+                          .then((value) {
+                        if (value != null) {
+                          Get.to(() => const HomeScreenMain());
+                        } else {
+                          Get.snackbar('Error', 'Error logging in');
+                        }
+                      });
                     }
                   },
-                  child: Text(
-                      sLoginText.toUpperCase(),
+                  child: Text(sLoginText.toUpperCase(),
                       style: const TextStyle(
-                        color: sPrimaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                      )
-                  ),
+                      )),
                 ),
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 
   /**
@@ -157,5 +166,3 @@ class _LoginFormState extends State<LoginForm> {
     return firebaseUser;
   }
 }
-
-

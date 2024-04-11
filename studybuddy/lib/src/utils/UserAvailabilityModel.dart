@@ -29,6 +29,12 @@ class UserAvailabilityModel extends GetxController {
         startTime: json['startTimeOfDay'],
         endTime: json['endTimeOfDay']);
   }
+
+//TODO: Include a method in this class that checks for overlaps between one
+
+// check for overlaps with other timeslots, add a threshold > 30;
+// return 0
+// useravilabilitymodel1 and useravailabilitymodel2
 //
 // String getStartTime(){
 //   return startTime;
