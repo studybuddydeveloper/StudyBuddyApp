@@ -52,7 +52,8 @@ class HomeRepository extends GetxController {
             uid: doc.id,
             displayName: data['fullName'],
             college: data['schoolName'],
-            major: data['major']);
+            major: data['major'],
+            about: data['about']);
       }).toList();
       return users;
     } catch (e) {
@@ -70,10 +71,8 @@ class HomeRepository extends GetxController {
     // for each filter name in names,
     // append a where to the query
 
-
     return users;
   }
-
 
   /**
    * Default fetch based on major
@@ -95,7 +94,8 @@ class HomeRepository extends GetxController {
             uid: doc.id,
             displayName: data['fullName'],
             college: data['schoolName'],
-            major: data['major']);
+            major: data['major'],
+            about: data['about']);
       }).toList();
       return users;
     } catch (e) {
@@ -198,12 +198,12 @@ class HomeRepository extends GetxController {
             QueryDocumentSnapshot doc = querySnapshot.docs.first;
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-
             User_Main m = User_Main(
               uid: doc.id,
               displayName: data['fullName'],
               college: data['schoolName'],
               major: data['major'],
+              about: data['about'],
             );
             users.add(m);
           }

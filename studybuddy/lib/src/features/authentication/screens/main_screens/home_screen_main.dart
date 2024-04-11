@@ -50,34 +50,82 @@ class _HomeScreenState extends State<HomeScreenMain> {
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'User Profile',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+          return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${user.displayName + '\'s'} Profile',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(children: [
+                        Card(
+                          elevation: 2.0,
+                          // Add elevation for a shadow effect
+                          margin: EdgeInsets.all(10.0),
+                          // Add margin for spacing
+                          child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Name: ${user.displayName}')),
+                        ),
+                        SizedBox(height: 10.0),
+                        Card(
+                            elevation: 2.0,
+                            // Add elevation for a shadow effect
+                            margin: EdgeInsets.all(10.0),
+                            // Add margin for spacing
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('College: ${user.college}'),
+                            )),
+                        SizedBox(height: 10.0),
+                        Card(
+                            elevation: 2.0,
+                            // Add elevation for a shadow effect
+                            margin: EdgeInsets.all(10.0),
+                            // Add margin for spacing
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Name: ${user.major}'),
+                            ))
+                      ]),
+                    ),
+
+                    // Text()
+                    // Add other user details as needed
+                    SizedBox(height: 20.0),
+                    SizedBox(
+                      height: 20.0,
+                      child: Text('About Me: ${user.about}'),
+                    ),
+                    SizedBox(height: 20.0),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+
+                        minimumSize: Size(200, 50), // Set minimum width
+                        // Adjust padding
+                      ),
+                      onPressed: () {
+                        // Implement any action you want when the button is pressed
+                        Navigator.pop(context); // Close the bottom sheet
+                      },
+                      child: Text('Close'),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10.0),
-                Text('Name: ${user.displayName}'),
-                Text('College: ${user.college}'),
-                // Text()
-                // Add other user details as needed
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Implement any action you want when the button is pressed
-                    Navigator.pop(context); // Close the bottom sheet
-                  },
-                  child: Text('Close'),
-                ),
-              ],
-            ),
-          );
+              ));
         },
       );
     }
