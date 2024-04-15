@@ -28,6 +28,7 @@ class HomeRepository extends GetxController {
   @override
   onInit() {
     super.onInit();
+
     uid = userData.userId!;
     major = userData.major!;
     college = userData.college!;

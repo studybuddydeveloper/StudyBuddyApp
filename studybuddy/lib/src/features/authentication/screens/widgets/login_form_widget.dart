@@ -6,6 +6,7 @@ import 'package:studybuddy/src/features/authentication/screens/main_screens/home
 import 'package:studybuddy/src/features/authentication/screens/widgets/forget_password_model_bottom_sheet.dart';
 
 import '../../../../constants/text_strings.dart';
+import '../../../../utils/User_Data.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -155,6 +156,14 @@ class _LoginFormState extends State<LoginForm> {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       firebaseUser = userCredential.user;
+
+      // Create an instance of UserData
+      UserData userData = UserData();
+
+      // Perform UserData initialization (if any additional async operations needed)
+      await userData.initializeUserDetails();
+      Get.put(userData);
+
       // Login successful, navigate to the next screen (e.g., the main screen).
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

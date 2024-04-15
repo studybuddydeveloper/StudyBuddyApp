@@ -9,6 +9,7 @@ import 'package:studybuddy/src/repository/authentication_repository/exceptions/l
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
+import '../../utils/User_Data.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -28,8 +29,6 @@ class AuthenticationRepository extends GetxController {
     // ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
-
-  //so we can reference it anywhere in the app
 
   //Defining methods to be used in the controllers here
 
@@ -86,10 +85,18 @@ class AuthenticationRepository extends GetxController {
 
   //Method to login a user with email and password
   Future<bool?> loginWithEmailAndPassword(String email, String password) async {
+    print("hello world");
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       // Login successful, navigate to the next screen (e.g., the main screen).
       if (firebaseUser.value != null) {
+        // Create an instance of UserData
+        UserData userData = UserData();
+
+        // Perform UserData initialization (if any additional async operations needed)
+        await userData.initializeUserDetails();
+        print("The userdata put: ${userData.displayName}");
+        Get.put(userData);
         Get.offAll(() => const MainScreen());
       } else {
         isLoginValid = false;

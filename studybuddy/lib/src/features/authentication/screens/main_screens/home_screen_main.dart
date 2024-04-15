@@ -1,14 +1,12 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../repository/home_repository/home_repository.dart';
 import '../../../../utils/User_Data.dart';
-import '../../controllers/profile_controller.dart';
 
 class HomeScreenMain extends StatefulWidget {
   const HomeScreenMain({super.key});
@@ -28,7 +26,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
   bool isSchoolChecked = true;
   bool isMajorChecked = false;
 
-  final _Pcontroller = Get.put(ProfileController());
   late final HomeScreenController _hController;
 
   late HomeRepository _homeRepo;
@@ -37,8 +34,9 @@ class _HomeScreenState extends State<HomeScreenMain> {
   @override
   void initState() {
     super.initState();
-    _hController = HomeScreenController(
-        userData: Provider.of<UserData>(context, listen: false));
+    final UserData userData = Get.find<UserData>();
+    _hController = HomeScreenController(userData: userData);
+
     users = _hController.fetchUsersInSameCollege();
   }
 
@@ -400,79 +398,7 @@ class _HomeScreenState extends State<HomeScreenMain> {
                         );
                       },
                     );
-                    // return LayoutBuilder(builder:
-                    //     (BuildContext context, BoxConstraints constraints) {
-                    //   double screenWidth = 500;
-                    //   int crossAxisCount = (screenWidth / 300).round();
-                    //   return GridView.builder(
-                    //       gridDelegate:
-                    //           SliverGridDelegateWithFixedCrossAxisCount(
-                    //         crossAxisCount: crossAxisCount,
-                    //         crossAxisSpacing: 20.0,
-                    //         mainAxisSpacing: 20.0,
-                    //       ),
-                    //       itemCount: userList.length,
-                    //       itemBuilder: (context, index) {
-                    //         return GestureDetector(
-                    //             onTap: () => showUserProfile(userList[index]),
-                    //             child: Container(
-                    //               padding: EdgeInsets.all(8.0),
-                    //               decoration: BoxDecoration(
-                    //                 color: Colors.black,
-                    //                 borderRadius: BorderRadius.circular(8.0),
-                    //               ),
-                    //               child: Column(
-                    //                 crossAxisAlignment:
-                    //                     CrossAxisAlignment.start,
-                    //                 children: [
-                    //                   Text(
-                    //                     userList[index].displayName ??
-                    //                         'no name',
-                    //                     style: TextStyle(color: Colors.white),
-                    //                   ),
-                    //                   SizedBox(height: 8.0),
-                    //                   Row(
-                    //                     children: [
-                    //                       Text(
-                    //                         'College: ${userList[index].college}',
-                    //                         style:
-                    //                             TextStyle(color: Colors.white),
-                    //                       ),
-                    //                       SizedBox(width: 20),
-                    //                       Text(
-                    //                         'Major: ${userList[index].major}',
-                    //                         style:
-                    //                             TextStyle(color: Colors.white),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ));
-                    //       });
-                    // });
                   }
                 }));
   }
-
-/**
- *  return ListView.builder(
-    padding: EdgeInsets.all(16.0),
-    itemCount: userList.length,
-    itemBuilder: (context, index) {
-    return ListTile(
-    tileColor: Colors.black,
-    title: Text(userList[index].displayName ?? 'no name'),
-    subtitle: Row(children: [
-    Text('College: ${userList[index].college}'),
-    SizedBox(
-    width: 50,
-    ),
-    Text('Major: ${userList[index].major}')
-    ]),
-    onTap: () => showUserProfile(userList[index]),
-    );
-    },
-    );
- */
 }

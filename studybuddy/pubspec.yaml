@@ -52,6 +52,8 @@ dependencies:
   animated_theme_switcher: ^2.0.1-nullsafety.0
   dropdown_search: ^5.0.6
   google_sign_in: ^6.2.1
+  provider: ^6.1.2
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
