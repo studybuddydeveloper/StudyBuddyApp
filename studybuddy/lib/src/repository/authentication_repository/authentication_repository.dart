@@ -4,7 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
+import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
@@ -26,21 +28,30 @@ class AuthenticationRepository extends GetxController {
     firebaseUser = Rx<User?>(_auth.currentUser);
     //checks the status of the current user
     //binds the stream to the user and listens to the user/what they're doing
-    // ever(firebaseUser, _setInitialScreen);
+    ever(firebaseUser, _setInitialScreen);
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
 
   //Defining methods to be used in the controllers here
 
-  // _setInitialScreen(User? user) {
-  //   print("hello world");
-  //   //if user has been logged out and is null, go to welcome screen
-  //   if (user == null) {
-  //     Get.offAll(() => SplashScreen());
-  //   } else {
-  //     Get.offAll(() => const MainScreen());
-  //   }
-  // }
+  _setInitialScreen(User? user) async {
+    print("hello world");
+    //if user has been logged out and is null, go to welcome screen
+    print(user);
+    if (user == null) {
+      Get.offAll(() => WelcomeScreen());
+    } else {
+
+      UserData userData = UserData();
+
+      // Perform UserData initialization (if any additional async operations needed)
+      await userData.initializeUserDetails();
+      print("The userdata put: ${userData.displayName}");
+      Get.put(userData);
+      // Get.offAll(() => const MainScreen());
+      Get.offAll(() => const HomeScreenMain());
+    }
+  }
 
   /// Method to register a new user by creating a new user with email and password
   void registerUser(

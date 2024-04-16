@@ -4,7 +4,7 @@ class SListTileTheme {
   SListTileTheme._();
 
   static final ListTileThemeData lightListTileTheme = ListTileThemeData(
-    tileColor: Colors.white,
+    tileColor: Colors.black,
     selectedTileColor: Colors.blue,
     iconColor: Colors.black,
     textColor: Colors.white,

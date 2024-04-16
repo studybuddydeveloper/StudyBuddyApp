@@ -22,7 +22,6 @@ class HomeScreenController extends GetxController {
   final UserData userData;
 
   HomeScreenController({required this.userData}) {
-    print("The userdata nname: ${userData.displayName}");
     homeRepository = Get.put(HomeRepository(userData: userData));
   }
 
@@ -44,13 +43,11 @@ class HomeScreenController extends GetxController {
    * This fetches users from the database that are in the same college as the current user
    */
   Future<List<User_Main>> fetchUsersInSameCollege() async {
-    print("The current user college in fetch_home_ctrler: ${userData.college}");
     List<User_Main> usersInSameCollege = [];
     if (college != null) {
       usersInSameCollege = await homeRepository.fetchUsersInSameCollege();
 
       if (usersInSameCollege.isNotEmpty) {
-        print('Users in the same college: $usersInSameCollege');
       } else {
         print('No users found in the same college.');
       }
@@ -72,7 +69,6 @@ class HomeScreenController extends GetxController {
           await homeRepository.fetchUsersWithSameMajor(userData.major);
 
       if (usersInSameMajor.isNotEmpty) {
-        print('Users in the same college: $usersInSameMajor');
       } else {
         print('No users found in the same college.');
       }
@@ -94,7 +90,6 @@ class HomeScreenController extends GetxController {
           await homeRepository.fetchUsersWithSameAvailability();
 
       if (usersWithSameAvailability.isNotEmpty) {
-        print('Users with the same availability: $usersWithSameAvailability');
       } else {
         print('No users found with the same availability.');
       }
@@ -112,7 +107,6 @@ class HomeScreenController extends GetxController {
           await firestoreService.getUsersWithSameMajorNames(currentUserMajor);
 
       if (similarMajorUserNames.isNotEmpty) {
-        print('Users with similar major: $similarMajorUserNames');
       } else {
         print('No users found with a similar major.');
       }

@@ -27,7 +27,6 @@ Future<List<String>> retrieveMultipleColleges() async {
 Future<List<String>> retrieveMultipleMajors() async {
   final CollectionReference _majorCollection =
       FirebaseFirestore.instance.collection('majors');
-  print("the major collection is: $_majorCollection");
   QuerySnapshot majorNames = await _majorCollection.get();
   List<String> majorNamesList = [];
   for (QueryDocumentSnapshot doc in majorNames.docs) {
@@ -127,7 +126,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         onChanged: (value) {
                           // Handle changes to the 'Name' section
-                          print("Name: $value");
                         },
                         maxLines: null,
                       ),
@@ -151,7 +149,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         onChanged: (value) {
                           // Handle changes to the 'Name' section
-                          print("email: $value");
                         },
                         maxLines: null,
                       ),
@@ -198,7 +195,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         )),
                                   ),
                                   onChanged: (value) {
-                                    print("This is the value: $value");
                                     controller.college.text = value.toString();
                                     setState(() {
                                       itemSelected = value.toString();
@@ -251,7 +247,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         )),
                                   ),
                                   onChanged: (value) {
-                                    print("This is the value: $value");
                                     controller.major.text = value.toString();
                                     setState(() {
                                       majorSelected = value.toString();
@@ -281,7 +276,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         onChanged: (value) {
                           // Handle changes to the 'Name' section
-                          print("About: $value");
                         },
                         maxLines: null,
                       ),

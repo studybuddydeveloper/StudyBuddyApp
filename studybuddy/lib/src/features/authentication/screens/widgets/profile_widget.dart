@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../controllers/profile_controller.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
@@ -17,8 +14,6 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(ProfileController());
-    final controller = Get.put(ProfileController());
     final color = Theme.of(context).colorScheme.primary;
 
     //instantiate the controller here at this point
@@ -66,19 +61,6 @@ class ProfileWidget extends StatelessWidget {
         ),
       ),
     );
-    //   color: Colors.white;
-    // all: 21,
-    // child: IconButton(
-    //   onPressed: onClicked,
-    //   icon: buildCircle(
-    //     color: color,
-    //     all: 0,
-    //     child: Icon(
-    //     isEdit ? Icons.add_a_photo : Icons.edit,
-    //     color: Colors.white,
-    // )
-    //    )
-    // )
   }
 
   Widget buildCircle({

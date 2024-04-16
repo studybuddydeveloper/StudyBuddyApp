@@ -57,8 +57,6 @@ class TimeSchedulingController extends GetxController {
   }
 
   Future<void> saveAvailabilityToDatabase() async {
-    print('The user availability is: $userAvailability');
-
     final String userId = FirebaseAuth.instance.currentUser!.uid;
 
     //parse the user availability into a pair

@@ -34,15 +34,11 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
   @override
   Widget build(BuildContext context) {
     double middleElementWidth =
-        MediaQuery
-            .of(context)
-            .size
-            .width * 1.3; // Adjust the factor as needed
+        MediaQuery.of(context).size.width * 1.3; // Adjust the factor as needed
 
     items = createListOfTimes(selectedStartTime, selectedEndTime);
     return Builder(
-        builder: (context) =>
-            Scaffold(
+        builder: (context) => Scaffold(
               appBar: buildAppBar(
                 // centerTitle: true,
                 context,
@@ -55,7 +51,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                     )),
                 // Set the title text
                 leading:
-                BackButton(onPressed: () => Get.to(() => ProfileScreen())),
+                    BackButton(onPressed: () => Get.to(() => ProfileScreen())),
               ),
               body: SingleChildScrollView(
                 child: Container(
@@ -126,14 +122,13 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                           horizontal: 40, vertical: 30),
                                       shape: BeveledRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10))),
+                                              BorderRadius.circular(10))),
                                   // key: "Sunday",
                                   onHover: (True) => {},
-                                  onPressed: () =>
-                                  {
-                                    //add the date to the avail.string
-                                    // currDateString += "Monday",
-                                  }),
+                                  onPressed: () => {
+                                        //add the date to the avail.string
+                                        // currDateString += "Monday",
+                                      }),
                             ),
                             SizedBox(width: 10),
                             // Spacer between text and dropdowns
@@ -180,7 +175,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                         horizontal: 40, vertical: 30),
                                     shape: BeveledRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(10))),
+                                            BorderRadius.circular(10))),
                                 // key: "Sunday",
                                 onHover: (True) => {},
                                 onPressed: () => {}),
@@ -225,7 +220,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                         horizontal: 40, vertical: 30),
                                     shape: BeveledRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(10))),
+                                            BorderRadius.circular(10))),
                                 // key: "Sunday",
                                 onHover: (True) => {},
                                 onPressed: () => {}),
@@ -271,7 +266,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                           horizontal: 40, vertical: 30),
                                       shape: BeveledRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10))),
+                                              BorderRadius.circular(10))),
                                   // key: "Sunday",
                                   onHover: (True) => {},
                                   onPressed: () => {}),
@@ -316,7 +311,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                         horizontal: 40, vertical: 30),
                                     shape: BeveledRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(10))),
+                                            BorderRadius.circular(10))),
                                 // key: "Sunday",
                                 onHover: (True) => {},
                                 onPressed: () => {}),
@@ -364,7 +359,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                           horizontal: 40, vertical: 30),
                                       shape: BeveledRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10))),
+                                              BorderRadius.circular(10))),
                                   // key: "Sunday",
                                   onHover: (True) => {},
                                   onPressed: () => {}),
@@ -409,7 +404,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                                           horizontal: 40, vertical: 30),
                                       shape: BeveledRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(10))),
+                                              BorderRadius.circular(10))),
                                   // key: "Sunday",
                                   onHover: (True) => {},
                                   onPressed: () => {}),
@@ -445,8 +440,7 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: () =>
-                            {
+                            onPressed: () => {
                               _controller = TimeSchedulingController(
                                   userAvailability: userAvailability),
                               _controller.saveAvailabilityToDatabase(),
@@ -486,8 +480,8 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
   /**
    * It takes in a selected value, and creates a drop down of times from that value.This is in increments of 30 minutes!
    */
-  Widget buildDropdownButton(String selectedValue, String dayOfWeek,
-      bool isStartTime) {
+  Widget buildDropdownButton(
+      String selectedValue, String dayOfWeek, bool isStartTime) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       // Add padding
@@ -501,24 +495,15 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
       child: DropdownButton<String>(
         value: selectedValue,
         underline: Container(),
-        onChanged: (String? newValue) =>
-        {
+        onChanged: (String? newValue) => {
           // TODO: CHange this value to the updated value when it's changed on the screen
           setState(() {
             if (!isStartTime) {
-              // print("new end is $newValue");
-              // int.parse(selectedEndTimes[dayOfWeek]!.split(":")[0])
               selectedEndTimes[dayOfWeek] = newValue!;
-              // currDateString += "-$newValue";
               var curr = selectedEndTimes[dayOfWeek];
               var cur = selectedStartTimes[dayOfWeek];
               userAvailability.add('$dayOfWeek $cur-$curr');
-
-              print("the user availa: $userAvailability");
             } else {
-              // print("hello word");
-              // print("new value is $newValue");
-              // currDateString += "$dayOfWeek $newValue";
               selectedStartTimes[dayOfWeek] = newValue!;
             }
           })

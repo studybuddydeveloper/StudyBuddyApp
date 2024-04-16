@@ -384,17 +384,25 @@ class _HomeScreenState extends State<HomeScreenMain> {
                       padding: EdgeInsets.all(16.0),
                       itemCount: userList.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          tileColor: Colors.black,
-                          title: Text(userList[index].displayName ?? 'no name'),
-                          subtitle: Row(children: [
-                            Text('College: ${userList[index].college}'),
-                            SizedBox(
-                              width: 50,
+                        return Column(
+                          children: [
+                            ListTile(
+                              tileColor: Colors.black,
+                              title: Text(
+                                  userList[index].displayName ?? 'no name'),
+                              subtitle: Row(children: [
+                                Text('College: ${userList[index].college}'),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Text('Major: ${userList[index].major}')
+                              ]),
+                              onTap: () => showUserProfile(userList[index]),
                             ),
-                            Text('Major: ${userList[index].major}')
-                          ]),
-                          onTap: () => showUserProfile(userList[index]),
+                            SizedBox(
+                              height: 20,
+                            )
+                          ],
                         );
                       },
                     );

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/screens/main_screens/main_screen.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
 import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
 import 'package:studybuddy/src/utils/TimeScheduler.dart';
 import 'package:studybuddy/src/utils/UserAvailabilityModel.dart';
 
 import '../../../../repository/authentication_repository/profile_repository.dart';
-import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
 import '../../controllers/profile_controller.dart';
 import '../../models/user.dart' as modelUser;
-import '../forgot_password_screens/chat_screens/chat_screen.dart';
 import '../widgets/academicinfo_widget.dart';
 import '../widgets/appbar-widget.dart';
 import '../widgets/button_widget.dart';
@@ -102,49 +100,73 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     const user = UserPreferences.myUser;
     controller.setUser();
-    final m_controller = Get.put(Majors());
     return Builder(
         builder: (context) => Scaffold(
             appBar: buildAppBar(context,
                 title: Text('Profile'),
                 leading: BackButton(
-                  onPressed: () => Get.offAll(() => MainScreen()),
+                  onPressed: () => Get.offAll(() => HomeScreenMain()),
                 )),
-            body: ListView(
-              physics: const BouncingScrollPhysics(),
-              children: [
-                ProfileWidget(
-                  imagePath: user.imagePath,
-                  onClicked: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => EditProfilePage()),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                buildName(user),
-                const SizedBox(height: 24),
-                Center(child: buildUpgradeButton()),
-                const SizedBox(height: 24),
-                AcademicInfoWidget(
-                    college: college, major: major, classYear: classYear),
-                const SizedBox(height: 24),
-                buildMeetingMode(user),
-                const SizedBox(height: 48),
-                buildAbout(user),
-
-                const SizedBox(height: 48),
-
-                ElevatedButton(
-                    onPressed: () => Get.offAll(() => UserAvailability()),
-                    child: Text("Click to view your availability")),
-                // controller.getProfileInfo(),
-                const SizedBox(height: 48),
-                ElevatedButton(
-                    child: Text("Go to Home"),
-                    onPressed: () => controller.goToMainScreen())
-              ],
+            body: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  ProfileWidget(
+                    imagePath: user.imagePath,
+                    onClicked: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => EditProfilePage()),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  buildName(user),
+                  const SizedBox(height: 24),
+                  Center(child: buildUpgradeButton()),
+                  const SizedBox(height: 24),
+                  AcademicInfoWidget(
+                      college: college, major: major, classYear: classYear),
+                  const SizedBox(height: 24),
+                  buildMeetingMode(user),
+                  const SizedBox(height: 48),
+                  buildAbout(user),
+                  const SizedBox(height: 60),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    textDirection: TextDirection.ltr,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Get.to(UserAvailability()),
+                          child: Text("View Availability",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20.0,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () => Get.to(const HomeScreenMain()),
+                          child: Text("Home",
+                              style: const TextStyle(
+                                // color: sSignupButtonColorText,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             )));
   }
 
@@ -177,7 +199,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'message',
         onClicked: () {
-          Get.to(() => ChatScreen());
+          // Get.to(() => ChatScreen());
         },
       );
 
@@ -217,62 +239,103 @@ class _UserAvailability extends State<UserAvailability> {
 
   @override
   Widget build(BuildContext context) {
+    double middleElementWidth = MediaQuery.of(context).size.width * 0.5;
     return Scaffold(
         appBar: buildAppBar(context,
             title: Text('User Profile'),
             leading: BackButton(
               onPressed: () => Get.to(() => ProfileScreen()),
             )),
-        body: Center(
-            child: FutureBuilder<List<UserAvailabilityModel>>(
-                future: timeScheduler.getUserAppointments(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    print("waiting");
-                    return CircularProgressIndicator(
-                      color: Colors.black,
-                    );
-                  } else if (snapshot.hasError) {
-                    print(timeScheduler.getUserAppointments());
-                    return Text('Error: ${snapshot.error}');
-                  } else if (snapshot.hasData.isBlank!) {
-                    return Column(
-                      children: [
-                        Text(
-                            "Uh Oh, looks like you've not set your availability yet"
-                            "Click below to continue"),
-                        SizedBox(height: 50),
-                        ElevatedButton(
-                            onPressed: () => Get.to(() => ScheduleGridWidget()),
-                            child: Text("Add your availability"))
-                      ],
-                    );
-                  } else {
-                    final appointments = snapshot.data!;
-                    return Column(
-                      children: [
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: appointments.length,
-                          itemBuilder: (context, index) {
-                            final appointment = appointments[index];
-                            return ListTile(
-                              title: Text('Date: ${appointment.dayOfWeek}'),
-                              subtitle: Text(
-                                  'Start: ${appointment.startTime} - End: ${appointment.endTime}'),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        ElevatedButton(
-                            onPressed: () => Get.to(() => ScheduleGridWidget()),
-                            child: Text("Update your availability"))
-                      ],
-                    );
-                  }
-                })));
+        body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Center(
+              child: FutureBuilder<List<UserAvailabilityModel>>(
+                  future: timeScheduler.getUserAppointments(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      print("waiting");
+                      return CircularProgressIndicator(
+                        color: Colors.black,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData.isBlank!) {
+                      return Column(
+                        children: [
+                          Text(
+                              "Uh Oh, looks like you've not set your availability yet"
+                              "Click below to continue"),
+                          SizedBox(height: 50),
+                          ElevatedButton(
+                              onPressed: () =>
+                                  Get.to(() => ScheduleGridWidget()),
+                              child: Text("Add your availability"))
+                        ],
+                      );
+                    } else {
+                      final appointments = snapshot.data!;
+                      return Column(
+                        children: [
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: appointments.length,
+                            itemBuilder: (context, index) {
+                              final appointment = appointments[index];
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title:
+                                        Text('Date: ${appointment.dayOfWeek}'),
+                                    subtitle: Text(
+                                        'Start: ${appointment.startTime} - End: ${appointment.endTime}'),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  width: middleElementWidth,
+                                  child: Container(), // Placeholder
+                                ),
+                              ),
+                              OutlinedButton(
+                                onPressed: () =>
+                                    Get.to(() => ScheduleGridWidget()),
+                                child: Text("Update your availability",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                                style: OutlinedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 40, vertical: 30),
+                                    shape: BeveledRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10))),
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  width: middleElementWidth,
+                                  child: Container(), // Placeholder
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    }
+                  })),
+        ));
   }
 }

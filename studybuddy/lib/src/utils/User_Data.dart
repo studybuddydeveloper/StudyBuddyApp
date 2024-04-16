@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
-class UserData with ChangeNotifier {
+class UserData extends GetxController {
   // User data fields
   String? _userId;
   String? _displayName;
@@ -17,12 +19,21 @@ class UserData with ChangeNotifier {
 
   String? get major => _major;
 
-  AuthProvider() {
-    initializeUserDetails();
-  }
-
   Future<void> initializeUserDetails() async {
-    final User? user = FirebaseAuth.instance.currentUser;
+    final Completer<void> authInitialized = Completer<void>();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (!authInitialized.isCompleted) {
+        authInitialized.complete();
+      }
+    });
+
+    // Wait for Firebase Authentication to initialize
+    await authInitialized.future;
+
+    // Introduce a short delay before accessing currentUser
+
+    final User? user = await FirebaseAuth.instance.currentUser;
 
     try {
       // TODO save all this fields to a const page to prevent constant lookup
@@ -39,12 +50,13 @@ class UserData with ChangeNotifier {
 
         if (doc.exists) {
           Map<String, dynamic> userData = doc.data() as Map<String, dynamic>;
-
-          String displayName = userData['fullName'];
-          String college = userData['schoolName'];
-          String major = userData['major'];
-          setUserDetails(userId, displayName, college, major);
+          _userId = userId;
+          _displayName = userData['fullName'];
+          _college = userData['schoolName'];
+          _major = userData['major'];
         }
+      } else {
+        print('no user found for this user');
       }
     } catch (e) {
       // Handle errors or notify the user about the failure
@@ -52,12 +64,12 @@ class UserData with ChangeNotifier {
     }
   }
 
-  void setUserDetails(
-      String userId, String displayName, String college, String major) {
+  void setUserDetails(String userId, String displayName, String college,
+      String major) {
     _userId = userId;
     _displayName = displayName;
     _college = college;
     _major = major;
-    notifyListeners();
+    print("The user details have been set");
   }
 }

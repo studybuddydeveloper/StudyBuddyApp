@@ -14,7 +14,6 @@ class FirestoreService extends GetxController {
       try {
         DocumentSnapshot userDoc =
             await usersCollection.doc(currentUser.uid).get();
-        print("The current user school: ${userDoc['schoolName'] as String?}");
         return userDoc['schoolName'] as String?;
       } catch (e) {
         print('Error getting user major: $e');
