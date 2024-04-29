@@ -35,18 +35,13 @@ class AuthenticationRepository extends GetxController {
   //Defining methods to be used in the controllers here
 
   _setInitialScreen(User? user) async {
-    print("hello world");
-    //if user has been logged out and is null, go to welcome screen
-    print(user);
     if (user == null) {
       Get.offAll(() => WelcomeScreen());
     } else {
-
       UserData userData = UserData();
 
       // Perform UserData initialization (if any additional async operations needed)
       await userData.initializeUserDetails();
-      print("The userdata put: ${userData.displayName}");
       Get.put(userData);
       // Get.offAll(() => const MainScreen());
       Get.offAll(() => const HomeScreenMain());
@@ -106,7 +101,6 @@ class AuthenticationRepository extends GetxController {
 
         // Perform UserData initialization (if any additional async operations needed)
         await userData.initializeUserDetails();
-        print("The userdata put: ${userData.displayName}");
         Get.put(userData);
         Get.offAll(() => const MainScreen());
       } else {
@@ -125,7 +119,10 @@ class AuthenticationRepository extends GetxController {
     return null;
   }
 
-  Future<void> logout() async => await _auth.signOut();
+  Future<void> logout() async {
+    await _auth.signOut();
+    Get.offAll(() => WelcomeScreen());
+  }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;

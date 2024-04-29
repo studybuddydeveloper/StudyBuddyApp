@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
 
 AppBar buildAppBar(BuildContext context,
-    {required Text title, required leading}) {
+    {required Text title, required leading, required List<Widget> actions}) {
   final isDarkMode = Theme
       .of(context)
       .brightness == Brightness.dark;
@@ -16,7 +16,7 @@ AppBar buildAppBar(BuildContext context,
     leading: leading,
     backgroundColor: Colors.transparent,
     elevation: 0,
-    actions: [
+    actions: (actions.length) > 0 ? actions : [
       ThemeSwitcher(
         builder: (context) =>
             IconButton(

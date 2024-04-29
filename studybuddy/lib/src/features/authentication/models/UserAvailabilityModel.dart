@@ -23,7 +23,6 @@ class UserAvailabilityModel extends GetxController {
   }
 
   factory UserAvailabilityModel.fromJson(Map<String, dynamic> json) {
-    print("The jso: $json");
     return UserAvailabilityModel(
         dayOfWeek: json['dayOfWeek'],
         startTime: json['startTimeOfDay'],

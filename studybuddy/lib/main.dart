@@ -35,18 +35,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // print("The userdata school: ${Provider<.college}");
-
-    // Provider.of<UserData>(context, listen: false).initializeUserDetails();
     return GetMaterialApp(
-      title: 'Study Buddy',
-      theme: SAppTheme.lightTheme,
-      darkTheme: SAppTheme.darkTheme,
-      themeMode: ThemeMode.system,
-      //page transitions
-      defaultTransition: Transition.rightToLeftWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
-      home: WelcomeScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        // Remove the debug banner
+        title: 'Study Buddy',
+        theme: SAppTheme.lightTheme,
+        darkTheme: SAppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        //page transitions
+        defaultTransition: Transition.rightToLeftWithFade,
+        transitionDuration: const Duration(milliseconds: 500),
+        home: WelcomeScreen());
   }
 }

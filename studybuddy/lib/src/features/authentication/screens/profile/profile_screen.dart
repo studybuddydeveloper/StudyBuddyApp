@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/features/authentication/screens/availability_schedule_screen/AvailabilityTimeWidget.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/update_profile_screen.dart';
-import 'package:studybuddy/src/reusable_widgets/AvailabilityTimeWidget.dart';
+import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 import 'package:studybuddy/src/utils/TimeScheduler.dart';
 import 'package:studybuddy/src/utils/UserAvailabilityModel.dart';
 
@@ -101,76 +102,156 @@ class _ProfileScreen extends State<ProfileScreen> {
     const user = UserPreferences.myUser;
     controller.setUser();
     return Builder(
-        builder: (context) => Scaffold(
-            appBar: buildAppBar(context,
-                title: Text('Profile'),
-                leading: BackButton(
-                  onPressed: () => Get.offAll(() => HomeScreenMain()),
-                )),
-            body: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  ProfileWidget(
-                    imagePath: user.imagePath,
-                    onClicked: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => EditProfilePage()),
-                      );
-                    },
+        builder: (context) =>
+            Scaffold(
+                appBar: buildAppBar(
+                  context,
+                  title: Text('Profile'),
+                  leading: BackButton(
+                    onPressed: () => Get.offAll(() => HomeScreenMain()),
                   ),
-                  const SizedBox(height: 24),
-                  buildName(user),
-                  const SizedBox(height: 24),
-                  Center(child: buildUpgradeButton()),
-                  const SizedBox(height: 24),
-                  AcademicInfoWidget(
-                      college: college, major: major, classYear: classYear),
-                  const SizedBox(height: 24),
-                  buildMeetingMode(user),
-                  const SizedBox(height: 48),
-                  buildAbout(user),
-                  const SizedBox(height: 60),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    textDirection: TextDirection.ltr,
+                  actions: [
+                    PopupMenuButton(
+                      color: Colors.white,
+                      // backgroundColor: Colors.white,
+                      itemBuilder: (BuildContext context) {
+                        return [
+                          PopupMenuItem(
+                            child: Row(
+                              children: [
+                                Icon(Icons.logout, color: Colors.red),
+                                // Logout icon
+                                SizedBox(width: 10),
+                                Text('Logout', style: TextStyle(
+                                    color: Colors.red)),
+                                // Set text color to red for logout
+                              ],
+                            ),
+                            value: 'logout',
+                          ),
+                        ];
+                      },
+                      onSelected: (value) {
+                        switch (value) {
+                          case 'logout':
+                          // Handle logout action
+                            Get.offAll(() => WelcomeScreen());
+                            break;
+                        }
+                      },
+                    ),
+                    // IconButton(
+                    //   icon: Icon(Icons.edit),
+                    //   onPressed: () {
+                    //     Get.to(() => EditProfilePage());
+                    //   },
+                    // )
+                  ],
+                ),
+                body: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
                     children: [
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () => Get.to(UserAvailability()),
-                          child: Text("View Availability",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
+                      ProfileWidget(
+                        imagePath: user.imagePath,
+                        onClicked: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => EditProfilePage()),
+                          );
+                        },
                       ),
-                      const SizedBox(
-                        width: 20.0,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => Get.to(const HomeScreenMain()),
-                          child: Text("Home",
-                              style: const TextStyle(
-                                // color: sSignupButtonColorText,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ),
+                      const SizedBox(height: 24),
+                      buildName(user),
+                      const SizedBox(height: 24),
+                      Center(child: buildUpgradeButton()),
+                      const SizedBox(height: 24),
+                      AcademicInfoWidget(
+                          college: college, major: major, classYear: classYear),
+                      const SizedBox(height: 24),
+                      buildMeetingMode(user),
+                      const SizedBox(height: 48),
+                      buildAbout(user),
+                      const SizedBox(height: 60),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        textDirection: TextDirection.ltr,
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () => Get.to(UserAvailability()),
+                              child: Text("View Availability",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20.0,
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () => Get.to(const HomeScreenMain()),
+                              child: Text("Home",
+                                  style: const TextStyle(
+                                    // color: sSignupButtonColorText,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            )));
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                  items: <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      tooltip: 'Home',
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      tooltip: 'Availability',
+                      icon: IconButton(
+                          icon: Icon(Icons.event_available),
+                          onPressed: () {
+                            Get.to(() => ScheduleGridWidget());
+                          }),
+                      label: 'Availability',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.chat),
+                      label: 'Chat',
+                      tooltip: 'Coming Soon!',
+                    ),
+                    BottomNavigationBarItem(
+                      tooltip: 'Profile',
+                      icon: IconButton(
+                        icon: Icon(Icons.person),
+                        onPressed: () {
+                          // Get.to(() => ProfileScreen());
+                        },
+
+                      ),
+                      label: 'Profile',
+                    ),
+                  ],
+                  selectedItemColor: Colors.black,
+                  unselectedItemColor: Colors.grey,
+                  backgroundColor: Colors.white,
+                  // currentIndex: _selectedIndex,
+                  // onTap: _onItemTapped,
+                )));
   }
 
-  Widget buildName(modelUser.User user) => Column(
+  Widget buildName(modelUser.User user) =>
+      Column(
         children: [
           Text(
             fullName == "" ? 'Your Name' : fullName,
@@ -184,7 +265,8 @@ class _ProfileScreen extends State<ProfileScreen> {
         ],
       );
 
-  Widget buildMeetingMode(modelUser.User user) => Column(
+  Widget buildMeetingMode(modelUser.User user) =>
+      Column(
         children: [
           Text(
             meetingMode == "I prefere meeting $meetingMode"
@@ -196,14 +278,16 @@ class _ProfileScreen extends State<ProfileScreen> {
         ],
       );
 
-  Widget buildUpgradeButton() => ButtonWidget(
+  Widget buildUpgradeButton() =>
+      ButtonWidget(
         text: 'message',
         onClicked: () {
           // Get.to(() => ChatScreen());
         },
       );
 
-  Widget buildAbout(modelUser.User user) => Container(
+  Widget buildAbout(modelUser.User user) =>
+      Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,17 +319,53 @@ class _UserAvailability extends State<UserAvailability> {
   List<UserAvailabilityModel> userAvailability = [];
 
   final TimeScheduler timeScheduler =
-      TimeScheduler(uid: ProfileController.instance.getCurrentUserId());
+  TimeScheduler(uid: ProfileController.instance.getCurrentUserId());
 
   @override
   Widget build(BuildContext context) {
-    double middleElementWidth = MediaQuery.of(context).size.width * 0.5;
+    double middleElementWidth = MediaQuery
+        .of(context)
+        .size
+        .width * 0.5;
     return Scaffold(
         appBar: buildAppBar(context,
             title: Text('User Profile'),
             leading: BackButton(
               onPressed: () => Get.to(() => ProfileScreen()),
-            )),
+            ),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text('Profile'),
+                      value: 'profile',
+                    ),
+                    PopupMenuItem(
+                      child: Text('Settings'),
+                      value: 'settings',
+                    ),
+                    PopupMenuItem(
+                      child: Text('Logout'),
+                      value: 'logout',
+                    ),
+                  ];
+                },
+                onSelected: (value) {
+                  switch (value) {
+                    case 'profile':
+                    // Handle profile action
+                      break;
+                    case 'settings':
+                    // Handle settings action
+                      break;
+                    case 'logout':
+                    // Handle logout action
+                      break;
+                  }
+                },
+              ),
+            ]),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Center(
@@ -264,7 +384,7 @@ class _UserAvailability extends State<UserAvailability> {
                         children: [
                           Text(
                               "Uh Oh, looks like you've not set your availability yet"
-                              "Click below to continue"),
+                                  "Click below to continue"),
                           SizedBox(height: 50),
                           ElevatedButton(
                               onPressed: () =>
@@ -286,9 +406,11 @@ class _UserAvailability extends State<UserAvailability> {
                                 children: [
                                   ListTile(
                                     title:
-                                        Text('Date: ${appointment.dayOfWeek}'),
+                                    Text('Date: ${appointment.dayOfWeek}'),
                                     subtitle: Text(
-                                        'Start: ${appointment.startTime} - End: ${appointment.endTime}'),
+                                        'Start: ${appointment
+                                            .startTime} - End: ${appointment
+                                            .endTime}'),
                                   ),
                                   SizedBox(
                                     height: 20,
@@ -322,7 +444,7 @@ class _UserAvailability extends State<UserAvailability> {
                                         horizontal: 40, vertical: 30),
                                     shape: BeveledRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(10))),
+                                        BorderRadius.circular(10))),
                               ),
                               Expanded(
                                 child: SizedBox(

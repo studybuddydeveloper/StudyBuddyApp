@@ -55,21 +55,18 @@ class UserData extends GetxController {
           _college = userData['schoolName'];
           _major = userData['major'];
         }
-      } else {
-        print('no user found for this user');
-      }
+      } else {}
     } catch (e) {
       // Handle errors or notify the user about the failure
       print('Error fetching user profile: $e');
     }
   }
 
-  void setUserDetails(String userId, String displayName, String college,
-      String major) {
+  void setUserDetails(
+      String userId, String displayName, String college, String major) {
     _userId = userId;
     _displayName = displayName;
     _college = college;
     _major = major;
-    print("The user details have been set");
   }
 }

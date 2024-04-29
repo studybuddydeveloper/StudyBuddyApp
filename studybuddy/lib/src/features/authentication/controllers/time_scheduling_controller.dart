@@ -31,19 +31,13 @@ class TimeSchedulingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // print("hello world");
     saveAvailabilityToDatabase();
   }
-
-  // the user's availability is saved to the database here by calling the repo\
-  // user's availability is a string list and looks like
-  // ["monday 3pm-5pm", "tuesday (2pm-7pm)"]
 
   /**
    * This gets one availability record and parses it into a pair or tuple
    */
   List<String> parseUserAvailability(String availability) {
-    // print("The availability is: $availability");
     List<String> userTimeRecord = [];
     //get the date which is before the space
     String date = availability.split(' ')[0];

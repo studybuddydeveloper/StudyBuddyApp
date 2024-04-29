@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/availability_schedule_screen/AvailabilityTimeWidget.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../repository/home_repository/home_repository.dart';
 import '../../../../utils/User_Data.dart';
+import '../welcome_screen.dart';
 
 class HomeScreenMain extends StatefulWidget {
   const HomeScreenMain({super.key});
@@ -357,12 +359,52 @@ class _HomeScreenState extends State<HomeScreenMain> {
         appBar: AppBar(
           title: const Text('College Buddies'),
           actions: [
-            IconButton(
+            PopupMenuButton(
               icon: Icon(Icons.person),
-              onPressed: () {
-                Get.to(() => ProfileScreen());
+              color: Colors.white,
+              // backgroundColor: Colors.white,
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        // Logout icon
+                        SizedBox(width: 10),
+                        Text('Profile', style: TextStyle(color: Colors.black)),
+                        // Set text color to red for logout
+                      ],
+                    ),
+                    value: 'profile',
+                  ),
+                  // Divider(height: 1, thickness: 1), // Add a divider
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        Icon(Icons.logout, color: Colors.red),
+                        // Logout icon
+                        SizedBox(width: 10),
+                        Text('Logout', style: TextStyle(color: Colors.red)),
+                        // Set text color to red for logout
+                      ],
+                    ),
+                    value: 'logout',
+                  ),
+                ];
               },
-            ),
+              onSelected: (value) {
+                switch (value) {
+                  case 'logout':
+                    // Handle logout action
+                    Get.offAll(() => WelcomeScreen());
+                    break;
+
+                  case 'profile':
+                    // Handle profile action
+                    Get.to(() => ProfileScreen());
+                    break;
+                }
+              },
+            )
           ],
         ),
         body:
@@ -407,6 +449,44 @@ class _HomeScreenState extends State<HomeScreenMain> {
                       },
                     );
                   }
-                }));
+                }),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              tooltip: 'Home',
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Availability',
+              icon: IconButton(
+                  icon: Icon(Icons.event_available),
+                  onPressed: () {
+                    Get.to(() => ScheduleGridWidget());
+                  }),
+              label: 'Availability',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat),
+              label: 'Chat',
+              tooltip: 'Coming Soon!',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Profile',
+              icon: IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () {
+                  Get.to(() => ProfileScreen());
+                },
+              ),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.white,
+          // currentIndex: _selectedIndex,
+          // onTap: _onItemTapped,
+        ));
   }
 }

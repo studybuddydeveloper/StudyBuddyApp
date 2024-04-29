@@ -42,8 +42,6 @@ class SignUpFormWidget extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             TextFormField(
               validator: (value) {
-                // if (_formKey.currentState!.validate()) {
-                print(value);
                 if (value!.isEmpty || !value.contains(" ")) {
                   setState(() {
                     sisFullNameMissing = true;

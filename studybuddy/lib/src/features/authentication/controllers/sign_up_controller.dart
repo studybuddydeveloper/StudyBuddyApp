@@ -21,12 +21,17 @@ class SignUpController extends GetxController {
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
 
+  final AuthenticationRepository authRepo = Get.put(AuthenticationRepository());
+
+  void logOut() {
+    authRepo.logout();
+  }
+
   //Register user method to be called in the WelcomeScreen
   void registerUser(String email, String fullName, String schoolName,
       String password, String confirmPassword) {
     // Dependency
-    final AuthenticationRepository authRepo =
-        Get.put(AuthenticationRepository());
+
     //perform authentication here for a new user
     authRepo.registerUser(
       email,
