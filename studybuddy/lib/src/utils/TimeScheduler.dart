@@ -62,17 +62,16 @@ class TimeScheduler extends GetxController {
     }).toList();
   }
 
-  // void setTimeSchedule(Map<String, List<String>> timeSchedule) {
-  //   this.timeSchedule = timeSchedule;
+  //
+  // void getInfoStream() {
+  //   FirebaseFirestore.instance.collection('your_collection').snapshots().listen((snapshot) {
+  //     var data = snapshot.docs.map((doc) => UserAvailabilityModel.fromSnapshot(doc)).toList();
+  //     // Update your data
+  //     // For example, if you're using GetX's reactive state management
+  //     // you can update the observable list
+  //     yourList.value = data;
+  //   });
   // }
-
-  /**
-   * Returns the time schedule of the user
-   */
-  // Map<String, List<String>> getTimeSchedule() {
-  //   return timeSchedule;
-  // }
-
   /**
    * This returns the time schedule of a specific user
    */

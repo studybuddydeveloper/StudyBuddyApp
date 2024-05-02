@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 
-import '../../../../constants/colors.dart';
-import '../../../../constants/image_strings.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/sign_up_controller.dart';
-import '../main_screens/main_screen.dart';
 
 class SignUpFormWidget extends StatelessWidget {
-  const SignUpFormWidget({
+  SignUpFormWidget({
     super.key,
   });
 
-  static final _formKey = GlobalKey<FormState>();
+  bool isDarkTheme(BuildContext context) {
+    var brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark;
+  }
+
+  final _formKey = GlobalKey<FormState>();
+
+  bool isIconVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -68,34 +71,34 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(
               height: sFormHeight - 20,
             ),
-            TextFormField(
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your full school name';
-                  }
-                  return null;
-                },
-                controller: controller.schoolName,
-                decoration: InputDecoration(
-                  label: const Text(sSchoolName),
-                  prefixIcon: const Icon(Icons.school),
-                  errorText: sisSchoolNameMissing
-                      ? 'Please enter your full school name'
-                      : null,
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: sisFullNameMissing
-                            ? Colors.red
-                            : Colors.black), // Error border color
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: sisFullNameMissing ? Colors.red : Colors.black),
-                  ),
-                )),
-            const SizedBox(
-              height: sFormHeight - 20,
-            ),
+            // TextFormField(
+            //     validator: (value) {
+            //       if (value!.isEmpty) {
+            //         return 'Please enter your full school name';
+            //       }
+            //       return null;
+            //     },
+            //     controller: controller.schoolName,
+            //     decoration: InputDecoration(
+            //       label: const Text(sSchoolName),
+            //       prefixIcon: const Icon(Icons.school),
+            //       errorText: sisSchoolNameMissing
+            //           ? 'Please enter your full school name'
+            //           : null,
+            //       errorBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(
+            //             color: sisFullNameMissing
+            //                 ? Colors.red
+            //                 : Colors.black), // Error border color
+            //       ),
+            //       focusedErrorBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(
+            //             color: sisFullNameMissing ? Colors.red : Colors.black),
+            //       ),
+            //     )),
+            // const SizedBox(
+            //   height: sFormHeight - 20,
+            // ),
             TextFormField(
               // validator: (value) {
               //       if (!value!.endsWith('.edu')) {
@@ -125,27 +128,30 @@ class SignUpFormWidget extends StatelessWidget {
               height: sFormHeight - 20,
             ),
             TextFormField(
+              obscureText: isIconVisible,
               validator: (value) {
-                // if (_formKey.currentState!.validate()) {
                 if (value!.isEmpty) {
-                  return 'Please enter a password';
+                  return 'Please enter your password';
                 }
-                sIsValidPassword = true;
                 return null;
               },
               controller: controller.password,
               decoration: InputDecoration(
-                label: const Text(sPassword),
-                prefixIcon: const Icon(Icons.remove_red_eye),
-                errorText:
-                    sisPasswordMissing ? 'Please enter a password' : null,
-                // Change the border color if the password length is invalid
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: sIsValidPassword ? Colors.black : Colors.red,
+                  labelText: sPassword,
+                  prefixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isIconVisible = !isIconVisible;
+                      });
+                    },
+                    icon: isIconVisible
+                        ? const Icon(
+                            Icons.visibility_off,
+                          )
+                        : const Icon(Icons.visibility),
                   ),
-                ),
-              ),
+                  border: const OutlineInputBorder(),
+                  hintText: sPassword),
             ),
             const SizedBox(
               height: sFormHeight - 20,
@@ -171,6 +177,7 @@ class SignUpFormWidget extends StatelessWidget {
                     setState(() {
                       obscureText = !obscureText;
                     });
+                    // icon
                   },
                 ),
                 label: const Text(sConfirmPassword),
@@ -211,39 +218,39 @@ class SignUpFormWidget extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: sPrimaryColor,
-                  side: const BorderSide(
-                    color: sSecondaryColor,
-                  ),
-                  foregroundColor: sSecondaryColor,
-                ),
-                onPressed: () async {
-                  var value = AuthenticationRepository.signInWithGoogle(
-                      context: context);
-                  if (value != null) {
-                    Get.to(() => const MainScreen());
-                  } else {
-                    Get.snackbar('Error', 'Error logging in');
-                  }
-                },
-                //TODO switch to google image
-                icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
-                label: Text(sLoginWithGoogle.toUpperCase(),
-                    /*todo set this to a const value*/
-                    style: const TextStyle(
-                      color: sSecondaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ),
-            ),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: OutlinedButton.icon(
+            //     style: OutlinedButton.styleFrom(
+            //         // side: const BorderSide(
+            //         //   color: sSecondaryColor,
+            //         // ),
+            //         // foregroundColor: sSecondaryColor,
+            //         ),
+            //     onPressed: () async {
+            //       var value = AuthenticationRepository.signInWithGoogle(
+            //           context: context);
+            //       if (value != null) {
+            //         Get.to(() => const MainScreen());
+            //       } else {
+            //         Get.snackbar('Error', 'Error logging in');
+            //       }
+            //     },
+            //     //TODO switch to google image
+            //     icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
+            //     label: Text(sLoginWithGoogle.toUpperCase(),
+            //         /*todo set this to a const value*/
+            //         style: const TextStyle(
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.bold,
+            //         )),
+            //   ),
+            // ),
           ])),
     );
   }
 
   void setState(Null Function() param0) {}
 }
+
+// void setState(Null Function() param0) {}

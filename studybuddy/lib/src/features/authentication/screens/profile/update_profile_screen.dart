@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/profile_controller.dart';
-import 'package:studybuddy/src/features/authentication/screens/availability_schedule_screen/AvailabilityTimeWidget.dart';
+import 'package:studybuddy/src/features/authentication/controllers/sign_up_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../utils/Majors.dart';
 import '../../../../utils/user_preferences.dart';
 import '../../models/user.dart' as modelUser;
-import '../welcome_screen.dart';
+import '../main_screens/home_screen_main.dart';
 import '../widgets/appbar-widget.dart';
 import '../widgets/profile_widget.dart';
 
@@ -45,6 +45,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   ProfileScreen profile = ProfileScreen();
+  final authController = Get.put(SignUpController());
   FirebaseAuth auth = FirebaseAuth.instance;
 
   late Future<List<String>> collegeNamesList;
@@ -98,9 +99,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 },
                 onSelected: (value) {
                   switch (value) {
+                    case 'Home':
+                      // Handle home action
+                      Get.to(() => HomeScreenMain());
+                      break;
+
                     case 'logout':
                       // Handle logout action
-                      Get.offAll(() => WelcomeScreen());
+                      authController.logOut();
                       break;
                   }
                 },
@@ -129,205 +135,211 @@ class _EditProfilePageState extends State<EditProfilePage> {
               builder: (context, snapshot) {
                 // if (snapshot.connectionState == ConnectionState.waiting) {
                 if (snapshot.hasData) {
-                  return ListView(
-                    // padding: const EdgeInsets.symmetric(horizontal: 32),
-                    // physics: const BouncingScrollPhysics(),
-                    children: [
-                      ProfileWidget(
-                        imagePath: user.imagePath,
-                        isEdit: true,
-                        onClicked: () async {},
-                      ),
-                      const SizedBox(height: 24),
-                      Text('Name'),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
+                  return Container(
+                    padding: const EdgeInsets.all(32),
+                    child: ListView(
+                      // padding: const EdgeInsets.symmetric(horizontal: 32),
+                      // physics: const BouncingScrollPhysics(),
+                      children: [
+                        ProfileWidget(
+                          imagePath: user.imagePath,
+                          isEdit: true,
+                          onClicked: () async {},
                         ),
-                        child: TextField(
-                          controller: controller.fullName,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: nameFieldFocused
-                                ? ''
-                                : controller.fullName.text,
+                        const SizedBox(height: 24),
+                        Text('Name'),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          onChanged: (value) {
-                            // Handle changes to the 'Name' section
-                          },
-                          maxLines: null,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Text('Email'),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: TextField(
-                          enabled: false,
-                          // controller: controller.email,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: controller.email.text,
-                          ),
-                          onChanged: (value) {
-                            // Handle changes to the 'Name' section
-                          },
-                          maxLines: null,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      FutureBuilder(
-                          future: collegeNamesList,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              List<String> collegeNames = snapshot.data!;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'College',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  DropdownSearch<String>(
-                                    items: collegeNames,
-                                    popupProps: PopupProps.menu(
-                                      showSearchBox: true,
-                                    ),
-                                    dropdownButtonProps: DropdownButtonProps(
-                                      color: Colors.blue,
-                                    ),
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      dropdownSearchDecoration: InputDecoration(
-                                          hintText: "Select College",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          )),
-                                    ),
-                                    onChanged: (value) {
-                                      controller.college.text =
-                                          value.toString();
-                                      setState(() {
-                                        itemSelected = value.toString();
-                                      });
-                                    },
-                                    selectedItem: itemSelected,
-                                  ),
-                                ],
-                              );
-                            }
-                          }),
-                      FutureBuilder(
-                          future: majorNamesList,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              List<String> majorNames = snapshot.data!;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Majors',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  DropdownSearch<String>(
-                                    items: majorNames,
-                                    popupProps: PopupProps.menu(
-                                      showSearchBox: true,
-                                    ),
-                                    dropdownButtonProps: DropdownButtonProps(
-                                      color: Colors.blue,
-                                    ),
-                                    dropdownDecoratorProps:
-                                        DropDownDecoratorProps(
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      dropdownSearchDecoration: InputDecoration(
-                                          hintText: "Select Major",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                          )),
-                                    ),
-                                    onChanged: (value) {
-                                      controller.major.text = value.toString();
-                                      setState(() {
-                                        majorSelected = value.toString();
-                                      });
-                                    },
-                                    selectedItem: majorSelected,
-                                  ),
-                                ],
-                              );
-                            }
-                          }),
-                      const SizedBox(height: 24),
-                      Text('About Section'),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: TextField(
-                          controller: controller.about,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            labelText: nameFieldFocused ? '' : 'About',
-                          ),
-                          onChanged: (value) {
-                            // Handle changes to the 'Name' section
-                          },
-                          maxLines: null,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Column(children: [
-                        TextField(
-                          controller: controller.classYear,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Class Year',
+                          child: TextField(
+                            controller: controller.fullName,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: nameFieldFocused
+                                  ? ''
+                                  : controller.fullName.text,
+                            ),
+                            onChanged: (value) {
+                              // Handle changes to the 'Name' section
+                            },
+                            maxLines: null,
                           ),
                         ),
-                        // Todo make the class year a dropdown instead of entered text
-                        // GraduatingYearDropdown(),
-                      ])
-                    ],
+                        const SizedBox(height: 24),
+                        Text('Email'),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: TextField(
+                            enabled: false,
+                            // controller: controller.email,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: controller.email.text,
+                            ),
+                            onChanged: (value) {
+                              // Handle changes to the 'Name' section
+                            },
+                            maxLines: null,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        FutureBuilder(
+                            future: collegeNamesList,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                List<String> collegeNames = snapshot.data!;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'College',
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    DropdownSearch<String>(
+                                      items: collegeNames,
+                                      popupProps: PopupProps.menu(
+                                        showSearchBox: true,
+                                      ),
+                                      dropdownButtonProps: DropdownButtonProps(
+                                        color: Colors.blue,
+                                      ),
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                                hintText: "Select College",
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                )),
+                                      ),
+                                      onChanged: (value) {
+                                        controller.college.text =
+                                            value.toString();
+                                        setState(() {
+                                          itemSelected = value.toString();
+                                        });
+                                      },
+                                      selectedItem: itemSelected,
+                                    ),
+                                  ],
+                                );
+                              }
+                            }),
+                        FutureBuilder(
+                            future: majorNamesList,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                List<String> majorNames = snapshot.data!;
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Majors',
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    DropdownSearch<String>(
+                                      items: majorNames,
+                                      popupProps: PopupProps.menu(
+                                        showSearchBox: true,
+                                      ),
+                                      dropdownButtonProps: DropdownButtonProps(
+                                        color: Colors.blue,
+                                      ),
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        textAlignVertical:
+                                            TextAlignVertical.center,
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                                hintText: "Select Major",
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                )),
+                                      ),
+                                      onChanged: (value) {
+                                        controller.major.text =
+                                            value.toString();
+                                        setState(() {
+                                          majorSelected = value.toString();
+                                        });
+                                      },
+                                      selectedItem: majorSelected,
+                                    ),
+                                  ],
+                                );
+                              }
+                            }),
+                        const SizedBox(height: 24),
+                        Text('About Section'),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: TextField(
+                            controller: controller.about,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: nameFieldFocused ? '' : 'About',
+                            ),
+                            onChanged: (value) {
+                              // Handle changes to the 'Name' section
+                            },
+                            maxLines: null,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Column(children: [
+                          TextField(
+                            controller: controller.classYear,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Class Year',
+                            ),
+                          ),
+                          // Todo make the class year a dropdown instead of entered text
+                          // GraduatingYearDropdown(),
+                        ])
+                      ],
+                    ),
                   );
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
@@ -353,7 +365,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   icon: IconButton(
                       icon: Icon(Icons.event_available),
                       onPressed: () {
-                        Get.to(() => ScheduleGridWidget());
+                        Get.to(() => UserAvailability());
                       }),
                   label: 'Availability',
                 ),

@@ -52,7 +52,6 @@ class _LoginFormState extends State<LoginForm> {
                 decoration: const InputDecoration(
                   labelText: sEmail,
                   hintText: sEmailHint,
-                  prefixIconColor: Colors.black,
                   prefixIcon: Icon(
                     Icons.person_2_outlined,
                   ),

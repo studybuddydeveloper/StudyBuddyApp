@@ -2,13 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
-import 'package:studybuddy/src/features/authentication/screens/availability_schedule_screen/AvailabilityTimeWidget.dart';
+import 'package:studybuddy/src/features/authentication/controllers/sign_up_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../repository/home_repository/home_repository.dart';
 import '../../../../utils/User_Data.dart';
-import '../welcome_screen.dart';
 
 class HomeScreenMain extends StatefulWidget {
   const HomeScreenMain({super.key});
@@ -18,6 +17,7 @@ class HomeScreenMain extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreenMain> {
+  final SignUpController authController = Get.put(SignUpController());
   late Future<List<User_Main>> users;
 
   bool isTimeChecked =
@@ -132,229 +132,245 @@ class _HomeScreenState extends State<HomeScreenMain> {
 
     return Scaffold(
         drawer: Drawer(
-            backgroundColor: Colors.white,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          Navigator.pop(context); // Close the drawer
-                        },
-                      ),
-                    ],
+            // backgroundColor: Colors.white,
+            child: SingleChildScrollView(
+          // scrollDirection: Axis.vertical,
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
+
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 30.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        Navigator.pop(context); // Close the drawer
+                      },
+                    ),
+                  ],
+                ),
+                Text(
+                  'Filter by:',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    'Filter by:',
+                ),
+                //TODO Include vertical line
+                const Divider(
+                  thickness: 1,
+                  indent: 1,
+                  color: Colors.white,
+                ),
+                CheckboxListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  side: BorderSide(color: Colors.black),
+                  tileColor: Colors.white,
+                  title: Text(
+                    'SCHOOL',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 24,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  //TODO Include vertical line
-                  const Divider(
-                    thickness: 1,
-                    indent: 1,
-                    color: Colors.black,
+                  value: isSchoolChecked,
+                  // Set the initial value of the checkbox
+                  onChanged: null,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CheckboxListTile(
+                  tileColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  CheckboxListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                  title: Text(
+                    'MAJOR',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    side: BorderSide(color: Colors.black),
-                    tileColor: Colors.white,
-                    title: Text(
-                      'SCHOOL',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    value: isSchoolChecked,
-                    // Set the initial value of the checkbox
-                    onChanged: null,
                   ),
-
-                  CheckboxListTile(
-                    tileColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    title: Text(
-                      'MAJOR',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    value: isMajorChecked,
-                    // Set the initial value of the checkbox
-                    onChanged: (newValue) {
-                      // Handle checkbox state change
-                      setState(() {
-                        isMajorChecked = newValue!;
-                      });
-                    },
-                    selectedTileColor: Colors.black,
+                  value: isMajorChecked,
+                  // Set the initial value of the checkbox
+                  onChanged: (newValue) {
+                    // Handle checkbox state change
+                    setState(() {
+                      isMajorChecked = newValue!;
+                    });
+                  },
+                  selectedTileColor: Colors.black,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CheckboxListTile(
+                  tileColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  CheckboxListTile(
-                    tileColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                  title: Text(
+                    'TIME',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
-                    title: Text(
-                      'TIME',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    value: isTimeChecked,
-                    // Set the initial value of the checkbox
-                    onChanged: (newValue) {
-                      // Handle checkbox state change
-                      setState(() {
-                        isTimeChecked = newValue!;
-                      });
-                    },
-                    selectedTileColor: Colors.black,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 50,
-                          child: CheckboxListTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            side: BorderSide(color: Colors.black),
-                            tileColor: Colors.white,
-                            title: Text(
-                              'IN PERSON',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            value: isInpersonChecked,
-                            // Set the initial value of the checkbox
-                            onChanged: (newValue) {
-                              // Handle checkbox state change
-                              setState(() {
-                                isInpersonChecked = newValue!;
-                              });
-                            },
+                  value: isTimeChecked,
+                  // Set the initial value of the checkbox
+                  onChanged: (newValue) {
+                    // Handle checkbox state change
+                    setState(() {
+                      isTimeChecked = newValue!;
+                    });
+                  },
+                  selectedTileColor: Colors.black,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 150,
+                        height: 50,
+                        child: CheckboxListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
-                        ),
-                        SizedBox(
-                          width: 24,
-                        ),
-                        Container(
-                          width: 150,
-                          height: 50,
-                          child: CheckboxListTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                          side: BorderSide(color: Colors.black),
+                          tileColor: Colors.white,
+                          title: Text(
+                            'IN PERSON',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
                             ),
-                            side: BorderSide(color: Colors.black),
-
-                            tileColor: Colors.white,
-                            title: Text(
-                              'VIRTUAL',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            value: isVirtualChecked,
-                            // Set the initial value of the checkbox
-                            onChanged: (newValue) {
-                              // Handle checkbox state change
-                              setState(() {
-                                isVirtualChecked = newValue!;
-                              });
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          width: 24,
-                        ),
-                        Container(
-                          width: 150,
-                          height: 50,
-                          child: CheckboxListTile(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            side: BorderSide(color: Colors.black),
-                            tileColor: Colors.white,
-                            title: Text(
-                              'HYBRID',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            value: isHybridChecked,
-                            // Set the initial value of the checkbox
-                            onChanged: (newValue) {
-                              // Handle checkbox state change
-                              setState(() {
-                                isHybridChecked = newValue!;
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 24,
-                        ),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                      onPressed: () => {
-                            if (isMajorChecked)
-                              {
-                                users = _hController.fetchUsersInSameMajor(),
-                              }
-
-                            // take away the else
-                            else if (isTimeChecked)
-                              {
-                                // users get intersected with the users
-                                // that have the same availability
-                                users = _hController
-                                    .fetchUsersWithSameAvailability(),
-                              },
-                            Navigator.pop(context),
+                          value: isInpersonChecked,
+                          // Set the initial value of the checkbox
+                          onChanged: (newValue) {
+                            // Handle checkbox state change
+                            setState(() {
+                              isInpersonChecked = newValue!;
+                            });
                           },
-                      child: Text("Apply",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          )))
-                ],
-              ),
-            )),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Container(
+                        width: 150,
+                        height: 50,
+                        child: CheckboxListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          side: BorderSide(color: Colors.black),
+
+                          tileColor: Colors.white,
+                          title: Text(
+                            'VIRTUAL',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isVirtualChecked,
+                          // Set the initial value of the checkbox
+                          onChanged: (newValue) {
+                            // Handle checkbox state change
+                            setState(() {
+                              isVirtualChecked = newValue!;
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Container(
+                        width: 150,
+                        height: 50,
+                        child: CheckboxListTile(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          side: BorderSide(color: Colors.black),
+                          tileColor: Colors.white,
+                          title: Text(
+                            'HYBRID',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          value: isHybridChecked,
+                          // Set the initial value of the checkbox
+                          onChanged: (newValue) {
+                            // Handle checkbox state change
+                            setState(() {
+                              isHybridChecked = newValue!;
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                // Spacer(), // This will push the button to the bottom
+
+                ElevatedButton(
+                    onPressed: () => {
+                          if (isMajorChecked)
+                            {
+                              users = _hController.fetchUsersInSameMajor(),
+                            }
+
+                          // take away the else
+                          else if (isTimeChecked)
+                            {
+                              // users get intersected with the users
+                              // that have the same availability
+                              users =
+                                  _hController.fetchUsersWithSameAvailability(),
+                            },
+                          Navigator.pop(context),
+                        },
+                    child: Text("Apply",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        )))
+              ],
+            ),
+          ),
+        )),
         // icon: Icon(Icons.filter_alt_rounded),),
         appBar: AppBar(
           title: const Text('College Buddies'),
@@ -368,7 +384,6 @@ class _HomeScreenState extends State<HomeScreenMain> {
                   PopupMenuItem(
                     child: Row(
                       children: [
-                        // Logout icon
                         SizedBox(width: 10),
                         Text('Profile', style: TextStyle(color: Colors.black)),
                         // Set text color to red for logout
@@ -395,7 +410,7 @@ class _HomeScreenState extends State<HomeScreenMain> {
                 switch (value) {
                   case 'logout':
                     // Handle logout action
-                    Get.offAll(() => WelcomeScreen());
+                    authController.logOut();
                     break;
 
                   case 'profile':
@@ -454,15 +469,20 @@ class _HomeScreenState extends State<HomeScreenMain> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               tooltip: 'Home',
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                  // Get.to(() => User());
+                },
+              ),
+              label: '',
             ),
             BottomNavigationBarItem(
               tooltip: 'Availability',
               icon: IconButton(
                   icon: Icon(Icons.event_available),
                   onPressed: () {
-                    Get.to(() => ScheduleGridWidget());
+                    Get.to(() => UserAvailability());
                   }),
               label: 'Availability',
             ),

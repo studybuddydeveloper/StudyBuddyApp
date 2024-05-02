@@ -44,9 +44,9 @@ class SAppTheme {
       outlinedButtonTheme: SOutlinedButtonTheme.darkOutlinedButtonTheme,
       elevatedButtonTheme: SElevatedButtonTheme.darkElevatedButtonTheme,
       inputDecorationTheme: STextFieldTheme.darkInputDecorationTheme,
-      iconTheme: IconThemeData(color: Colors.yellow),
+      iconTheme: IconThemeData(color: Colors.white),
       iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
-        iconColor: MaterialStateProperty.all(Colors.yellow),
+        iconColor: MaterialStateProperty.all(Colors.white),
       )));
 }

@@ -6,8 +6,6 @@ import 'package:studybuddy/src/features/authentication/screens/onboarding_screen
 import 'package:studybuddy/src/features/authentication/screens/widgets/form_header_widget.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/login_form_widget.dart';
 
-import '../../../../constants/image_strings.dart';
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -60,23 +58,26 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: () {},
-                  //TODO switch to google image
-                  icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
-                  label: Text(sLoginWithGoogle.toUpperCase(),
-                      /*todo set this to a const value*/
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      )),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: OutlinedButton.icon(
+              //     // focusNode: FocusNode(
+              //     //   canRequestFocus: false,
+              //     // ),
+              //     onPressed: () {},
+              //     //TODO switch to google image
+              //     icon: const Image(image: AssetImage(sGoogleLogo), width: 20),
+              //     label: Text(sLoginWithGoogle.toUpperCase(),
+              //         /*todo set this to a const value*/
+              //         style: const TextStyle(
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.bold,
+              //         )),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
               Align(
                 alignment: Alignment.center,
                 child: TextButton(

@@ -4,6 +4,7 @@ import 'package:studybuddy/src/features/authentication/controllers/sign_up_contr
 import 'package:studybuddy/src/features/authentication/controllers/time_scheduling_controller.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
+import '../main_screens/home_screen_main.dart';
 import '../widgets/appbar-widget.dart';
 
 class ScheduleGridWidget extends StatefulWidget {
@@ -47,13 +48,13 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
               title: Text('Select your availability today!',
                   style: TextStyle(
                     fontSize: 40,
-                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                     // align: 'center',
                   )),
               // Set the title text
-              leading:
-                  BackButton(onPressed: () => Get.to(() => ProfileScreen())),
+              leading: BackButton(onPressed: () {
+                Navigator.pop(context);
+              }),
               actions: [
                 PopupMenuButton(
                   icon: Icon(Icons.person),
@@ -90,6 +91,10 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
                   },
                   onSelected: (value) {
                     switch (value) {
+                      case 'Home':
+                        // Handle home action
+                        Get.to(() => HomeScreenMain());
+                        break;
                       case 'logout':
                         // Handle logout action
                         authController.logOut();
@@ -526,15 +531,19 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   tooltip: 'Home',
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: IconButton(
+                      icon: Icon(Icons.home),
+                      onPressed: () {
+                        Get.to(() => HomeScreenMain());
+                      }),
+                  label: '',
                 ),
                 BottomNavigationBarItem(
                   tooltip: 'Availability',
                   icon: IconButton(
                       icon: Icon(Icons.event_available),
                       onPressed: () {
-                        Get.to(() => ScheduleGridWidget());
+                        Get.to(() => UserAvailability());
                       }),
                   label: 'Availability',
                 ),
