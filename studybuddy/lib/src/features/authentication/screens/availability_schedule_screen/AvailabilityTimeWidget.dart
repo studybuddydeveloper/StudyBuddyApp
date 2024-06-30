@@ -12,21 +12,30 @@ class ScheduleGridWidget extends StatefulWidget {
   _ScheduleGridWidgetState createState() => _ScheduleGridWidgetState();
 }
 
-/**
- * This widget creates time drop down for all available dates
- */
 class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
   final SignUpController authController = Get.put(SignUpController());
   String selectedStartTime = '5:00PM'; // Example initial selection
   String selectedEndTime = '10:00PM'; // Example initial selection
 
-  // a single var wont work since we haave multiple dates. Instead, we use a map
-  // mapping each date's selected start and end times
-  // Declare a map to store selected start times for each date
-  Map<String, String> selectedStartTimes = {};
+  Map<String, String?> selectedStartTimes = {
+    'Monday': null,
+    'Tuesday': null,
+    'Wednesday': null,
+    'Thursday': null,
+    'Friday': null,
+    'Saturday': null,
+    'Sunday': null,
+  };
 
-// Declare a map to store selected end times for each date
-  Map<String, String> selectedEndTimes = {};
+  Map<String, String?> selectedEndTimes = {
+    'Monday': null,
+    'Tuesday': null,
+    'Wednesday': null,
+    'Thursday': null,
+    'Friday': null,
+    'Saturday': null,
+    'Sunday': null,
+  };
   List<String> items = [];
 
   List<String> userAvailability = [];
@@ -35,575 +44,299 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
   late TimeSchedulingController _controller;
 
   @override
+  void initState() {
+    super.initState();
+    items = createListOfTimes(selectedStartTime, selectedEndTime);
+  }
+
+  @override
   Widget build(BuildContext context) {
     double middleElementWidth =
         MediaQuery.of(context).size.width * 1.3; // Adjust the factor as needed
 
-    items = createListOfTimes(selectedStartTime, selectedEndTime);
-    return Builder(
-        builder: (context) => Scaffold(
-            appBar: buildAppBar(
-              // centerTitle: true,
-              context,
-              title: Text('Select your availability today!',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    // align: 'center',
-                  )),
-              // Set the title text
-              leading: BackButton(onPressed: () {
-                Navigator.pop(context);
-              }),
-              actions: [
-                PopupMenuButton(
-                  icon: Icon(Icons.person),
-                  color: Colors.white,
-                  // backgroundColor: Colors.white,
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      PopupMenuItem(
-                        child: Row(
-                          children: [
-                            // Logout icon
-                            SizedBox(width: 10),
-                            Text('Profile',
-                                style: TextStyle(color: Colors.black)),
-                            // Set text color to red for logout
-                          ],
-                        ),
-                        value: 'profile',
-                      ),
-                      // Divider(height: 1, thickness: 1), // Add a divider
-                      PopupMenuItem(
-                        child: Row(
-                          children: [
-                            Icon(Icons.logout, color: Colors.red),
-                            // Logout icon
-                            SizedBox(width: 10),
-                            Text('Logout', style: TextStyle(color: Colors.red)),
-                            // Set text color to red for logout
-                          ],
-                        ),
-                        value: 'logout',
-                      ),
-                    ];
-                  },
-                  onSelected: (value) {
-                    switch (value) {
-                      case 'Home':
-                        // Handle home action
-                        Get.to(() => HomeScreenMain());
-                        break;
-                      case 'logout':
-                        // Handle logout action
-                        authController.logOut();
-                        break;
-
-                      case 'profile':
-                        // Handle profile action
-                        Get.to(() => ProfileScreen());
-                        break;
-                    }
-                  },
-                )
-              ], // Set the leading widget
-            ),
-            body: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                alignment: Alignment.center,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+        appBar: buildAppBar(
+          context,
+          title: Text('Select your availability today!',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              )),
+          leading: BackButton(onPressed: () {
+            Navigator.pop(context);
+          }),
+          actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.person),
+              color: Colors.white,
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Text('Profile', style: TextStyle(color: Colors.black)),
+                      ],
+                    ),
+                    value: 'profile',
+                  ),
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        Icon(Icons.logout, color: Colors.red),
+                        SizedBox(width: 10),
+                        Text('Logout', style: TextStyle(color: Colors.red)),
+                      ],
+                    ),
+                    value: 'logout',
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                switch (value) {
+                  case 'Home':
+                    Get.to(() => HomeScreenMain());
+                    break;
+                  case 'logout':
+                    authController.logOut();
+                    break;
+                  case 'profile':
+                    Get.to(() => ProfileScreen());
+                    break;
+                }
+              },
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            width: middleElementWidth,
-                            child: Container(), // Placeholder
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            // Implement logic to add a new date selection
-                          },
-                          icon: Icon(Icons.add),
-                          label: Text('ADD DATE',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.black,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 30),
-                              shape: BeveledRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: middleElementWidth,
-                            child: Container(), // Placeholder
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      child: SizedBox(
+                        width: middleElementWidth,
+                      ),
                     ),
-                    SizedBox(height: 20),
-
-                    //TODO: Extract this into a separate widget(the row part since it is repeated.)
-                    // Method chosen is not currently working
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 220,
-                            child: ElevatedButton(
-                                child: Text("Monday",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.black,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 30),
-                                    shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                // key: "Sunday",
-                                onHover: (True) => {},
-                                onPressed: () => {
-                                      //add the date to the avail.string
-                                      // currDateString += "Monday",
-                                    }),
-                          ),
-                          SizedBox(width: 10),
-                          // Spacer between text and dropdowns
-                          // Start time dropdown button
-                          buildDropdownButton(
-                              selectedStartTimes["Monday"] ?? "5:00PM",
-                              "Monday",
-                              true),
-                          // setState(() {
-                          //   selectedStartTime = newValue;
-                          //   currDateString += " ($newValue";
-                          // });
-                          SizedBox(width: 10),
-                          // Spacer between dropdowns
-                          // Text 'till'
-                          Text('till'),
-                          SizedBox(width: 10),
-                          buildDropdownButton(
-                              selectedEndTimes["Monday"] ?? "10:00PM",
-                              "Monday",
-                              false),
-                          // End time dropdown button
-                          // availabilityTimes.add(currDateString),
-                        ]),
-                    SizedBox(height: 20),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 220,
-                          child: ElevatedButton(
-                              child: Text("Tuesday",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.black,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 30),
-                                  shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              // key: "Sunday",
-                              onHover: (True) => {},
-                              onPressed: () => {}),
-                        ),
-                        SizedBox(width: 10),
-                        // Start time dropdown button
-                        buildDropdownButton(
-                            selectedStartTimes["Tuesday"] ?? "5:00PM",
-                            "Tuesday",
-                            true),
-                        SizedBox(width: 10),
-                        // Spacer between dropdowns
-                        // Text 'till'
-                        Text('till'),
-                        SizedBox(width: 10),
-                        // Spacer between text and dropdowns
-                        // End time dropdown button
-                        buildDropdownButton(
-                            selectedEndTimes["Tuesday"] ?? "10:00PM",
-                            "Tuesday",
-                            false)
-                      ],
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        // Implement logic to add a new date selection
+                      },
+                      icon: Icon(Icons.add),
+                      label: Text('ADD DATE',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 30),
+                          shape: BeveledRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
                     ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 220,
-                          child: ElevatedButton(
-                              child: Text("Wednesday",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.black,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 30),
-                                  shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              // key: "Sunday",
-                              onHover: (True) => {},
-                              onPressed: () => {}),
-                        ),
-                        SizedBox(width: 10),
-                        // Spacer between text and dropdowns
-                        // Start time dropdown button
-                        buildDropdownButton(
-                            selectedStartTimes["Wednesday"] ?? "5:00PM",
-                            "Wednesday",
-                            true),
-                        SizedBox(width: 10),
-                        // Spacer between dropdowns
-                        // Text 'till'
-                        Text('till'),
-                        SizedBox(width: 10),
-                        // Spacer between text and dropdowns
-                        // End time dropdown button
-                        buildDropdownButton(
-                            selectedEndTimes["Wednesday"] ?? "10:00PM",
-                            "Wednesday",
-                            false)
-                      ],
+                    Expanded(
+                      child: SizedBox(
+                        width: middleElementWidth,
+                      ),
                     ),
-                    SizedBox(height: 20),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            width: 220,
-                            child: ElevatedButton(
-                                child: Text("Thursday",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.black,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 30),
-                                    shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                // key: "Sunday",
-                                onHover: (True) => {},
-                                onPressed: () => {}),
-                          ),
-                          SizedBox(width: 10),
-
-                          buildDropdownButton(
-                              selectedStartTimes["Thursday"] ?? "5:00PM",
-                              "Thursday",
-                              true),
-                          SizedBox(width: 10),
-                          // Spacer between dropdowns
-                          // Text 'till'
-                          Text('till'),
-                          SizedBox(width: 10),
-                          // Spacer between text and dropdowns
-                          // End time dropdown button
-                          buildDropdownButton(
-                              selectedEndTimes["Thursday"] ?? "10:00PM",
-                              "Thursday",
-                              false)
-                        ]),
-                    SizedBox(height: 20),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        // Day of the week (e.g., Monday)
-                        SizedBox(
-                          width: 220,
-                          child: ElevatedButton(
-                              child: Text("Friday",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: Colors.black,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 40, vertical: 30),
-                                  shape: BeveledRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              // key: "Sunday",
-                              onHover: (True) => {},
-                              onPressed: () => {}),
-                        ),
-                        SizedBox(width: 10),
-                        // Spacer between text and dropdowns
-                        // Start time dropdown button
-                        buildDropdownButton(
-                            selectedStartTimes["Friday"] ?? "5:00PM",
-                            "Friday",
-                            true),
-                        SizedBox(width: 10),
-                        // Spacer between dropdowns
-                        // Text 'till'
-                        Text('till'),
-                        SizedBox(width: 10),
-                        // Spacer between text and dropdowns
-
-                        buildDropdownButton(
-                            selectedEndTimes["Friday"] ?? "10:00PM",
-                            "Friday",
-                            false),
-                        // TODO: Check if the value for the start and end times selected is the same
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 220,
-                            child: ElevatedButton(
-                                child: Text("Saturday",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.black,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 30),
-                                    shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                // key: "Sunday",
-                                onHover: (True) => {},
-                                onPressed: () => {}),
-                          ),
-                          SizedBox(width: 10),
-                          // Spacer between text and dropdowns
-                          // Start time dropdown button
-                          buildDropdownButton(
-                              selectedStartTimes['Saturday'] ?? "5:00PM",
-                              "Saturday",
-                              true),
-                          SizedBox(width: 10),
-                          // Spacer between dropdowns
-                          // Text 'till'
-                          Text('till'),
-                          SizedBox(width: 10),
-                          buildDropdownButton(
-                              selectedEndTimes['Saturday'] ?? "10:00PM",
-                              "Saturday",
-                              false)
-                          // End time dropdown button
-                        ]),
-                    SizedBox(height: 20),
-                    Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 220,
-                            child: ElevatedButton(
-                                child: Text("Sunday",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Colors.black,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 40, vertical: 30),
-                                    shape: BeveledRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                // key: "Sunday",
-                                onHover: (True) => {},
-                                onPressed: () => {}),
-                          ),
-                          // Text("Sunday"),
-                          SizedBox(width: 10),
-                          // Spacer between text and dropdowns
-                          // Start time dropdown button
-                          buildDropdownButton(
-                              selectedStartTimes['Sunday'] ?? "5:00PM",
-                              "Sunday",
-                              true),
-                          SizedBox(width: 10),
-                          // Spacer between dropdowns
-                          // Text 'till'
-                          Text('till'),
-                          SizedBox(width: 10),
-                          buildDropdownButton(
-                              selectedEndTimes['Sunday'] ?? "10:00PM",
-                              "Sunday",
-                              false)
-                          // End time dropdown button
-                        ]),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            width: middleElementWidth,
-                            child: Container(), // Placeholder
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () => {
-                            _controller = TimeSchedulingController(
-                                userAvailability: userAvailability),
-                            _controller.saveAvailabilityToDatabase(),
-
-                            // reset the user availability
-                            userAvailability = []
-                          },
-                          child: Text("SUBMIT",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 40, vertical: 30),
-                              shape: BeveledRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: middleElementWidth,
-                            child: Container(), // Placeholder
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
-              ),
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  tooltip: 'Home',
-                  icon: IconButton(
-                      icon: Icon(Icons.home),
+                SizedBox(height: 20),
+                for (var day in [
+                  'Monday',
+                  'Tuesday',
+                  'Wednesday',
+                  'Thursday',
+                  'Friday',
+                  'Saturday',
+                  'Sunday'
+                ])
+                  buildDayRow(day),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        width: middleElementWidth,
+                      ),
+                    ),
+                    ElevatedButton(
                       onPressed: () {
-                        Get.to(() => HomeScreenMain());
-                      }),
-                  label: '',
-                ),
-                BottomNavigationBarItem(
-                  tooltip: 'Availability',
-                  icon: IconButton(
-                      icon: Icon(Icons.event_available),
-                      onPressed: () {
-                        Get.to(() => UserAvailability());
-                      }),
-                  label: 'Availability',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat),
-                  label: 'Chat',
-                  tooltip: 'Coming Soon!',
-                ),
-                BottomNavigationBarItem(
-                  tooltip: 'Profile',
-                  icon: IconButton(
-                    icon: Icon(Icons.person),
-                    onPressed: () {
-                      // Get.to(() => ProfileScreen());
-                    },
-                  ),
-                  label: 'Profile',
-                ),
+                        bool isValid = true;
+                        String errorMessage = '';
+                        selectedStartTimes.forEach((day, startTime) {
+                          if (startTime != null &&
+                              selectedEndTimes[day] != null) {
+                            if (int.parse(
+                                    selectedEndTimes[day]!.split(":")[0]) <=
+                                int.parse(startTime.split(":")[0])) {
+                              isValid = false;
+                              errorMessage =
+                                  'End time cannot be earlier or the same as start time for $day';
+                            }
+                          }
+                        });
+                        if (isValid) {
+                          _controller = TimeSchedulingController(
+                              userAvailability: userAvailability);
+                          _controller.saveAvailabilityToDatabase();
+                          userAvailability = [];
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(errorMessage),
+                          ));
+                        }
+                      },
+                      child: Text("SUBMIT",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 30),
+                          shape: BeveledRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: middleElementWidth,
+                      ),
+                    ),
+                  ],
+                )
               ],
-              selectedItemColor: Colors.black,
-              unselectedItemColor: Colors.grey,
-              backgroundColor: Colors.white,
-              // currentIndex: _selectedIndex,
-              // onTap: _onItemTapped,
-            )));
+            ),
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              tooltip: 'Home',
+              icon: IconButton(
+                  icon: Icon(Icons.home),
+                  onPressed: () {
+                    Get.to(() => HomeScreenMain());
+                  }),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Availability',
+              icon: IconButton(
+                  icon: Icon(Icons.event_available),
+                  onPressed: () {
+                    Get.to(() => UserAvailability());
+                  }),
+              label: 'Availability',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat),
+              label: 'Chat',
+              tooltip: 'Coming Soon!',
+            ),
+            BottomNavigationBarItem(
+              tooltip: 'Profile',
+              icon: IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () {
+                  // Get.to(() => ProfileScreen());
+                },
+              ),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          backgroundColor: Colors.white,
+        ));
   }
 
-  /**
-   * It takes in a selected value, and creates a drop down of times from that value.This is in increments of 30 minutes!
-   */
+  Widget buildDayRow(String day) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 220,
+          child: ElevatedButton(
+            child: Text(day,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                )),
+            style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.black,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                shape: BeveledRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
+            onPressed: () {},
+          ),
+        ),
+        SizedBox(width: 10),
+        buildDropdownButton(selectedStartTimes[day] ?? "5:00PM", day, true),
+        SizedBox(width: 10),
+        Text('till'),
+        SizedBox(width: 10),
+        buildDropdownButton(selectedEndTimes[day] ?? "10:00PM", day, false),
+      ],
+    );
+  }
+
   Widget buildDropdownButton(
       String selectedValue, String dayOfWeek, bool isStartTime) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-      // Add padding
-
-      // Decoration to add borders
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black), // Set border color
-        borderRadius: BorderRadius.circular(10), // Set border radius
-        color: Colors.white, // Set background color to black
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(10),
+        color: isStartTime
+            ? Colors.white
+            : (selectedEndTimes[dayOfWeek] != null &&
+                    selectedStartTimes[dayOfWeek] != null &&
+                    int.parse(selectedEndTimes[dayOfWeek]!.split(":")[0]) <=
+                        int.parse(selectedStartTimes[dayOfWeek]!.split(":")[0])
+                ? Colors.red
+                : Colors.white),
       ),
       child: DropdownButton<String>(
-        value: selectedValue,
+        value: selectedValue.isNotEmpty ? selectedValue : '',
         underline: Container(),
-        onChanged: (String? newValue) => {
-          // TODO: CHange this value to the updated value when it's changed on the screen
-          setState(() {
-            if (!isStartTime) {
-              // print("new end is $newValue");
-              // int.parse(selectedEndTimes[dayOfWeek]!.split(":")[0])
-              selectedEndTimes[dayOfWeek] = newValue!;
-              // currDateString += "-$newValue";
-              var curr = selectedEndTimes[dayOfWeek];
-              var cur = selectedStartTimes[dayOfWeek];
-              userAvailability.add('$dayOfWeek $cur-$curr');
-            } else {
-              selectedStartTimes[dayOfWeek] = newValue!;
-            }
-          })
+        onChanged: (String? newValue) {
+          if (newValue != selectedValue) {
+            setState(() {
+              if (!isStartTime) {
+                selectedEndTimes[dayOfWeek] = newValue!;
+                var curr = selectedEndTimes[dayOfWeek];
+                var cur = selectedStartTimes[dayOfWeek];
+                if (int.parse(curr!.split(":")[0]) <=
+                    int.parse(cur!.split(":")[0])) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('End time cannot be earlier than start time'),
+                  ));
+                } else {
+                  userAvailability.add('$dayOfWeek $cur-$curr');
+                }
+              } else {
+                selectedStartTimes[dayOfWeek] = newValue!;
+              }
+            });
+          }
         },
         items: items.map((value) {
           return DropdownMenuItem<String>(
@@ -611,7 +344,6 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
             child: Text(
               value,
               style: TextStyle(
-                // TODO: change styling to default app styling
                 fontSize: 20,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -622,22 +354,19 @@ class _ScheduleGridWidgetState extends State<ScheduleGridWidget> {
       ),
     );
   }
-}
 
-/**
- * This function creates a list of times from the start time to the end time
- */
-List<String> createListOfTimes(String startTime, String endTime) {
-  List<String> times = [];
+  List<String> createListOfTimes(String startTime, String endTime) {
+    List<String> times = [];
 
-  int startHour = int.parse(startTime.split(":")[0]);
-  int endHour = int.parse(endTime.split(":")[0]);
-  for (int i = startHour; i <= endHour; i++) {
-    times.add("$i:00PM");
-    if (i == endHour) {
-      break;
+    int startHour = int.parse(startTime.split(":")[0]);
+    int endHour = int.parse(endTime.split(":")[0]);
+    for (int i = startHour; i <= endHour; i++) {
+      times.add("$i:00PM");
+      if (i == endHour) {
+        break;
+      }
+      times.add("$i:30PM");
     }
-    times.add("$i:30PM");
+    return times;
   }
-  return times;
 }
