@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb32dbb2-5d36-484e-a534-42f799136c4c" name="Changes" comment="Enabling forgot password option">
+    <list default="true" id="4b8f9adc-9696-49e4-8360-2bd2db74adf0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../public/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/controllers/sign_up_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/controllers/sign_up_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/home_screen_main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/home_screen_main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/profile_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/sign_up_form_two_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/authentication/screens/widgets/sign_up_form_two_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/repository/authentication_repository/authentication_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/repository/authentication_repository/authentication_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/repository/home_repository/home_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/repository/home_repository/home_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,22 +57,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/cakan/OneDrive - Mount Holyoke College/Desktop/GitHub Repos/StudyBuddyApp/studybuddy&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "C:/Users/emman/Flutter-Workspace/StudyBuddyApp",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\emman\Flutter-Workspace\StudyBuddyApp\studybuddy\lib\src\features\authentication\screens\profile" />
       <recent name="C:\Users\cakan\OneDrive - Mount Holyoke College\Desktop\GitHub Repos\StudyBuddyApp\studybuddy\lib\src\features\authentication\screens\profile" />
     </key>
   </component>
@@ -73,7 +86,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cb32dbb2-5d36-484e-a534-42f799136c4c" name="Changes" comment="" />
+      <changelist id="4b8f9adc-9696-49e4-8360-2bd2db74adf0" name="Changes" comment="" />
       <created>1698014116864</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -100,18 +113,28 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/onboarding_screens/login_screen.dart</url>
-          <line>92</line>
-          <option name="timeStamp" value="2" />
+          <line>23</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/repository/users_repository/users_repository.dart</url>
-          <line>25</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/main_screens/home_screen_main.dart</url>
+          <line>153</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart</url>
-          <line>120</line>
-          <option name="timeStamp" value="6" />
+          <line>210</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart</url>
+          <line>200</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/authentication/screens/profile/update_profile_screen.dart</url>
+          <line>103</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

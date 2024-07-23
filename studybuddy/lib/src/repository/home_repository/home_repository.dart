@@ -8,6 +8,7 @@ import 'package:studybuddy/src/features/authentication/screens/main_screens/user
 import '../../features/authentication/controllers/profile_controller.dart';
 import '../../features/authentication/models/UserAvailabilityModel.dart';
 import '../../utils/User_Data.dart';
+import '../authentication_repository/profile_repository.dart';
 
 class HomeRepository extends GetxController {
   static HomeRepository get instance => Get.find();
@@ -32,6 +33,59 @@ class HomeRepository extends GetxController {
     uid = userData.userId!;
     major = userData.major!;
     college = userData.college!;
+  }
+
+  Future<List<Object>> fetchUserProfile() async {
+    print("hello");
+    String uid = _Pcontroller.getCurrentUserId();
+
+    // final uid = _auth.currentUser!.uid;
+    Map<String, dynamic> userData = {};
+
+    try {
+      // TODO save all this fields to a const page to prevent constant lookup
+      // userId = controller.getCurrentUserId();
+      userData = await ProfileRepository().getUserProfile(uid);
+
+      // Access the user data fields
+      college = userData['schoolName'] ?? '';
+      print("my $college");
+      fetchUsersInSameCollege();
+      // about = userData['about'] ?? '';
+      // major = userData['major'] ?? '';
+      // classYear = userData['classYear'] ?? '';
+      //
+      // // Now, you can use these variables in your UI
+      // setState(() {}); // Trigger a rebuild to reflect the updated data
+
+      // fetchUserProfile();
+      print("The college $college");
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('college', isEqualTo: college)
+          .get();
+
+      List<User_Main> users = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return User_Main(
+          uid: doc.id,
+          displayName: data['displayName'],
+          college: data['college'],
+          about: data['about'],
+          major: data['major'],
+          // "monday (3-5)"
+          // "monday": ["2-7"]
+          // Add other user details as needed
+        );
+      }).toList();
+      print(" the users dislay $users");
+      return users;
+    } catch (e) {
+      // Handle errors or notify the user about the failure
+      print('Error fetching user profile: $e');
+    }
+    return [];
   }
 
   /**

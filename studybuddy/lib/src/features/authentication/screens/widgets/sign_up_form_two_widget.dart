@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
@@ -44,6 +45,7 @@ class SignUpFormWidget extends StatelessWidget {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             TextFormField(
+              autofocus: true,
               validator: (value) {
                 if (value!.isEmpty || !value.contains(" ")) {
                   setState(() {
@@ -71,41 +73,9 @@ class SignUpFormWidget extends StatelessWidget {
             const SizedBox(
               height: sFormHeight - 20,
             ),
-            // TextFormField(
-            //     validator: (value) {
-            //       if (value!.isEmpty) {
-            //         return 'Please enter your full school name';
-            //       }
-            //       return null;
-            //     },
-            //     controller: controller.schoolName,
-            //     decoration: InputDecoration(
-            //       label: const Text(sSchoolName),
-            //       prefixIcon: const Icon(Icons.school),
-            //       errorText: sisSchoolNameMissing
-            //           ? 'Please enter your full school name'
-            //           : null,
-            //       errorBorder: OutlineInputBorder(
-            //         borderSide: BorderSide(
-            //             color: sisFullNameMissing
-            //                 ? Colors.red
-            //                 : Colors.black), // Error border color
-            //       ),
-            //       focusedErrorBorder: OutlineInputBorder(
-            //         borderSide: BorderSide(
-            //             color: sisFullNameMissing ? Colors.red : Colors.black),
-            //       ),
-            //     )),
-            // const SizedBox(
-            //   height: sFormHeight - 20,
-            // ),
+
             TextFormField(
-              // validator: (value) {
-              //       if (!value!.endsWith('.edu')) {
-              //         return 'Please enter a valid college email address ending with ".edu"';
-              //       }
-              //       return null;
-              // },
+              autofocus: true,
               controller: controller.email,
               decoration: InputDecoration(
                 label: const Text(sEmail),
@@ -128,6 +98,7 @@ class SignUpFormWidget extends StatelessWidget {
               height: sFormHeight - 20,
             ),
             TextFormField(
+              autofocus: true,
               obscureText: isIconVisible,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -157,6 +128,7 @@ class SignUpFormWidget extends StatelessWidget {
               height: sFormHeight - 20,
             ),
             TextFormField(
+              autofocus: true,
               obscureText: obscureText,
               validator: (value) {
                 if (value != controller.password.text) {
@@ -205,12 +177,20 @@ class SignUpFormWidget extends StatelessWidget {
                       textStyle: Theme.of(context).textTheme.displayMedium),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      SignUpController.instance.registerUser(
-                          controller.email.text,
-                          controller.fullName.text,
-                          controller.schoolName.text,
-                          controller.password.text,
-                          controller.confirmPassword.text);
+                      SignUpController.instance
+                          .registerUser(
+                              controller.email.text,
+                              controller.fullName.text,
+                              controller.schoolName.text,
+                              controller.password.text,
+                              controller.confirmPassword.text)
+                          .then((isSignUpSuccessful) {
+                        if (isSignUpSuccessful) {
+                          Get.offAll(() => ProfileScreen());
+                        } else {
+                          Get.snackbar('Error', 'Sign up failed');
+                        }
+                      });
                     }
                   },
                   child: Text(sSignupText.toUpperCase())),

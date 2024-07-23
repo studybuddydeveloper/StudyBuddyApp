@@ -1,4 +1,6 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
@@ -36,10 +38,29 @@ class _HomeScreenState extends State<HomeScreenMain> {
   @override
   void initState() {
     super.initState();
+    Get.put(UserData()); // Register UserData
     final UserData userData = Get.find<UserData>();
     _hController = HomeScreenController(userData: userData);
 
-    users = _hController.fetchUsersInSameCollege();
+    // Fetch the current user's profile
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((userProfile) {
+      // Check if the user's school, major, and class year are filled out
+      if (userProfile['schoolName'] == null ||
+          userProfile['major'] == null ||
+          userProfile['classYear'] == null) {
+        // If they are not filled out, redirect the user to the ProfileScreen
+        Get.offAll(() => ProfileScreen());
+      } else {
+        // If they are filled out, fetch the users
+        users = _hController.fetchUsersInSameCollege();
+      }
+
+      // users = _hController.fetchUsersInSameCollege();
+    });
   }
 
   @override

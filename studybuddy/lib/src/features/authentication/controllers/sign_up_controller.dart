@@ -28,12 +28,12 @@ class SignUpController extends GetxController {
   }
 
   //Register user method to be called in the WelcomeScreen
-  void registerUser(String email, String fullName, String schoolName,
+  Future<bool> registerUser(String email, String fullName, String schoolName,
       String password, String confirmPassword) {
     // Dependency
-
+    final bool isSignUpSuccessful;
     //perform authentication here for a new user
-    authRepo.registerUser(
+    return authRepo.registerUser(
       email,
       schoolName,
       fullName,

@@ -49,7 +49,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// Method to register a new user by creating a new user with email and password
-  void registerUser(
+  Future<bool> registerUser(
     String email,
     String schoolName,
     String fullName,
@@ -78,6 +78,7 @@ class AuthenticationRepository extends GetxController {
       //This checks if the user is null, if not, go to the landing page
       Get.offAll(() => const OnBoardingScreen());
       print("attempting to register user");
+      return true;
     } on FirebaseAuthException catch (e) {
       final ex = SignUpEmailAndPasswordFailure.code(e.code);
       print('FIREBASE AUTH EXCEPTION: ${ex.message}');
