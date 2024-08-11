@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/controllers/homepage_controller.dart';
 import 'package:studybuddy/src/features/authentication/controllers/sign_up_controller.dart';
+import 'package:studybuddy/src/features/authentication/screens/chat_screens/chat_personal_screen.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 
@@ -111,11 +112,20 @@ class _HomeScreenState extends State<HomeScreenMain> {
                     ),
                     SizedBox(height: 20.0),
                     ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PersonalChatScreen(
+                                      // i need to add the email here
+                                      receiverUserEmail: user.email,
+                                      receiverUserId: user.uid)));
+                        },
+                        child: Text("Contact me")),
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 15.0),
-
                         minimumSize: Size(200, 50), // Set minimum width
-                        // Adjust padding
                       ),
                       onPressed: () {
                         // Implement any action you want when the button is pressed

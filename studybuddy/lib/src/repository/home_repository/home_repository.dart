@@ -54,7 +54,8 @@ class HomeRepository extends GetxController {
             displayName: data['fullName'],
             college: data['schoolName'],
             major: data['major'],
-            about: data['about']);
+            about: data['about'],
+            email: data['email']);
       }).toList();
       return users;
     } catch (e) {
@@ -96,7 +97,8 @@ class HomeRepository extends GetxController {
             displayName: data['fullName'],
             college: data['schoolName'],
             major: data['major'],
-            about: data['about']);
+            about: data['about'],
+            email: data['email']);
       }).toList();
       return users;
     } catch (e) {
@@ -200,12 +202,12 @@ class HomeRepository extends GetxController {
             Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
             User_Main m = User_Main(
-              uid: doc.id,
-              displayName: data['fullName'],
-              college: data['schoolName'],
-              major: data['major'],
-              about: data['about'],
-            );
+                uid: doc.id,
+                displayName: data['fullName'],
+                college: data['schoolName'],
+                major: data['major'],
+                about: data['about'],
+                email: data['email']);
             users.add(m);
           }
         }
