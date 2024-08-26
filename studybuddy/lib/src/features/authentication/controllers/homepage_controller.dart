@@ -22,6 +22,7 @@ class HomeScreenController extends GetxController {
   final UserData userData;
 
   HomeScreenController({required this.userData}) {
+    print(this.userData);
     homeRepository = Get.put(HomeRepository(userData: userData));
   }
 
@@ -46,7 +47,6 @@ class HomeScreenController extends GetxController {
     List<User_Main> usersInSameCollege = [];
     if (college != null) {
       usersInSameCollege = await homeRepository.fetchUsersInSameCollege();
-
       if (usersInSameCollege.isNotEmpty) {
       } else {
         print('No users found in the same college.');

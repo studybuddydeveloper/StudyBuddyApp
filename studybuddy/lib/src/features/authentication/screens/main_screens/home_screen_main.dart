@@ -39,8 +39,12 @@ class _HomeScreenState extends State<HomeScreenMain> {
     super.initState();
     final UserData userData = Get.find<UserData>();
     _hController = HomeScreenController(userData: userData);
-
+    if (userData.college == null) {
+      // SnackBar()
+      print("hll");
+    }
     users = _hController.fetchUsersInSameCollege();
+    print(users);
   }
 
   @override
@@ -442,8 +446,18 @@ class _HomeScreenState extends State<HomeScreenMain> {
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.data!.isEmpty) {
-                    return Text(
-                        "Uh oh, looks like we don't have any recommendations for you yet!");
+                    return Center(
+                        child: (Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                          Text(
+                              textAlign: TextAlign.center,
+                              "Uh oh, looks like we don't have any recommendations for you yet!"),
+                          Text(
+                              textAlign: TextAlign.center,
+                              "Make sure you complete your profile!")
+                        ])));
                   } else {
                     List<User_Main> userList = snapshot.data as List<User_Main>;
 

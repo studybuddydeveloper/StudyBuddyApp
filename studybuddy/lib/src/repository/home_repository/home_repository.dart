@@ -21,14 +21,13 @@ class HomeRepository extends GetxController {
   HomeRepository({required this.userData}) {}
 
   // TimeSchedulingController _tController = TimeSchedulingController(userAvailability: userAvailability)
-  String college = '';
-  String uid = '';
-  String major = '';
+  String? college;
+  String? uid;
+  String? major;
 
   @override
   onInit() {
     super.onInit();
-
     uid = userData.userId!;
     major = userData.major!;
     college = userData.college!;
@@ -39,6 +38,11 @@ class HomeRepository extends GetxController {
    */
   Future<List<User_Main>> fetchUsersInSameCollege() async {
     // Map<String, dynamic> userData = {};
+    print(college == null);
+    print("hello: " + college!);
+    if (college == '') {
+      return [];
+    }
     try {
       // TODO save all this fields to a const page to prevent constant lookup
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance

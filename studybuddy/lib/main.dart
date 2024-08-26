@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:studybuddy/src/utils/User_Data.dart';
 // import 'package:studybuddy/src/repository/authentication_repository/authentication_repository_Data.dart';
 import 'package:studybuddy/src/utils/theme/theme.dart';
 
@@ -10,7 +11,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   //ensures that init of all widgets has been before loading of app
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   // //initializes firebase for the specific platform that the app is being run on
   // //aka entry point for accessing firebase
   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -19,10 +20,10 @@ Future<void> main() async {
       .then((value) => Get.put(AuthenticationRepository()));
 
   // // Create an instance of UserData
-  // UserData userData = UserData();
+  UserData userData = UserData();
   //
   // // Perform UserData initialization (if any additional async operations needed)
-  // await userData.initializeUserDetails();
+  await userData.initializeUserDetails();
 
   runApp(
     MyApp(),
