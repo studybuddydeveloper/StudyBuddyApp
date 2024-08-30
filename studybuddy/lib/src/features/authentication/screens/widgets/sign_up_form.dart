@@ -47,7 +47,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             TextFormField(
               validator: (value) {
-                if (value!.isEmpty || !value.contains(" ")) {
+                if (value!.isEmpty) {
                   setState(() {
                     sisFirstNameMissing = true;
                   });
@@ -61,7 +61,7 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
                 label: const Text(sFirstName),
                 prefixIcon: const Icon(Icons.person),
                 errorText:
-                    sisFirstNameMissing ? 'Please enter your full name' : null,
+                    sisFirstNameMissing ? 'Please enter your first name' : null,
                 errorBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: sisFirstNameMissing
