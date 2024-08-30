@@ -5,25 +5,19 @@ import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/sign_up_controller.dart';
 
-class SignUpFormWidget extends StatelessWidget {
-  SignUpFormWidget({
-    super.key,
-  });
-
-  final _formKey = GlobalKey<FormState>();
-  bool _obscureText = true;
+class SignUpFormWidget extends StatefulWidget {
+  SignUpFormWidget({Key? key}) : super(key: key);
 
   @override
-  void initState() {
-    _obscureText = true;
-  }
+  _SignUpFormWidgetState createState() => _SignUpFormWidgetState();
+}
 
-  // Toggles the password show status
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+class _SignUpFormWidgetState extends State<SignUpFormWidget> {
+  bool _obscurePasswordText = true;
+  bool _obscureCpasswordText = true;
+  final _formKey = GlobalKey<FormState>();
+
+  // Your other code...
 
   @override
   Widget build(BuildContext context) {
@@ -131,38 +125,35 @@ class SignUpFormWidget extends StatelessWidget {
               height: sFormHeight - 20,
             ),
             TextFormField(
-              obscureText: obscureText,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter your password';
+                  return 'Please enter a password';
                 }
                 return null;
               },
               controller: controller.password,
+              obscureText: _obscurePasswordText,
               decoration: InputDecoration(
-                  labelText: sPassword,
+                  label: Text(sPassword),
                   prefixIcon: IconButton(
                     onPressed: () {
                       setState(() {
-                        obscureText = !_obscureText;
+                        _obscurePasswordText = !_obscurePasswordText;
                       });
                     },
-                    icon: _obscureText
-                        ? const Icon(
-                            Icons.visibility_off,
-                          )
+                    icon: _obscurePasswordText
+                        ? const Icon(Icons.visibility_off)
                         : Icon(Icons.visibility),
-                  ),
-                  border: const OutlineInputBorder(),
-                  hintText: sPassword),
+                  )),
+              // Your other code...
             ),
             const SizedBox(
               height: sFormHeight - 20,
             ),
             TextFormField(
-              obscureText: !_obscureText,
+              obscureText: _obscureCpasswordText,
               validator: (value) {
-                if (value != controller.password.text) {
+                if (value!.isEmpty || value != controller.password.text) {
                   sPasswordsMatch = false;
                   return "Passwords don't match";
                 }
@@ -170,15 +161,14 @@ class SignUpFormWidget extends StatelessWidget {
               },
               controller: controller.confirmPassword,
               decoration: InputDecoration(
-                hintText: 'Confirm Password',
                 prefixIcon: IconButton(
-                  icon: Icon(!_obscureText
-                      ? Icons.remove_red_eye
-                      : Icons.visibility_off),
+                  icon: Icon(_obscureCpasswordText
+                      ? Icons.visibility_off
+                      : Icons.visibility),
                   onPressed: () {
                     // Toggle the password obscure state
                     setState(() {
-                      obscureText = !_obscureText;
+                      _obscureCpasswordText = !_obscureCpasswordText;
                     });
                     // icon
                   },
@@ -252,8 +242,4 @@ class SignUpFormWidget extends StatelessWidget {
           ])),
     );
   }
-
-  void setState(Null Function() param0) {}
 }
-
-// void setState(Null Function() param0) {}

@@ -50,9 +50,9 @@ class AuthenticationRepository extends GetxController {
 
   /// Method to register a new user by creating a new user with email and password
   void registerUser(
+    String firstName,
+    String lastName,
     String email,
-    String schoolName,
-    String fullName,
     String password,
     String confirmPassword,
   ) async {
@@ -61,13 +61,14 @@ class AuthenticationRepository extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       // After successful registration, update the user's profile with their full name.
-      await userCredential.user!.updateDisplayName(fullName);
+      await userCredential.user!.updateDisplayName(firstName);
       // Save the full name to Firestore.
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'fullName': fullName,
+        'firstName': firstName,
+        'lastName': lastName,
         'email': email,
         'schoolName': '',
         'major': '',

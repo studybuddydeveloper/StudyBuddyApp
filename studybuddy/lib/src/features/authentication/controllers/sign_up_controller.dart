@@ -16,7 +16,8 @@ class SignUpController extends GetxController {
 
   //Textfiled Controllers to retrieve landing details from user
   final email = TextEditingController();
-  final fullName = TextEditingController();
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
   final schoolName = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
@@ -28,15 +29,15 @@ class SignUpController extends GetxController {
   }
 
   //Register user method to be called in the WelcomeScreen
-  void registerUser(String email, String fullName, String schoolName,
+  void registerUser(String firstName, String lastName, String email,
       String password, String confirmPassword) {
     // Dependency
 
     //perform authentication here for a new user
     authRepo.registerUser(
+      firstName,
+      lastName,
       email,
-      schoolName,
-      fullName,
       password,
       confirmPassword,
     );

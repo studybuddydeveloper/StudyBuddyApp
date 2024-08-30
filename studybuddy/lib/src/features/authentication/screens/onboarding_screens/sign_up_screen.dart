@@ -4,7 +4,7 @@ import 'package:studybuddy/src/constants/sizes.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/form_header_widget.dart';
 
 import '../../../../constants/text_strings.dart';
-import '../widgets/sign_up_form_two_widget.dart';
+import '../widgets/sign_up_form.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {

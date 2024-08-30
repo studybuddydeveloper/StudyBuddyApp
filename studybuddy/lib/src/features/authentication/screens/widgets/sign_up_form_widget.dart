@@ -165,9 +165,9 @@ class _SignupFormState extends State<SignupForm> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   SignUpController.instance.registerUser(
+                      controller.firstName.text.trim(),
+                      controller.lastName.text.trim(),
                       controller.email.text.trim(),
-                      controller.fullName.text.trim(),
-                      controller.schoolName.text.trim(),
                       controller.password.text.trim(),
                       controller.fullName.text.trim());
                   Get.to(() => const MainScreen());
