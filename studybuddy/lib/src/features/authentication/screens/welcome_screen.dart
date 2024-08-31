@@ -65,7 +65,6 @@ class WelcomeScreen extends StatelessWidget {
                         onPressed: () => Get.to(const LoginScreen()),
                         child: Text(sLoginText.toUpperCase(),
                             style: const TextStyle(
-                              // color: sLoginButtonColorText,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             )),

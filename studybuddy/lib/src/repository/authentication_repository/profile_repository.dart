@@ -89,8 +89,6 @@ class ProfileRepository extends GetxController {
 
     //TODO Add the functionality to save the user's profile information
     // to the database of the assigned user
-    print("my fullName: $fullName");
-
     try {
       await _usersCollection.doc(user?.uid).update({
         'fullName': fullName,
@@ -135,7 +133,6 @@ class ProfileRepository extends GetxController {
         // Convert the document snapshot data to a map
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
-        print(userData);
         return userData;
       } else {
         // Handle the case when the user document does not exist
@@ -146,14 +143,6 @@ class ProfileRepository extends GetxController {
       print('Error fetching user profile: $e');
       return {};
     }
-    // final snapshot = await studyBuddyDB
-    //     .collection('users')
-    //     .where('email', isEqualTo: email)
-    //     .get();
-    // final userData =
-    //     snapshot.docs.map((doc) => UserModel.fromSnapshot(doc)).single;
-    // print(userData);
-    // return userData;
   }
 // final Colleges MountHolyokeCollege = Colleges(
 //   college_id: 'mount_holyoke_college',

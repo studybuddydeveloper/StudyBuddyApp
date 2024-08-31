@@ -1,87 +1,222 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:studybuddy/src/features/authentication/screens/main_screens/user.dart';
 
 import '../../features/authentication/controllers/profile_controller.dart';
-import '../authentication_repository/profile_repository.dart';
+import '../../features/authentication/models/UserAvailabilityModel.dart';
+import '../../utils/User_Data.dart';
 
-class HomeRepository {
+class HomeRepository extends GetxController {
+  static HomeRepository get instance => Get.find();
+
   ProfileController _Pcontroller = ProfileController();
-  String college = '';
 
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Future<List<User>> fetchUserProfile() async {
-    print("hello");
-    String uid = _Pcontroller.getCurrentUserId();
+  // final UserData _userData = Get.find<UserData>();
 
-    // final uid = _auth.currentUser!.uid;
-    Map<String, dynamic> userData = {};
+  late final UserData userData;
 
+  HomeRepository({required this.userData}) {}
+
+  // TimeSchedulingController _tController = TimeSchedulingController(userAvailability: userAvailability)
+  String? college;
+  String? uid;
+  String? major;
+
+  @override
+  onInit() {
+    super.onInit();
+    uid = userData.userId!;
+    major = userData.major!;
+    college = userData.college!;
+  }
+
+  /**
+   * Default fetch based on college
+   */
+  Future<List<User_Main>> fetchUsersInSameCollege() async {
+    // Map<String, dynamic> userData = {};
+    print(college == null);
+    print("hello: " + college!);
+    if (college == '') {
+      return [];
+    }
     try {
       // TODO save all this fields to a const page to prevent constant lookup
-      // userId = controller.getCurrentUserId();
-      userData = await ProfileRepository().getUserProfile(uid);
-
-      // Access the user data fields
-      college = userData['schoolName'] ?? '';
-      print("my $college");
-      getUsersInSameCollege(college);
-      // about = userData['about'] ?? '';
-      // major = userData['major'] ?? '';
-      // classYear = userData['classYear'] ?? '';
-      //
-      // // Now, you can use these variables in your UI
-      // setState(() {}); // Trigger a rebuild to reflect the updated data
-
-      // fetchUserProfile();
-      print("The college $college");
-
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('users')
-          .where('college', isEqualTo: college)
+          .where('schoolName', isEqualTo: college)
+          .where(FieldPath.documentId, isNotEqualTo: uid)
           .get();
 
-      List<User> users = querySnapshot.docs.map((doc) {
+      List<User_Main> users = querySnapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        return User(
-          uid: doc.id,
-          displayName: data['displayName'],
-          college: data['college'],
-          // "monday (3-5)"
-          // "monday": ["2-7"]
-          // Add other user details as needed
-        );
+        return User_Main(
+            uid: doc.id,
+            displayName: data['fullName'],
+            college: data['schoolName'],
+            major: data['major'],
+            about: data['about'],
+            email: data['email']);
       }).toList();
-      print(" the users dislay $users");
       return users;
     } catch (e) {
-      // Handle errors or notify the user about the failure
       print('Error fetching user profile: $e');
     }
     return [];
   }
 
-  Future<List<User>> getUsersInSameCollege(String college) async {
-    // fetchUserProfile();
-    print("The college $college");
+  /**
+   * Default fetch based on filters
+   */
+  Future<List<User_Main>> fetchUsersBasedFilters(List<String> names) async {
+    List<User_Main> users = [];
 
+    // for each filter name in names,
+    // append a where to the query
+
+    return users;
+  }
+
+  /**
+   * Default fetch based on major
+   */
+  Future<List<User_Main>> fetchUsersWithSameMajor(String? major) async {
+    List<User_Main> users = [];
+
+    try {
+      // Access the user data fields
+      // college = userData['schoolName'] ?? '';
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('major', isEqualTo: major)
+          .where(FieldPath.documentId, isNotEqualTo: uid)
+          .get();
+      List<User_Main> users = querySnapshot.docs.map((doc) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return User_Main(
+            uid: doc.id,
+            displayName: data['fullName'],
+            college: data['schoolName'],
+            major: data['major'],
+            about: data['about'],
+            email: data['email']);
+      }).toList();
+      return users;
+    } catch (e) {
+      print('Error fetching similar users: $e');
+    }
+    return users;
+  }
+
+  /**
+   * TODO
+   * Fetch users based on default AND meeting preference
+   */
+
+  Future<List<User_Main>> fetchUsersWithSameMeetingPref() async {
+    List<User_Main> users = [];
+    Map<String, dynamic> userData = {};
+
+    try {
+      // Access the user data fields
+      college = userData['schoolName'] ?? '';
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('meeting-preference', isEqualTo: college)
+          .where('')
+          .get();
+    } catch (e) {
+      print('Error fetching similar users: $e');
+    }
+
+    return users;
+  }
+
+  /**
+   * Fetch users based on default AND Availability
+   * TODO Add error handling
+   */
+  Future<List<User_Main>> fetchUsersWithSameAvailability() async {
+    List<User_Main> users = [];
+
+    List<UserAvailabilityModel> currUserAvailability = [];
+    // define the usersAvailability
+    List<UserAvailabilityModel> usersAvailability = [];
+
+    // query the time schedule collection for this specific user
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .where('college', isEqualTo: college)
+        .collection("time-schedule/${uid}/appointments")
         .get();
 
-    List<User> users = querySnapshot.docs.map((doc) {
-      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      return User(
-        uid: doc.id,
-        displayName: data['displayName'],
-        college: data['college'],
-        // Add other user details as needed
+    for (var coll in querySnapshot.docs) {
+      Map<String, dynamic> data = coll.data() as Map<String, dynamic>;
+      UserAvailabilityModel model = UserAvailabilityModel(
+        dayOfWeek: data['dayOfWeek'],
+        startTime: data['startTimeOfDay'],
+        endTime: data['endTimeOfDay'],
       );
-    }).toList();
-    print(" the users dislay $users");
+      currUserAvailability.add(model);
+    }
+
+    //this is a list of availability for the users
+
+    // now, we rely on existing methods to get all the users from the same
+    // defaults as the curr user
+    final List<User_Main> defaultUsers = await fetchUsersInSameCollege();
+
+    for (UserAvailabilityModel model in currUserAvailability) {
+      var day = model.dayOfWeek;
+      var start = model.startTime;
+      var end = model.endTime;
+
+      // now we go through all the default users
+
+      // TODO check if the default user is not in the RETURNED list already
+      // TODO update the list by removing users already matched from defaultusers
+      // TODO can utilize two lists
+      for (User_Main p_users in defaultUsers) {
+        // get their own availability(poor cubic solution, will need to optimize later
+
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection("time-schedule/${p_users.uid}/appointments")
+            .get();
+
+        for (var coll in querySnapshot.docs) {
+          Map<String, dynamic> data = coll.data() as Map<String, dynamic>;
+
+          //Lines 180 - 182, invocation should be an invocation of the user availablity model
+          // the user availability models will do the comparison
+
+          // might end up with duplicates because of multiple overlaps with the same
+          // user
+          if (data['dayOfWeek'] == day &&
+              data['startTimeOfDay'] == start &&
+              data['endTimeOfDay'] == end) {
+            // first get the data of this user from users collection
+            QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+                .collection('users')
+                .where(FieldPath.documentId, isEqualTo: p_users.uid)
+                .get();
+
+            QueryDocumentSnapshot doc = querySnapshot.docs.first;
+            Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+            User_Main m = User_Main(
+                uid: doc.id,
+                displayName: data['fullName'],
+                college: data['schoolName'],
+                major: data['major'],
+                about: data['about'],
+                email: data['email']);
+            users.add(m);
+          }
+        }
+      }
+    }
     return users;
   }
 }

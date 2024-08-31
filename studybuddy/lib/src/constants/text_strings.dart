@@ -84,7 +84,8 @@ const String sLoginSubtitle = 'Welcome back! Login to your account';
 // -- SignUp Screen -- Text
 const String sSignUpTitle = 'Sign Up';
 const String sSignUpSubtitle = 'Create an account to get started';
-const String sFullName = 'Full Name';
+const String sFirstName = 'First Name';
+const String sLastName = 'Last Name';
 
 // -- Forgot Password Screen -- Text
 const String sForgotPasswordTitle = 'Forgot Password';

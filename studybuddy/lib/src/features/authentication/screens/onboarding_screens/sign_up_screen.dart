@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:studybuddy/src/constants/sizes.dart';
 import 'package:studybuddy/src/features/authentication/screens/widgets/form_header_widget.dart';
+
 import '../../../../constants/text_strings.dart';
-import '../widgets/sign_up_form_two_widget.dart';
+import '../widgets/sign_up_form.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,8 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 const FormHeaderWidget(
                     sWelcomeTitle: sWelcomeTitle,
-                    sWelcomeSubtitle: sWelcomeSubtitle
-                ),
-                const SignUpFormWidget(),
+                    sWelcomeSubtitle: sWelcomeSubtitle),
+                SignUpFormWidget(),
                 const SizedBox(height: sFormHeight - 10),
                 Column(
                   children: [
@@ -41,21 +39,16 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextButton(
                         onPressed: () => Get.to(() => const LoginScreen()),
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
+                        child: Text.rich(TextSpan(
+                          children: [
+                            TextSpan(
                                 text: sAlreadyHaveAnAccount,
-                                style: Theme.of(context).textTheme.bodyMedium
-                              ),
-                              TextSpan(
+                                style: Theme.of(context).textTheme.bodyMedium),
+                            TextSpan(
                                 text: sLoginText.toUpperCase(),
-                                style: Theme.of(context).textTheme.bodySmall
-                              )
-                            ],
-
-                          )
-                        ))
+                                style: Theme.of(context).textTheme.bodySmall)
+                          ],
+                        )))
                   ],
                 )
               ],
@@ -66,5 +59,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-
-

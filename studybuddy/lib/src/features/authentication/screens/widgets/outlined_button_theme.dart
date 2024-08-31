@@ -9,14 +9,14 @@ class SOutlinedButtonTheme {
   /* -- Light Outlined Button Theme -- */
   static final lightOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      foregroundColor: Colors.black,
-      backgroundColor: Colors.white,
-      side: const BorderSide(color: Colors.black),
-      padding: const EdgeInsets.symmetric(vertical: sButtonHeight),
-    ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        side: const BorderSide(color: Colors.black),
+        padding: const EdgeInsets.symmetric(vertical: sButtonHeight),
+        textStyle: TextStyle(color: Colors.white)),
   );
 
   /* -- Dark Outlined Button Theme -- */
@@ -31,5 +31,4 @@ class SOutlinedButtonTheme {
       padding: const EdgeInsets.symmetric(vertical: sButtonHeight),
     ),
   );
-
 }

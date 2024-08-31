@@ -32,14 +32,7 @@ class ProfileController extends GetxController {
     email = TextEditingController(text: user!.email);
     fullName = TextEditingController(text: user!.displayName);
     about = TextEditingController(text: user!.displayName);
-    print(email.text);
   }
-
-  // void setUserName() {
-  //   user = auth.currentUser;
-  //   fullName.text = user!.displayName!;
-  //   print(fullName.text);
-  // }
 
   void goToMainScreen() {
     Get.to(() => MainScreen());
@@ -87,12 +80,10 @@ class ProfileController extends GetxController {
 
   void setEmail() {
     email = TextEditingController(text: user!.email);
-    print(email);
   }
 
   void saveProfileInfo(String fullName, String email, String college,
       String about, String major, String classYear) {
-    print("my name is $fullName");
     ProfileRepository.instance
         .saveProfileInfo(fullName, email, college, about, major, classYear);
   }
@@ -100,11 +91,5 @@ class ProfileController extends GetxController {
   getProfileInfo() {
     final userId = getCurrentUserId();
     _profileRepo.getUserProfile(userId);
-    // final email = _profileRepo.firebaseUser.value!.email;
-    // if (email != null) {
-    //   return _profileRepo.fetchExistingUserProfile(email);
-    // } else {
-    //   Get.snackbar("Error", "Login to continue");
-    // }
   }
 }

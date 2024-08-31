@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studybuddy/src/features/authentication/screens/home_screens/home_screen_main.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/authentication_repository.dart';
 
@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
       children: [
         Container(
             child: ElevatedButton(
-          child: Text("Click me!"),
+          child: Text("Go to Profile Page"),
           onPressed: () {
             Get.to(() => ProfileScreen());
           },
@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
             child: ElevatedButton(
           child: Text("Main Screen!"),
           onPressed: () {
-            Get.to(() => HomeScreen());
+            Get.to(() => HomeScreenMain());
           },
         )),
       ],

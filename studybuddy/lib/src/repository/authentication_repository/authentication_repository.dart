@@ -4,12 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:studybuddy/src/features/authentication/screens/main_screens/home_screen_main.dart';
 import 'package:studybuddy/src/features/authentication/screens/onboarding_screens/onboarding_screen.dart';
+import 'package:studybuddy/src/features/authentication/screens/welcome_screen.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/login_email_and_password_failure.dart';
 import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
 import '../../features/authentication/screens/main_screens/main_screen.dart';
-import '../../features/authentication/screens/welcome_screen.dart';
+import '../../utils/User_Data.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -21,6 +24,11 @@ class AuthenticationRepository extends GetxController {
 
   late var isLoginValid = true;
 
+  Future<bool> getUserFirstTimeFlag() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isFirstTime') ?? false;
+  }
+
   @override
   void onReady() {
     firebaseUser = Rx<User?>(_auth.currentUser);
@@ -30,25 +38,33 @@ class AuthenticationRepository extends GetxController {
     firebaseUser.bindStream(_auth.userChanges());
   } //The Rx puts the user in a stream and this user is a non-private variable
 
-  //so we can reference it anywhere in the app
-
   //Defining methods to be used in the controllers here
 
-  _setInitialScreen(User? user) {
-    print("hello world");
-    //if user has been logged out and is null, go to welcome screen
+  _setInitialScreen(User? user) async {
     if (user == null) {
-      Get.offAll(() => const WelcomeScreen());
+      Get.offAll(() => WelcomeScreen());
     } else {
-      Get.offAll(() => const MainScreen());
+      UserData userData = UserData();
+
+      // Perform UserData initialization (if any additional async operations needed)
+      await userData.initializeUserDetails();
+      Get.put(userData);
+      bool isFirstTime = await getUserFirstTimeFlag();
+      if (isFirstTime) {
+        // If it's the user's first time, navigate to the OnBoardingScreen
+        Get.offAll(() => const OnBoardingScreen());
+      } else {
+        // If it's not the user's first time, navigate to the HomeScreenMain
+        Get.offAll(() => const HomeScreenMain());
+      }
     }
   }
 
   /// Method to register a new user by creating a new user with email and password
-  void registerUser(
+  Future<Map> registerUser(
+    String firstName,
+    String lastName,
     String email,
-    String schoolName,
-    String fullName,
     String password,
     String confirmPassword,
   ) async {
@@ -57,13 +73,14 @@ class AuthenticationRepository extends GetxController {
           .createUserWithEmailAndPassword(email: email, password: password);
 
       // After successful registration, update the user's profile with their full name.
-      await userCredential.user!.updateDisplayName(fullName);
+      await userCredential.user!.updateDisplayName(firstName);
       // Save the full name to Firestore.
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'fullName': fullName,
+        'firstName': firstName,
+        'lastName': lastName,
         'email': email,
         'schoolName': '',
         'major': '',
@@ -71,18 +88,14 @@ class AuthenticationRepository extends GetxController {
         'about': '',
         // Add other user data as needed.
       });
-      //This checks if the user is null, if not, go to the landing page
-      Get.offAll(() => const OnBoardingScreen());
-      print("attempting to register user");
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isFirstTime', true);
     } on FirebaseAuthException catch (e) {
-      final ex = SignUpEmailAndPasswordFailure.code(e.code);
-      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
-      throw ex;
-    } catch (_) {
-      const ex = SignUpEmailAndPasswordFailure();
-      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
-      throw ex; //throwing the exception to the controller
+      final ex = SignUpEmailAndPasswordFailure.code(e.message!);
+      return {'message': ex, 'success': false};
     }
+    return {'message': '200 status', 'success': true};
   }
 
   //Method to login a user with email and password
@@ -91,6 +104,12 @@ class AuthenticationRepository extends GetxController {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       // Login successful, navigate to the next screen (e.g., the main screen).
       if (firebaseUser.value != null) {
+        // Create an instance of UserData
+        UserData userData = UserData();
+
+        // Perform UserData initialization (if any additional async operations needed)
+        await userData.initializeUserDetails();
+        Get.put(userData);
         Get.offAll(() => const MainScreen());
       } else {
         isLoginValid = false;
@@ -98,17 +117,18 @@ class AuthenticationRepository extends GetxController {
       // Get.offAll(WelcomeScreen()); // Replace NextScreen() with the name of your main screen widget.
     } on FirebaseAuthException catch (e) {
       final ex = LoginEmailAndPasswordFailure.code(e.code);
-      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
       throw ex;
     } catch (_) {
       final ex = LoginEmailAndPasswordFailure();
-      print('FIREBASE AUTH EXCEPTION: ${ex.message}');
       throw ex;
     }
     return null;
   }
 
-  Future<void> logout() async => await _auth.signOut();
+  Future<void> logout() async {
+    await _auth.signOut();
+    Get.offAll(() => WelcomeScreen());
+  }
 
   static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -122,9 +142,7 @@ class AuthenticationRepository extends GetxController {
             await auth.signInWithPopup(authProvider);
 
         user = userCredential.user;
-      } catch (e) {
-        print(e);
-      }
+      } catch (e) {}
     } else {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 

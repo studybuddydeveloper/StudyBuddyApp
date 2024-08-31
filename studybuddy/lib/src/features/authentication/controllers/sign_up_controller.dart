@@ -16,24 +16,31 @@ class SignUpController extends GetxController {
 
   //Textfiled Controllers to retrieve landing details from user
   final email = TextEditingController();
-  final fullName = TextEditingController();
+  final firstName = TextEditingController();
+  final lastName = TextEditingController();
   final schoolName = TextEditingController();
   final password = TextEditingController();
   final confirmPassword = TextEditingController();
 
+  final AuthenticationRepository authRepo = Get.put(AuthenticationRepository());
+
+  void logOut() {
+    authRepo.logout();
+  }
+
   //Register user method to be called in the WelcomeScreen
-  void registerUser(String email, String fullName, String schoolName,
-      String password, String confirmPassword) {
+  Future<Map> registerUser(String firstName, String lastName, String email,
+      String password, String confirmPassword) async {
     // Dependency
-    final AuthenticationRepository authRepo =
-        Get.put(AuthenticationRepository());
+
     //perform authentication here for a new user
-    authRepo.registerUser(
+    final result = await authRepo.registerUser(
+      firstName,
+      lastName,
       email,
-      schoolName,
-      fullName,
       password,
       confirmPassword,
     );
+    return result;
   }
 }

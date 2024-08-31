@@ -1,12 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 
-class FirestoreService {
-  final CollectionReference majorsCollection =
-      FirebaseFirestore.instance.collection('majors');
+class FirestoreService extends GetxController {
+  static FirestoreService get instance => Get.find();
 
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
+
+  Future<String?> getCurrentUserCollege() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      try {
+        DocumentSnapshot userDoc =
+            await usersCollection.doc(currentUser.uid).get();
+        return userDoc['schoolName'] as String?;
+      } catch (e) {
+        print('Error getting user major: $e');
+        return null;
+      }
+    }
+    return null;
+  }
 
   Future<String?> getCurrentUserMajor() async {
     User? currentUser = FirebaseAuth.instance.currentUser;

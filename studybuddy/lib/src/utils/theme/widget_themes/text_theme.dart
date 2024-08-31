@@ -150,17 +150,17 @@ class STextTheme {
         fontSize: 24,
       ),
       bodyLarge: GoogleFonts.montserrat(
-        color: ThemeData.dark().colorScheme.onSecondary,
+        color: ThemeData.light().colorScheme.onSecondary,
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
       bodyMedium: GoogleFonts.montserrat(
-        color: ThemeData.dark().colorScheme.onSecondary,
+        color: ThemeData.light().colorScheme.onSecondary,
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       bodySmall: GoogleFonts.montserrat(
-        color: ThemeData.dark().colorScheme.onSecondary,
+        color: ThemeData.light().colorScheme.onSecondary,
         fontSize: 16,
       ));
 }
