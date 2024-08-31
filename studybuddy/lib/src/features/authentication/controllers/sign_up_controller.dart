@@ -29,17 +29,18 @@ class SignUpController extends GetxController {
   }
 
   //Register user method to be called in the WelcomeScreen
-  void registerUser(String firstName, String lastName, String email,
-      String password, String confirmPassword) {
+  Future<Map> registerUser(String firstName, String lastName, String email,
+      String password, String confirmPassword) async {
     // Dependency
 
     //perform authentication here for a new user
-    authRepo.registerUser(
+    final result = await authRepo.registerUser(
       firstName,
       lastName,
       email,
       password,
       confirmPassword,
     );
+    return result;
   }
 }

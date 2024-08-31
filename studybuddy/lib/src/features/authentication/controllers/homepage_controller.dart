@@ -22,8 +22,8 @@ class HomeScreenController extends GetxController {
   final UserData userData;
 
   HomeScreenController({required this.userData}) {
-    print(this.userData);
-    print(userData == null);
+    // print(this.userData);
+    // print(userData == null);
     homeRepository = Get.put(HomeRepository(userData: userData));
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studybuddy/src/repository/authentication_repository/exceptions/sign_up_email_and_password_failure.dart';
 
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
@@ -196,14 +197,21 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       textStyle: Theme.of(context).textTheme.displayMedium),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      SignUpController.instance.registerUser(
+                      final result = SignUpController.instance.registerUser(
                           controller.firstName.text,
                           controller.lastName.text,
                           controller.email.text,
                           controller.password.text,
                           controller.confirmPassword.text);
+                      result.then((map) {
+                        bool value = map["success"];
+                        var status = map["message"];
+                        if (!value) {
+                          showAlert(status);
+                        }
+                      });
                     }
                   },
                   child: Text(sSignupText.toUpperCase())),
@@ -241,5 +249,15 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
             // ),
           ])),
     );
+  }
+
+  void showAlert(SignUpEmailAndPasswordFailure code) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(code.message),
+          );
+        });
   }
 }
