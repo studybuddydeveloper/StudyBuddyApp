@@ -22,7 +22,7 @@ Whether you're preparing for exams, managing coursework, or looking for a more e
 
 You can access StudyBuddy here: https://studybuddyapp-93539.firebaseapp.com/
 
-2️⃣ Usage
+## 2️⃣ Usage
 
 Sign up or log in to your account using your college email.
 
@@ -30,7 +30,7 @@ Set up your profile to find study matches
 
 Start learning with your studybuddies!
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 Frontend: Flutter, Dart
 
@@ -38,6 +38,9 @@ Backend: Dart
 Database: Firebase
 
 Authentication: Firebase Auth
+
+## Demo 📽️
+https://youtu.be/qbLPmwQkTNY
 
 
 💡 Contact & Support
